@@ -34,6 +34,7 @@ import sortingalgoritms.sorts.BaseSortOperator;
 import sortingalgoritms.ui.AnimationPane;
 import sortingalgoritms.util.UtilSortHandler;
 import javafx.util.Duration;
+import sortingalgoritms.util.Logger;
 
 /**
  * FXML Controller class
@@ -78,7 +79,7 @@ public class MainController implements Initializable {
         anchorPane.getChildren().add(animationPane);
 
         algorithmComboBox.getItems().setAll(getAlgorithmsList());
-        algorithmComboBox.getSelectionModel().select(0);
+        algorithmComboBox.getSelectionModel().select(1);
 
         presetValuesComboBox.getItems().setAll(getPresetValuesList());
         presetValuesComboBox.valueProperty().addListener(o -> {
@@ -136,6 +137,14 @@ public class MainController implements Initializable {
 
                 // Loop through the entire sort list to perform all available sorts
                 IntStream.range(0, sortOperators.getList().size()).forEachOrdered(index -> {
+                    
+                    String sortName = getAlgorithmsList().get(++index) + " Sort\n";
+                    
+                     Platform.runLater(() -> {
+                     algorithmLabel.setText(sortName);
+                     logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
+                     
+                     });
 
                     // Record the start time to measure efficency
                     LocalTime startTime = LocalTime.now();
@@ -147,18 +156,15 @@ public class MainController implements Initializable {
                     // Record the start time to measure efficency
                     LocalTime endTime = LocalTime.now();
 
-                    String sortName = getAlgorithmsList().get(++index) + " Sort\n";
-
                     // Reload the original unsorted list into the array
                     Platform.runLater(() -> animationPane.resetBars());
 
                     // Update javafx components in a separate thread
                     Platform.runLater(() -> {
-                        logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
-                        algorithmLabel.setText(sortName);
                         countLabel.setText(String.valueOf(0)); // Reset count iteration
                         appendMetricText(sortName, startTime, endTime);  // Log metric data
                     });
+                    
                 });
                 disableUI.set(false); // enable ui
                 timeline.stop();
@@ -171,14 +177,18 @@ public class MainController implements Initializable {
     // Initialize the sorting process for one specified sort operation
     private void performSingleOperation() {
         disableUI.set(true);
+       
+        String sortName =  algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
+        algorithmLabel.setText(sortName);
+        countLabel.setText(String.valueOf(0)); // Reset count iteration
+        
+        logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
 
         // Create a separate thread for the animation
         thread = new Thread() {
 
             @Override
             public void run() {
-
-                logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
 
                 // Record the start time to measure efficency
                 LocalTime startTime = LocalTime.now();
@@ -189,29 +199,24 @@ public class MainController implements Initializable {
                         .sort(animationPane.getBarArray(),
                                 0, animationPane.getBarArray().length - 1);
 
-                // Stop the clock 
-                timeline.stop();
-
-                updateViews();
-
                 // Get the end time to measure efficiency
                 LocalTime endTime = LocalTime.now();
 
-                String sortName = algorithmComboBox.getValue() + " Sort\n";
-
                 Platform.runLater(() -> {
-                    algorithmLabel.setText(sortName);
-                    countLabel.setText(String.valueOf(0)); // Reset count iteration
                     // Record the end time to measure efficency                    
                     appendMetricText(sortName, startTime, endTime);
-                    // Reload the original unsorted list into the array
+
                 });
-
                 disableUI.set(false); // enable ui
+                updateViews();
+                // Stop the clock 
+                timeline.stop();
                 thread.stop();
-                Platform.runLater(() -> animationPane.resetBars());
 
+                // Reload the original unsorted list into the array
+                Platform.runLater(() -> animationPane.resetBars());
             }
+
         };
         timeline.play();
         thread.start();
@@ -221,7 +226,9 @@ public class MainController implements Initializable {
      * Updates the animation pane bars and numbered text fields
      */
     private void updateViews() {
+         Platform.runLater(() -> countLabel.setText(""+Logger.getCount()));
         UtilSortHandler.SortClass.apply(animationPane.getBarArray(), animationPane);
+       
     }
 
     /**

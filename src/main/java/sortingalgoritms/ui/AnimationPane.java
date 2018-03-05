@@ -128,18 +128,19 @@ public class AnimationPane extends AnchorPane implements IHandler {
         
         if (labelIndex == 10) {
             labelIndex = 0;
-             System.out.println();
+             //System.out.println();
         }
 
         while (labelIndex <= 9) {
             TextField textfield = (TextField) textFieldsGridPane.getChildren().get(labelIndex);
             textfield.setText(""+bar.getValue());
             textfield.setStyle("-fx-border-color: #" + color + ";");
+            bar.setStyle("-fx-background-color: #" + color + ";");
             Bar reg = (Bar) barsGridPane.getChildren().get(labelIndex);
             reg.resize(getResizeHeight(bar));
             
-            System.out.print(bar.getValue() + " ");
-            bar.setStyle("-fx-background-color: #" + color + ";");
+           // System.out.print(bar.getValue() + " ");
+            
             labelIndex++;
             break;
         }
