@@ -1,0 +1,71 @@
+.root {
+   -fx-base: #262931;
+   -fx-accent: #0096C9;
+   -fx-background: #232629;
+   -fx-focus-color: #0093FF;
+   -fx-control-inner-background: #262931;
+   -fx-inner-border: linear-gradient(from 0% 0% to 100% 100%, derive(#686971 73.6%) 0%, derive(#686971 29.2%) 100%);
+   -fx-body-color: linear-gradient(from 0% 0% to 100% 100%, derive(#686971 34.0%) 0%, derive(#686971 -18.0%) 100%);
+ }
+
+ .hyperlink {
+   -fx-fill: -fx-text-background-color;
+ }
+
+ .toggle-button:selected {
+   -fx-text-fill: -fx-text-base-color;
+ }
+ .sort-label {
+     -fx-font-family: "Open Sans";
+     -fx-font-size: 16px;
+ }
+ 
+ .title-bar {
+     -fx-border-width: 0 0 2 0;
+     -fx-background-color: #262931;
+     -fx-border-color: #686971;
+ }
+ .bar {
+     -fx-background-color: #0093FF;
+     -fx-background-radius: 3, 3, 2, 1;
+ }
+ 
+ .controls-grid-pane {
+     -fx-background-color: #232629;
+     -fx-padding: 6px;
+     -fx-background-radius: 3, 3, 2, 1;
+ }
+ 
+ .split-pane {
+     -fx-background-color: #232629;
+ }
+ 
+ .split-pane:focused {
+     -fx-background-color: transparent;
+ }
+ 
+ .label,
+ .check-box,
+ .text,
+ .radio-button {
+   -fx-fill: -fx-text-background-color;
+   -fx-text-fill: -fx-text-background-color;
+ }
+
+ .text {
+   -fx-fill: -fx-text-background-color;
+ }
+
+ .choice-box .label {
+  /* Workaround for RT-20015 */
+  -fx-text-fill: -fx-text-base-color;
+ }
+
+ .menu-button .label {
+  /* Workaround for RT-20015 */
+  -fx-text-fill: -fx-text-base-color;
+ }
+
+ .footer {
+     -fx-background-color: #03312E;
+ }

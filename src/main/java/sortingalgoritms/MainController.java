@@ -1,0 +1,267 @@
+/*
+* To change this license header, choose License Headers in Project Properties.
+* To change this template file, choose Tools | Templates
+* and open the template in the editor.
+ */
+package sortingalgoritms;
+
+import java.net.URL;
+
+import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.stream.IntStream;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+
+import javafx.application.Platform;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
+import sortingalgoritms.sorts.SortOperatorList;
+import sortingalgoritms.sorts.BaseSortOperator;
+import sortingalgoritms.ui.AnimationPane;
+import sortingalgoritms.util.UtilSortHandler;
+import javafx.util.Duration;
+
+/**
+ * FXML Controller class
+ *
+ * @author andje22
+ */
+public class MainController implements Initializable {
+
+    public static final SimpleIntegerProperty DELAY_PROPERTY = new SimpleIntegerProperty();
+
+    private final SimpleBooleanProperty disableUI = new SimpleBooleanProperty(false);
+
+    private final SortOperatorList sortOperators = new SortOperatorList();
+
+    @FXML private AnchorPane anchorPane;
+    @FXML private TextArea logTextArea;
+    @FXML private Button startButton;
+    @FXML private Button clearButton;
+    @FXML private ComboBox<String> algorithmComboBox;
+    @FXML private ComboBox<String> presetValuesComboBox;
+    @FXML private Spinner<Integer> delaySpinner;
+    @FXML private Label algorithmLabel, countLabel;
+
+    private AnimationPane animationPane;
+
+    private Thread thread;
+    private Timeline timeline;
+
+    /**
+     * Initializes the controller class.
+     *
+     * @param url
+     * @param rb
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        this.animationPane = new AnimationPane();
+        AnchorPane.setTopAnchor(animationPane, 50.0);
+        AnchorPane.setBottomAnchor(animationPane, 0.0);
+        AnchorPane.setLeftAnchor(animationPane, 0.0);
+        AnchorPane.setRightAnchor(animationPane, 0.0);
+        anchorPane.getChildren().add(animationPane);
+
+        algorithmComboBox.getItems().setAll(getAlgorithmsList());
+        algorithmComboBox.getSelectionModel().select(0);
+
+        presetValuesComboBox.getItems().setAll(getPresetValuesList());
+        presetValuesComboBox.valueProperty().addListener(o -> {
+            if (disableUI.get()) {
+                return;
+            }
+            animationPane.setPresetValues(presetValuesComboBox.getValue());
+            animationPane.createBars();
+
+        });
+        presetValuesComboBox.getSelectionModel().select(0);
+
+        // Create spinner factory with default min, max, current, step
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 2000, 50, 10);
+
+        // Set the spinner value factory
+        delaySpinner.setValueFactory(valueFactory);
+        DELAY_PROPERTY.bind(delaySpinner.valueProperty());
+
+        // Create a timeline with animation delay and infinite cycle count
+        timeline = new Timeline(new KeyFrame(
+                Duration.millis(delaySpinner.getValue()), ae -> updateViews()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+
+        // Bind algorithm name to the label
+        algorithmLabel.textProperty().set(algorithmComboBox.getValue());
+
+        // Bind the buttons disable property to the disable UI property
+        startButton.disableProperty().bind(disableUI);
+        clearButton.disableProperty().bind(disableUI);
+    }
+
+    @FXML
+    private void startAction(ActionEvent event) {
+        if (disableUI.get()) {
+            return;
+        }
+
+        if (algorithmComboBox.getSelectionModel().getSelectedIndex() == 0) {
+            performAllSortOperations();
+        } else {
+            performSingleOperation();
+        }
+    }
+    
+    // Initialize the sorting process for all sort operations
+    private void performAllSortOperations() {
+
+        disableUI.set(true);
+
+        // Create a separate thread for the animation
+        thread = new Thread() {
+            @Override
+            public void run() {
+
+                // Loop through the entire sort list to perform all available sorts
+                IntStream.range(0, sortOperators.getList().size()).forEachOrdered(index -> {
+
+                    // Record the start time to measure efficency
+                    LocalTime startTime = LocalTime.now();
+
+                    new BaseSortOperator(sortOperators.getList().get(index)).sort(animationPane.getBarArray(),
+                            0, animationPane.getBarArray().length - 1);
+                    updateViews();
+
+                    // Record the start time to measure efficency
+                    LocalTime endTime = LocalTime.now();
+
+                    String sortName = getAlgorithmsList().get(++index) + " Sort\n";
+
+                    // Reload the original unsorted list into the array
+                    Platform.runLater(() -> animationPane.resetBars());
+
+                    // Update javafx components in a separate thread
+                    Platform.runLater(() -> {
+                        logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
+                        algorithmLabel.setText(sortName);
+                        countLabel.setText(String.valueOf(0)); // Reset count iteration
+                        appendMetricText(sortName, startTime, endTime);  // Log metric data
+                    });
+                });
+                disableUI.set(false); // enable ui
+                timeline.stop();
+            }
+        };
+        timeline.play();
+        thread.start();
+    }
+
+    // Initialize the sorting process for one specified sort operation
+    private void performSingleOperation() {
+        disableUI.set(true);
+
+        // Create a separate thread for the animation
+        thread = new Thread() {
+
+            @Override
+            public void run() {
+
+                logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
+
+                // Record the start time to measure efficency
+                LocalTime startTime = LocalTime.now();
+
+                // Perform the sort at the position in the list
+                new BaseSortOperator(sortOperators.getList().get(
+                        algorithmComboBox.getSelectionModel().getSelectedIndex() - 1))
+                        .sort(animationPane.getBarArray(),
+                                0, animationPane.getBarArray().length - 1);
+
+                // Stop the clock 
+                timeline.stop();
+
+                updateViews();
+
+                // Get the end time to measure efficiency
+                LocalTime endTime = LocalTime.now();
+
+                String sortName = algorithmComboBox.getValue() + " Sort\n";
+
+                Platform.runLater(() -> {
+                    algorithmLabel.setText(sortName);
+                    countLabel.setText(String.valueOf(0)); // Reset count iteration
+                    // Record the end time to measure efficency                    
+                    appendMetricText(sortName, startTime, endTime);
+                    // Reload the original unsorted list into the array
+                });
+
+                disableUI.set(false); // enable ui
+                thread.stop();
+                Platform.runLater(() -> animationPane.resetBars());
+
+            }
+        };
+        timeline.play();
+        thread.start();
+    }
+
+    /**
+     * Updates the animation pane bars and numbered text fields
+     */
+    private void updateViews() {
+        UtilSortHandler.SortClass.apply(animationPane.getBarArray(), animationPane);
+    }
+
+    /**
+     * Appends the info text area with the metric data for the sorting routine.
+     */
+    private void appendMetricText(String sortName, LocalTime startTime, LocalTime endTime) {
+
+        // Current time mark
+        endTime = LocalTime.now();
+
+        // Calculates the difference between start and end time
+        LocalTime duration = endTime.minusNanos(startTime.getNano());
+
+        // Appends the time stamp to the text area on the left-side display
+        logTextArea.appendText(
+                String.format("%s%s %s%n%s %s%n%s %s %s%n%s %s %s%n%n",
+                        sortName,
+                        "Start: ", startTime,
+                        "End:   ", endTime,
+                        "Delay: ", delaySpinner.getValue(), " ms",
+                        "Speed: ", duration.getNano(), " ms"));
+    }
+
+    @FXML
+    private void clearTextArea(ActionEvent event) {
+        logTextArea.clear();
+    }
+
+    // The list of sort algorithms to choose in the combobox
+    private static List<String> getAlgorithmsList() {
+        String[] algorithms
+                = {"All", "Bubble", "Selection", "Insertion", "Merge", "Quick",
+                    "Shell", "Pancake", "Cocktail", "Heap", "Exchange"};
+        return Arrays.asList(algorithms);
+    }
+
+    // The list of preset values to choose in the combobox
+    private static List<String> getPresetValuesList() {
+        String[] presets
+                = {"Random", "Ordered", "Reverse", "Hundreds", "Thousands"};
+        return Arrays.asList(presets);
+    }
+}
