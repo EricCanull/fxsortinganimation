@@ -124,7 +124,7 @@ public class AnimationPane extends AnchorPane implements IHandler {
     @Override
     public Object apply(Object number) {
         Bar bar = (Bar) number;
-        String color = Integer.toHexString(bar.getColor().hashCode());
+       
         
         if (labelIndex == 10) {
             labelIndex = 0;
@@ -132,11 +132,12 @@ public class AnimationPane extends AnchorPane implements IHandler {
         }
 
         while (labelIndex <= 9) {
+            String color = Integer.toHexString(bar.getColor().hashCode());
             TextField textfield = (TextField) textFieldsGridPane.getChildren().get(labelIndex);
             textfield.setText(""+bar.getValue());
             textfield.setStyle("-fx-border-color: #" + color + ";");
-            bar.setStyle("-fx-background-color: #" + color + ";");
             Bar reg = (Bar) barsGridPane.getChildren().get(labelIndex);
+            reg.setStyle("-fx-background-color: #" + color + ";");
             reg.resize(getResizeHeight(bar));
             
            // System.out.print(bar.getValue() + " ");
