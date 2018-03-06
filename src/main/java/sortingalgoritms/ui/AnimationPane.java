@@ -46,6 +46,7 @@ public class AnimationPane extends AnchorPane implements IHandler {
                 } else {
                 IntStream.range(0, 10).forEachOrdered(index -> {
                     Bar bar = bars[index];
+                    //bar.getMaxY().bind(barsGridPane.heightProperty());
                     bar.resize(getResizeHeight(bar));
                 });
             }
@@ -88,12 +89,20 @@ public class AnimationPane extends AnchorPane implements IHandler {
              barsGridPane.add(bar, index, 0);
          });
      }
+     
+     
+     public void resetArray() {
+        setBarArray((Bar[]) randomData.getBarList().toArray());
+         labelIndex = 0;
+    }
 
     public void resetBars() {
         setBarArray((Bar[]) randomData.getBarList().toArray());
         createBars();
+         labelIndex = 0;
     }
 
+    // Use some maths for resizing the bars dynamically
     private double getResizeHeight(Bar bar) {
         double y1 = 0;
         double y2 = bar.getMaxY().get();
@@ -123,15 +132,13 @@ public class AnimationPane extends AnchorPane implements IHandler {
 
     @Override
     public Object apply(Object number) {
-        Bar bar = (Bar) number;
-       
-        
         if (labelIndex == 10) {
             labelIndex = 0;
              //System.out.println();
         }
 
         while (labelIndex <= 9) {
+             Bar bar = (Bar) number;   
             String color = Integer.toHexString(bar.getColor().hashCode());
             TextField textfield = (TextField) textFieldsGridPane.getChildren().get(labelIndex);
             textfield.setText(""+bar.getValue());

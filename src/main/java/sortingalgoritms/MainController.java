@@ -5,18 +5,19 @@
  */
 package sortingalgoritms;
 
-import java.net.URL;
 
+import java.net.URL;
 import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
+
 import java.util.ResourceBundle;
 import java.util.stream.IntStream;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-
 import javafx.application.Platform;
+
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.event.ActionEvent;
@@ -30,16 +31,16 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import sortingalgoritms.sorts.SortOperatorList;
-import sortingalgoritms.sorts.BaseSortOperator;
 import sortingalgoritms.ui.AnimationPane;
-import sortingalgoritms.util.UtilSortHandler;
 import javafx.util.Duration;
+import sortingalgoritms.sorts.BaseSortOperator;
 import sortingalgoritms.util.Logger;
+import sortingalgoritms.util.UtilSortHandler;
 
 /**
  * FXML Controller class
  *
- * @author andje22
+ * @author Eric Canull
  */
 public class MainController implements Initializable {
 
@@ -72,10 +73,10 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.animationPane = new AnimationPane();
-        AnchorPane.setTopAnchor(animationPane, 50.0);
-        AnchorPane.setBottomAnchor(animationPane, 0.0);
-        AnchorPane.setLeftAnchor(animationPane, 0.0);
-        AnchorPane.setRightAnchor(animationPane, 0.0);
+        AnchorPane.setTopAnchor(animationPane,    50.0);
+        AnchorPane.setBottomAnchor(animationPane,  0.0);
+        AnchorPane.setLeftAnchor(animationPane,    0.0);
+        AnchorPane.setRightAnchor(animationPane,   0.0);
         anchorPane.getChildren().add(animationPane);
 
         algorithmComboBox.getItems().setAll(getAlgorithmsList());
@@ -90,7 +91,7 @@ public class MainController implements Initializable {
             animationPane.createBars();
 
         });
-        presetValuesComboBox.getSelectionModel().select(0);
+        presetValuesComboBox.getSelectionModel().select(2);
 
         // Create spinner factory with default min, max, current, step
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 2000, 50, 10);
@@ -119,9 +120,9 @@ public class MainController implements Initializable {
         }
 
         if (algorithmComboBox.getSelectionModel().getSelectedIndex() == 0) {
-            performAllSortOperations();
+         //  performAllSortOperations();
         } else {
-            performSingleOperation();
+           performSingleOperation();
         }
     }
     
@@ -134,37 +135,37 @@ public class MainController implements Initializable {
         thread = new Thread() {
             @Override
             public void run() {
-
                 // Loop through the entire sort list to perform all available sorts
-                IntStream.range(0, sortOperators.getList().size()).forEachOrdered(index -> {
-                    
-                    String sortName = getAlgorithmsList().get(++index) + " Sort\n";
-                    
-                     Platform.runLater(() -> {
-                     algorithmLabel.setText(sortName);
-                     logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
-                     
-                     });
+                IntStream.range(0, sortOperators.getList().size() - 1).forEachOrdered(index -> {
+
+                    String sortName = getAlgorithmsList().get(index + 1) + " Sort\n";
+
+                    Platform.runLater(() -> {
+                        logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
+                     //   String sortName =  algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
+                        algorithmLabel.setText(sortName);
+                        logTextArea.appendText(sortName);
+                    });
 
                     // Record the start time to measure efficency
                     LocalTime startTime = LocalTime.now();
 
                     new BaseSortOperator(sortOperators.getList().get(index)).sort(animationPane.getBarArray(),
                             0, animationPane.getBarArray().length - 1);
-                    updateViews();
 
                     // Record the start time to measure efficency
                     LocalTime endTime = LocalTime.now();
 
+                    updateViews();
+                    
                     // Reload the original unsorted list into the array
                     Platform.runLater(() -> animationPane.resetBars());
 
-                    // Update javafx components in a separate thread
-                    Platform.runLater(() -> {
-                        countLabel.setText(String.valueOf(0)); // Reset count iteration
-                        appendMetricText(sortName, startTime, endTime);  // Log metric data
-                    });
-                    
+                        // Update javafx components in a separate thread
+                        Platform.runLater(() -> {
+                            countLabel.setText(String.valueOf(0)); // Reset count iteration
+                            appendMetricText(sortName, startTime, endTime);  // Log metric data
+                        });
                 });
                 disableUI.set(false); // enable ui
                 timeline.stop();
@@ -177,12 +178,14 @@ public class MainController implements Initializable {
     // Initialize the sorting process for one specified sort operation
     private void performSingleOperation() {
         disableUI.set(true);
-       
-        String sortName =  algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
-        algorithmLabel.setText(sortName);
-        countLabel.setText(String.valueOf(0)); // Reset count iteration
         
         logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
+        String sortName =  algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
+        algorithmLabel.setText(sortName);
+        logTextArea.appendText(sortName);
+    
+        // Reset count iteration
+        countLabel.setText(String.valueOf(0));
 
         // Create a separate thread for the animation
         thread = new Thread() {
@@ -202,21 +205,17 @@ public class MainController implements Initializable {
                 // Get the end time to measure efficiency
                 LocalTime endTime = LocalTime.now();
 
+                // Record the end time to measure efficency               
                 Platform.runLater(() -> {
-                    // Record the end time to measure efficency                    
                     appendMetricText(sortName, startTime, endTime);
-
                 });
+
                 disableUI.set(false); // enable ui
-                updateViews();
+
                 // Stop the clock 
                 timeline.stop();
-                thread.stop();
-
-                // Reload the original unsorted list into the array
-                Platform.runLater(() -> animationPane.resetBars());
+                updateViews();
             }
-
         };
         timeline.play();
         thread.start();
@@ -241,15 +240,15 @@ public class MainController implements Initializable {
 
         // Calculates the difference between start and end time
         LocalTime duration = endTime.minusNanos(startTime.getNano());
-
+        
+        StringBuilder sb = new StringBuilder();
+        sb.append("Start:   ").append(startTime).append("\n");
+        sb.append("End:     ").append(endTime).append("\n");
+        sb.append("Delay:  ").append(delaySpinner.getValue()).append(" ms").append("\n");
+        sb.append("Speed: ").append(duration.getNano()  / 1000000).append(" ms").append("\n\n");
+        
         // Appends the time stamp to the text area on the left-side display
-        logTextArea.appendText(
-                String.format("%s%s %s%n%s %s%n%s %s %s%n%s %s %s%n%n",
-                        sortName,
-                        "Start: ", startTime,
-                        "End:   ", endTime,
-                        "Delay: ", delaySpinner.getValue(), " ms",
-                        "Speed: ", duration.getNano(), " ms"));
+        logTextArea.appendText(sb.toString());
     }
 
     @FXML
