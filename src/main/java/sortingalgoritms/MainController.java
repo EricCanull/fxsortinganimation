@@ -111,6 +111,8 @@ public class MainController implements Initializable {
         // Bind the buttons disable property to the disable UI property
         startButton.disableProperty().bind(disableUI);
         clearButton.disableProperty().bind(disableUI);
+        algorithmComboBox.disableProperty().bind(disableUI);
+        presetValuesComboBox.disableProperty().bind(disableUI);
     }
 
     @FXML
@@ -189,7 +191,7 @@ public class MainController implements Initializable {
 
         // Create a separate thread for the animation
         thread = new Thread() {
-
+            
             @Override
             public void run() {
 
@@ -210,15 +212,20 @@ public class MainController implements Initializable {
                     appendMetricText(sortName, startTime, endTime);
                 });
 
-                disableUI.set(false); // enable ui
-
                 // Stop the clock 
                 timeline.stop();
-                updateViews();
-            }
+                
+                Platform.runLater(() -> {
+                    updateViews();
+                    disableUI.set(false); 
+                });
+            }; 
         };
+       
         timeline.play();
         thread.start();
+        
+        
     }
 
     /**
