@@ -18,7 +18,6 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import sortingalgoritms.util.Bar;
 import sortingalgoritms.util.IHandler;
 import sortingalgoritms.util.RandomBars;
 

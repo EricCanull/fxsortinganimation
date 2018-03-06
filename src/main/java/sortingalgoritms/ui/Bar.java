@@ -1,4 +1,4 @@
-package sortingalgoritms.util;
+package sortingalgoritms.ui;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.geometry.Insets;
@@ -8,6 +8,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import sortingalgoritms.MainController;
+import sortingalgoritms.util.IComparable;
+import sortingalgoritms.util.IPainter;
 
 /**
 * Ordered and Colored Integers.

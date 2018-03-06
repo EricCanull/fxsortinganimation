@@ -1,7 +1,6 @@
 package sortingalgoritms.sorts;
 
 import sortingalgoritms.util.IComparable;
-import sortingalgoritms.util.IHandler;
 import sortingalgoritms.util.Logger;
 
 /**

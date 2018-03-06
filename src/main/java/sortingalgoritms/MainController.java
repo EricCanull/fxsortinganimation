@@ -35,7 +35,7 @@ import sortingalgoritms.ui.AnimationPane;
 import javafx.util.Duration;
 import sortingalgoritms.sorts.BaseSortOperator;
 import sortingalgoritms.util.Logger;
-import sortingalgoritms.util.UtilSortHandler;
+import sortingalgoritms.sorts.BaseSortHandler;
 
 /**
  * FXML Controller class
@@ -232,7 +232,7 @@ public class MainController implements Initializable {
      */
     private void updateViews() {
          Platform.runLater(() -> countLabel.setText(""+Logger.getCount()));
-        UtilSortHandler.SortClass.apply(animationPane.getBarArray(), animationPane);
+        BaseSortHandler.SortClass.apply(animationPane.getBarArray(), animationPane);
        
     }
 

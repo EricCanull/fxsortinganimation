@@ -1,4 +1,6 @@
-package sortingalgoritms.util;
+package sortingalgoritms.sorts;
+
+import sortingalgoritms.util.IHandler;
 
 /**
  * Returns the numbers and colors that are determined during the sorting
@@ -6,17 +8,17 @@ package sortingalgoritms.util;
  * @author Eric Canull
  * @version 1.0
  */
-public final class UtilSortHandler implements IHandler {
+public final class BaseSortHandler implements IHandler {
     
     /**
      * A concrete sorting class
      */
-    public final static UtilSortHandler SortClass = new UtilSortHandler();
+    public final static BaseSortHandler SortClass = new BaseSortHandler();
     
     /**
      * Returns the sorted array from the concrete sorting classes.
      */
-    private UtilSortHandler(){
+    private BaseSortHandler(){
     }
     
     /**
