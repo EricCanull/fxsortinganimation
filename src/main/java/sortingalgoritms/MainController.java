@@ -169,7 +169,8 @@ public class MainController implements Initializable {
                             appendMetricText(sortName, startTime, endTime);  // Log metric data
                         });
                 });
-                disableUI.set(false); // enable ui
+                // enable ui
+                disableUI.set(false); 
                 timeline.stop();
             }
         };
@@ -180,7 +181,7 @@ public class MainController implements Initializable {
     // Initialize the sorting process for one specified sort operation
     private void performSingleOperation() {
         disableUI.set(true);
-        
+        logTextArea.appendText(presetValuesComboBox.getValue() + " Values\n");
         logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
         String sortName =  algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
         algorithmLabel.setText(sortName);
@@ -224,8 +225,6 @@ public class MainController implements Initializable {
        
         timeline.play();
         thread.start();
-        
-        
     }
 
     /**
@@ -252,7 +251,8 @@ public class MainController implements Initializable {
         sb.append("Start:   ").append(startTime).append("\n");
         sb.append("End:     ").append(endTime).append("\n");
         sb.append("Delay:  ").append(delaySpinner.getValue()).append(" ms").append("\n");
-        sb.append("Speed: ").append(duration.getNano()  / 1000000).append(" ms").append("\n\n");
+        sb.append("Speed: ").append(duration.getNano()  / 1000000).append(" ms").append("\n");
+        sb.append("Steps: ").append(Logger.getCount()).append("\n\n");
         
         // Appends the time stamp to the text area on the left-side display
         logTextArea.appendText(sb.toString());
