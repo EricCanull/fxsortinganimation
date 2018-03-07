@@ -1,4 +1,4 @@
-# FX Sorting Animation Demo
+# FX Sort Animation Demo
 
 ### Visualize the following sorting algorithms:
 
@@ -21,6 +21,6 @@
   </tr>
 </table>
 
-### Check me out in action!
+## Check it out!
 ![alt text](https://github.com/EricCanull/fxsortinganimation/blob/master/src/main/resources/images/sortanimation.gif "Sort Demo")
 
