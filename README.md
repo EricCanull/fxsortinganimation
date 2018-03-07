@@ -1,4 +1,4 @@
-##FX Sorting Animations
+# FX Sorting Animations
 
 Demostrates animation sort operations
 
