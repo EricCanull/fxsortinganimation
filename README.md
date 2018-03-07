@@ -1,6 +1,6 @@
 # FX Sorting Animation Demo
 
-### Visualization for the following sorting algorithms:
+### Visualize the following sorting algorithms:
 
 <td style="white-space: nowrap">
 <tr>  
@@ -21,6 +21,6 @@
   </tr>
 </table>
 
-### Screenshot
+### Check me out in action!
 ![alt text](https://github.com/EricCanull/fxsortinganimation/blob/master/src/main/resources/images/sortanimation.gif "Sort Demo")
 
