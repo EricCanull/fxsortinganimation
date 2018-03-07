@@ -73,28 +73,22 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         this.animationPane = new AnimationPane();
-        AnchorPane.setTopAnchor(animationPane,    50.0);
-        AnchorPane.setBottomAnchor(animationPane,  0.0);
-        AnchorPane.setLeftAnchor(animationPane,    0.0);
-        AnchorPane.setRightAnchor(animationPane,   0.0);
+        AnchorPane.setTopAnchor(animationPane, 50.0);
+        AnchorPane.setBottomAnchor(animationPane, 0.0);
+        AnchorPane.setLeftAnchor(animationPane, 0.0);
+        AnchorPane.setRightAnchor(animationPane, 0.0);
         anchorPane.getChildren().add(animationPane);
 
         algorithmComboBox.getItems().setAll(getAlgorithmsList());
         algorithmComboBox.getSelectionModel().select(1);
 
         presetValuesComboBox.getItems().setAll(getPresetValuesList());
-        presetValuesComboBox.valueProperty().addListener(o -> {
-            if (disableUI.get()) {
-                return;
-            }
-            animationPane.setPresetValues(presetValuesComboBox.getValue());
-            animationPane.createBars();
-
-        });
+        presetValuesComboBox.valueProperty().addListener(o -> presetValuesAction());
         presetValuesComboBox.getSelectionModel().select(2);
 
         // Create spinner factory with default min, max, current, step
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 2000, 50, 10);
+        SpinnerValueFactory<Integer> valueFactory 
+                = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 2000, 50, 10);
 
         // Set the spinner value factory
         delaySpinner.setValueFactory(valueFactory);
@@ -114,6 +108,14 @@ public class MainController implements Initializable {
         algorithmComboBox.disableProperty().bind(disableUI);
         presetValuesComboBox.disableProperty().bind(disableUI);
     }
+    
+    private void presetValuesAction() {
+         if (disableUI.get()) {
+                return;
+            }
+            animationPane.setPresetValues(presetValuesComboBox.getValue());
+            animationPane.createBars();
+    }
 
     @FXML
     private void startAction(ActionEvent event) {
@@ -122,67 +124,31 @@ public class MainController implements Initializable {
         }
 
         if (algorithmComboBox.getSelectionModel().getSelectedIndex() == 0) {
-         //  performAllSortOperations();
+            //  runAllSortOperations(sortName, i);
         } else {
-           performSingleOperation();
+            runSortOperation();
         }
     }
     
-    // Initialize the sorting process for all sort operations
-    private void performAllSortOperations() {
-
-        disableUI.set(true);
-
-        // Create a separate thread for the animation
-        thread = new Thread() {
-            @Override
-            public void run() {
-                // Loop through the entire sort list to perform all available sorts
-                IntStream.range(0, sortOperators.getList().size() - 1).forEachOrdered(index -> {
-
-                    String sortName = getAlgorithmsList().get(index + 1) + " Sort\n";
-
-                    Platform.runLater(() -> {
-                        logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
-                     //   String sortName =  algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
-                        algorithmLabel.setText(sortName);
-                        logTextArea.appendText(sortName);
-                    });
-
-                    // Record the start time to measure efficency
-                    LocalTime startTime = LocalTime.now();
-
-                    new BaseSortOperator(sortOperators.getList().get(index)).sort(animationPane.getBarArray(),
-                            0, animationPane.getBarArray().length - 1);
-
-                    // Record the start time to measure efficency
-                    LocalTime endTime = LocalTime.now();
-
-                    updateViews();
-                    
-                    // Reload the original unsorted list into the array
-                    Platform.runLater(() -> animationPane.resetBars());
-
-                        // Update javafx components in a separate thread
-                        Platform.runLater(() -> {
-                            countLabel.setText(String.valueOf(0)); // Reset count iteration
-                            appendMetricText(sortName, startTime, endTime);  // Log metric data
-                        });
-                });
-                // enable ui
-                disableUI.set(false); 
-                timeline.stop();
-            }
-        };
-        timeline.play();
-        thread.start();
+    private void runAllSortOperations() {
+        int i = 0;
+        while (i < 10) {
+            String sortName = getAlgorithmsList().get(i + 1);
+//              System.out.println(sortName);
+//             System.out.println(sortOperators.getList().get(i));
+            animationPane.resetBars();
+            i++;
+        }
     }
-
+    
     // Initialize the sorting process for one specified sort operation
-    private void performSingleOperation() {
+    private void runSortOperation() {
         disableUI.set(true);
+        
+        int sortIndex = algorithmComboBox.getSelectionModel().getSelectedIndex() - 1;
         logTextArea.appendText(presetValuesComboBox.getValue() + " Values\n");
         logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
+        
         String sortName =  algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
         algorithmLabel.setText(sortName);
         logTextArea.appendText(sortName);
@@ -200,8 +166,7 @@ public class MainController implements Initializable {
                 LocalTime startTime = LocalTime.now();
 
                 // Perform the sort at the position in the list
-                new BaseSortOperator(sortOperators.getList().get(
-                        algorithmComboBox.getSelectionModel().getSelectedIndex() - 1))
+                new BaseSortOperator(sortOperators.getList().get(sortIndex))
                         .sort(animationPane.getBarArray(),
                                 0, animationPane.getBarArray().length - 1);
 

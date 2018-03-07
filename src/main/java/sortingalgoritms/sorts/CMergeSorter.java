@@ -41,7 +41,6 @@ public final class CMergeSorter extends ASortOperator {
     private void mergeSort(IComparable[] numbers) {
         IComparable[] temp = new IComparable[numbers.length];
         mergeSort(numbers, temp, 0, numbers.length - 1);
-
     }
 
     /**

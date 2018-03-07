@@ -140,7 +140,7 @@ public class AnimationPane extends AnchorPane implements IHandler {
              Bar bar = (Bar) number;   
             String color = Integer.toHexString(bar.getColor().hashCode());
             TextField textfield = (TextField) textFieldsGridPane.getChildren().get(labelIndex);
-            textfield.setText(""+bar.getValue());
+            textfield.setText(String.valueOf(bar.getValue()));
             textfield.setStyle("-fx-border-color: #" + color + ";" 
                              + "-fx-background-color: #" + color.replace("ff", "33") + ";");
             Bar reg = (Bar) barsGridPane.getChildren().get(labelIndex);
