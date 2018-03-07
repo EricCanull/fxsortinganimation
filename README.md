@@ -21,6 +21,6 @@
   </tr>
 </table>
 
-## Check it out!
+#### Check it out!
 ![alt text](https://github.com/EricCanull/fxsortinganimation/blob/master/src/main/resources/images/sortanimation.gif "Sort Demo")
 
