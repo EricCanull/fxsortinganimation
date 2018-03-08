@@ -3,20 +3,20 @@ package sortingalgoritms.sorts;
 import sortingalgoritms.util.IHandler;
 
 /**
- * Returns the numbers and colors that are determined during the sorting
- * process.
+ * Used to create a singleton sort class and handle the incremental sorting 
+ * changes during the timer animation update.
  * @author Eric Canull
  * @version 1.0
  */
 public final class BaseSortHandler implements IHandler {
     
     /**
-     * A concrete sorting class
+     * A singleton sorting class object
      */
-    public final static BaseSortHandler SortClass = new BaseSortHandler();
+    public final static BaseSortHandler SINGLETON = new BaseSortHandler();
     
     /**
-     * Returns the sorted array from the concrete sorting classes.
+     * Private constructor 
      */
     private BaseSortHandler(){
     }

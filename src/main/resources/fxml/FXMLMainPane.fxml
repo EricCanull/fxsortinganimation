@@ -43,7 +43,7 @@
                         <Color blue="0.624" green="0.624" red="0.624" />
                      </textFill>
                   </Label>
-                  <TextArea fx:id="logTextArea" layoutX="-32.0" layoutY="89.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                  <TextArea fx:id="logTextArea" layoutX="-32.0" layoutY="89.0" styleClass="log-text-area" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                      <font>
                         <Font name="FiraCode-Regular" size="12.0" />
                      </font></TextArea>

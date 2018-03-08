@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -97,8 +98,8 @@ public class AnimationPane extends AnchorPane implements IHandler {
 
     public void resetBars() {
         setBarArray((Bar[]) randomData.getBarList().toArray());
-        createBars();
-         labelIndex = 0;
+        Platform.runLater(() -> createBars());
+        
     }
 
     // Use some maths for resizing the bars dynamically

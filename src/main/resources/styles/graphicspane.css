@@ -11,6 +11,10 @@
  .hyperlink {
    -fx-fill: -fx-text-background-color;
  }
+ .log-text-area {
+     -fx-font-family: "Fira Code";
+     -fx-font-size: 13px;
+ }
 
  .toggle-button:selected {
    -fx-text-fill: -fx-text-base-color;

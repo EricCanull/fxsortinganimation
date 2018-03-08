@@ -110,42 +110,20 @@ public class MainController implements Initializable {
     }
     
     private void presetValuesAction() {
-         if (disableUI.get()) {
-                return;
-            }
-            animationPane.setPresetValues(presetValuesComboBox.getValue());
-            animationPane.createBars();
+        animationPane.setPresetValues(presetValuesComboBox.getValue());
+        animationPane.createBars();
     }
 
     @FXML
     private void startAction(ActionEvent event) {
-        if (disableUI.get()) {
-            return;
-        }
-
-        if (algorithmComboBox.getSelectionModel().getSelectedIndex() == 0) {
-            //  runAllSortOperations(sortName, i);
-        } else {
-            runSortOperation();
-        }
-    }
-    
-    private void runAllSortOperations() {
-        int i = 0;
-        while (i < 10) {
-            String sortName = getAlgorithmsList().get(i + 1);
-//              System.out.println(sortName);
-//             System.out.println(sortOperators.getList().get(i));
-            animationPane.resetBars();
-            i++;
-        }
+         runSortOperation();
     }
     
     // Initialize the sorting process for one specified sort operation
     private void runSortOperation() {
         disableUI.set(true);
         
-        int sortIndex = algorithmComboBox.getSelectionModel().getSelectedIndex() - 1;
+        int sortIndex = algorithmComboBox.getSelectionModel().getSelectedIndex();
         logTextArea.appendText(presetValuesComboBox.getValue() + " Values\n");
         logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
         
@@ -197,7 +175,7 @@ public class MainController implements Initializable {
      */
     private void updateViews() {
          Platform.runLater(() -> countLabel.setText(""+Logger.getCount()));
-        BaseSortHandler.SortClass.apply(animationPane.getBarArray(), animationPane);
+        BaseSortHandler.SINGLETON.apply(animationPane.getBarArray(), animationPane);
        
     }
 
@@ -213,10 +191,10 @@ public class MainController implements Initializable {
         LocalTime duration = endTime.minusNanos(startTime.getNano());
         
         StringBuilder sb = new StringBuilder();
-        sb.append("Start:   ").append(startTime).append("\n");
-        sb.append("End:     ").append(endTime).append("\n");
-        sb.append("Delay:  ").append(delaySpinner.getValue()).append(" ms").append("\n");
-        sb.append("Speed: ").append(duration.getNano()  / 1000000).append(" ms").append("\n");
+        sb.append("Start: ").append(startTime).append("\n");
+        sb.append("Ended: ").append(endTime).append("\n");
+        sb.append("Delay: ").append(delaySpinner.getValue()).append(" ms").append("\n");
+        sb.append("Speed: ").append(duration.getNano()).append(" ns").append("\n");
         sb.append("Steps: ").append(Logger.getCount()).append("\n\n");
         
         // Appends the time stamp to the text area on the left-side display
@@ -231,7 +209,7 @@ public class MainController implements Initializable {
     // The list of sort algorithms to choose in the combobox
     private static List<String> getAlgorithmsList() {
         String[] algorithms
-                = {"All", "Bubble", "Selection", "Insertion", "Merge", "Quick",
+                = {"Bubble", "Selection", "Insertion", "Merge", "Quick",
                     "Shell", "Pancake", "Cocktail", "Heap", "Exchange"};
         return Arrays.asList(algorithms);
     }
