@@ -87,16 +87,16 @@ public class MainController implements Initializable {
         presetValuesComboBox.getSelectionModel().select(2);
 
         // Create spinner factory with default min, max, current, step
-        SpinnerValueFactory<Integer> valueFactory 
-                = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 2000, 50, 10);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory
+                .IntegerSpinnerValueFactory(0, 2000, 50, 10);
 
         // Set the spinner value factory
         delaySpinner.setValueFactory(valueFactory);
         DELAY_PROPERTY.bind(delaySpinner.valueProperty());
 
         // Create a timeline with animation delay and indefinite cycle count
-        timeline = new Timeline(new KeyFrame(
-                javafx.util.Duration.millis(delaySpinner.getValue()), ae -> updateViews()));
+        timeline = new Timeline(new KeyFrame(javafx.util.Duration.millis(
+                delaySpinner.getValue()), ae -> updateViews()));
         timeline.setCycleCount(Animation.INDEFINITE);
 
         // Bind algorithm name to the label
@@ -137,8 +137,8 @@ public class MainController implements Initializable {
         
         // Load the selected algorithm and display the preset values in the text area
         int sortIndex = getAlgorithmIndex();
-        logTextArea.appendText(presetValuesComboBox.getValue() + " Values\n");
-        logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
+        appendTextArea(presetValuesComboBox.getValue(), " Values\n");
+        appendTextArea(Arrays.toString(animationPane.getBarArray()), "\n\n");
         
         // Update the algorithm name to the labels and text area
         String sortName = algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
@@ -167,8 +167,9 @@ public class MainController implements Initializable {
             Platform.runLater(() -> {
                 updateViews();
                 appendMetricText(startTime, endTime);
-                statusLabel.setText("Status: Sorting complete");
             });
+            
+             setStatusText("Status: Sorting complete");
 
             // Sort completed 
             stop(executor);
@@ -180,22 +181,21 @@ public class MainController implements Initializable {
      */
     private void stop(ExecutorService executor) {
         try {
-            Platform.runLater(() -> (statusLabel.setText("Status: Stoping")));
+            setStatusText("Status: Stoping");
             executor.shutdown();
             executor.awaitTermination(1, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            Platform.runLater(() -> (statusLabel.setText("Status: Interrupted")));
+             setStatusText("Status: Interrupted");
         } finally {
             if (!executor.isTerminated()) {
-                Platform.runLater(() -> (statusLabel.setText(("Status: Busy"))));
+                setStatusText("Status: Busy");
             }
             executor.shutdownNow();
 
             timeline.stop();      // stop timeline 
             disableUI.set(false); // enable UI
-
-            // Get the end time to measure efficiency
-            Platform.runLater(() -> (statusLabel.setText("Status: Ready")));
+            
+            setStatusText("Status: Ready");
         }
     }
 
@@ -208,7 +208,29 @@ public class MainController implements Initializable {
             statusLabel.setText("Status: Sorting");
             countLabel.setText("" + Logger.getCount());
         });
+        
         BaseSortHandler.SINGLETON.apply(animationPane.getBarArray(), animationPane);
+    }
+    
+    /**
+     * Sets the status label text
+     * @param status 
+     */
+    private void setStatusText(String status) {
+         Platform.runLater(() -> (statusLabel.setText(status)));
+    }
+
+    /**
+     * Appends text area with logging data
+     * @param text1
+     * @param text2 
+     */
+    private void appendTextArea(String text1, String text2) {
+        // Create a new string builder  
+        final StringBuilder sb = new StringBuilder();
+        sb.append(text1).append(" ").append(text2);
+        
+        logTextArea.appendText(sb.toString());
     }
 
     /**
