@@ -7,7 +7,7 @@ package sortingalgoritms;
 
 
 import java.net.URL;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +34,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import sortingalgoritms.sorts.SortOperatorList;
 import sortingalgoritms.ui.AnimationPane;
-import javafx.util.Duration;
 import sortingalgoritms.sorts.BaseSortOperator;
 import sortingalgoritms.util.Logger;
 import sortingalgoritms.sorts.BaseSortHandler;
@@ -96,7 +95,7 @@ public class MainController implements Initializable {
 
         // Create a timeline with animation delay and infinite cycle count
         timeline = new Timeline(new KeyFrame(
-                Duration.millis(delaySpinner.getValue()), ae -> updateViews()));
+                javafx.util.Duration.millis(delaySpinner.getValue()), ae -> updateViews()));
         timeline.setCycleCount(Animation.INDEFINITE);
 
         // Bind algorithm name to the label
@@ -138,7 +137,7 @@ public class MainController implements Initializable {
         executor.submit(() -> {
             
             // Record the start time to measure efficency
-            LocalTime startTime = LocalTime.now();
+            Instant startTime = Instant.now();
 
             // Perform the sort at the position in the list
             new BaseSortOperator(sortOperators.getList().get(sortIndex))
@@ -146,7 +145,7 @@ public class MainController implements Initializable {
                             0, animationPane.getBarArray().length - 1);
            
             // Record the end time to measure efficency
-            LocalTime endTime = LocalTime.now();
+            Instant endTime = Instant.now();
            
             // Append text area with metric data
             Platform.runLater(() -> {
@@ -196,23 +195,25 @@ public class MainController implements Initializable {
     /**
      * Appends the info text area with the metric data for the sorting routine.
      */
-    private void appendMetricText(LocalTime startTime, LocalTime endTime) {
-
-        // Current time mark
-        endTime = LocalTime.now();
+    private void appendMetricText(Instant startTime, Instant endTime) {
 
         // Calculates the difference between start and end time
-        LocalTime duration = endTime.minusNanos(startTime.getNano());
+        long delta = Duration.between(startTime, endTime).toMillis();
         
-        StringBuilder sb = new StringBuilder();
-        sb.append("Start: ").append(startTime).append("\n");
-        sb.append("Ended: ").append(endTime).append("\n");
+        // Create a new string builder with metric data
+        final StringBuilder sb = new StringBuilder();
+        sb.append("Start: ").append(convertDateTime(startTime)).append(" ms \n");
+        sb.append("Ended: ").append(convertDateTime(endTime)).append(" ms \n");
         sb.append("Delay: ").append(delaySpinner.getValue()).append(" ms").append("\n");
-        sb.append("Speed: ").append(duration.getNano()).append(" ns").append("\n");
+        sb.append("Speed: ").append(delta).append(" ms").append("\n");
         sb.append("Steps: ").append(Logger.getCount()).append("\n\n");
         
         // Appends the time stamp to the text area on the left-side display
         logTextArea.appendText(sb.toString());
+    }
+    
+    private long convertDateTime(Instant instant) {
+      return instant.toEpochMilli();
     }
     
     private int getAlgorithmIndex() {
