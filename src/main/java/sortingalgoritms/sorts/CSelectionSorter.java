@@ -44,6 +44,7 @@ public final class CSelectionSorter extends ASortOperator {
                     count();
 
                 }
+                count();
             }
 
             if (minValue.compare(numbers[lowIndex]) == IComparable.LESS) {

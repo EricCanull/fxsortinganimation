@@ -50,7 +50,9 @@ public class MainController implements Initializable {
     private final SimpleBooleanProperty disableUI = new SimpleBooleanProperty(false);
 
     private final SortOperatorList sortOperators = new SortOperatorList();
-
+    
+    private final AnimationPane animationPane = new AnimationPane();
+    
     @FXML private AnchorPane anchorPane;
     @FXML private TextArea logTextArea;
     @FXML private Button startButton, clearButton;
@@ -58,21 +60,17 @@ public class MainController implements Initializable {
     @FXML private Spinner<Integer> delaySpinner;
     @FXML private Label algorithmLabel, countLabel, statusLabel;
 
-    private AnimationPane animationPane;
-
     private Timeline timeline;
 
     /**
-     * Initializes the controller class.
-     *
-     * @param url
+     * Initializes the main controller class.
+     * @param url 
      * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        // Add the animation pane and set anchors 
-        this.animationPane = new AnimationPane();
+        // Add and anchor the animation controller pane 
         AnchorPane.setTopAnchor(animationPane, 50.0);
         AnchorPane.setBottomAnchor(animationPane, 0.0);
         AnchorPane.setLeftAnchor(animationPane, 0.0);

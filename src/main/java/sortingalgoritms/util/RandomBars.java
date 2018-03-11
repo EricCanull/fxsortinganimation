@@ -46,7 +46,6 @@ public class RandomBars {
         return barsArray;
     }
      
-    //final int max = barList.stream().reduce(0, Math::max);
     public List<Bar> getBarList() {
         return this.barList;
     }
