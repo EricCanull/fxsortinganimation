@@ -59,7 +59,6 @@ public class MainController implements Initializable {
     @FXML private Label algorithmLabel, countLabel, statusLabel;
 
     private AnimationPane animationPane;
-    private ExecutorService executor;
 
     private Timeline timeline;
 
@@ -71,6 +70,8 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        // Add the animation pane and set anchors 
         this.animationPane = new AnimationPane();
         AnchorPane.setTopAnchor(animationPane, 50.0);
         AnchorPane.setBottomAnchor(animationPane, 0.0);
@@ -78,9 +79,11 @@ public class MainController implements Initializable {
         AnchorPane.setRightAnchor(animationPane, 0.0);
         anchorPane.getChildren().add(animationPane);
 
+        // Add algoritms list and select the first index in the combobox
         algorithmComboBox.getItems().setAll(getAlgorithmsList());
         algorithmComboBox.getSelectionModel().select(1);
-
+        
+        // Add preset values list and listener to combobox
         presetValuesComboBox.getItems().setAll(getPresetValuesList());
         presetValuesComboBox.valueProperty().addListener(o -> presetValuesAction());
         presetValuesComboBox.getSelectionModel().select(2);
@@ -108,34 +111,48 @@ public class MainController implements Initializable {
         presetValuesComboBox.disableProperty().bind(disableUI);
     }
     
+    /**
+     * Observable helper method updates the preset values whenever changes 
+     * occur.
+     */
     private void presetValuesAction() {
         animationPane.setPresetValues(presetValuesComboBox.getValue());
         animationPane.createBars();
     }
     
+    /**
+     * Start button method to run the sorting operation
+     */
     @FXML
     private void startAction(ActionEvent event) {
         startSort();
     }
     
+    /**
+     * Starts the sorting operation
+     */
     public void startSort() {
-        // Disable UI and reset count label
-        disableUI.set(true); 
-        countLabel.setText("0");
+        
+        disableUI.set(true); // Disable UI
+        countLabel.setText("0"); // Reset count label
         
         // Load the selected algorithm and display the preset values in the text area
         int sortIndex = getAlgorithmIndex();
         logTextArea.appendText(presetValuesComboBox.getValue() + " Values\n");
         logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
         
+        // Update the algorithm name to the labels and text area
         String sortName = algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
         algorithmLabel.setText(sortName);
         logTextArea.appendText(sortName);
-
+        
+        // Start the timeline
         timeline.play();
-        executor = Executors.newSingleThreadExecutor();
+        
+        // Create a new thread to run the sorting algorithm
+        final ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
-            
+
             // Record the start time to measure efficency
             Instant startTime = Instant.now();
 
@@ -143,25 +160,25 @@ public class MainController implements Initializable {
             new BaseSortOperator(sortOperators.getList().get(sortIndex))
                     .sort(animationPane.getBarArray(),
                             0, animationPane.getBarArray().length - 1);
-           
+
             // Record the end time to measure efficency
             Instant endTime = Instant.now();
-           
+
             // Append text area with metric data
             Platform.runLater(() -> {
                 appendMetricText(startTime, endTime);
                 updateViews();
             });
-            
+
             // Sort completed 
-            stop();
+            stop(executor);
         });
-   }
+    }
     
     /**
-     * Shutdown the running threads 
+     * Shutdown running threads and update the status label
      */
-    private void stop() {
+    private void stop(ExecutorService executor) {
         try {
             Platform.runLater(() -> (statusLabel.setText("Attempting to stop")));
             executor.shutdown();
@@ -183,7 +200,8 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Updates the animation pane bars and numbered text fields
+     * Continously updates the animation pane bars and numbered text fields
+     * with progressive sort data until the sorting is complete.
      */
     private void updateViews() {
         Platform.runLater(() -> {
@@ -213,20 +231,35 @@ public class MainController implements Initializable {
         logTextArea.appendText(sb.toString());
     }
     
+    /**
+     * Converts an Instant to milliseconds
+     * @param instant
+     * @return 
+     */
     private long convertToMillis(Instant instant) {
       return instant.toEpochMilli();
     }
     
+    /**
+     * Gets the current index selected for the algorithm combo box
+     * @return 
+     */
     private int getAlgorithmIndex() {
         return algorithmComboBox.getSelectionModel().getSelectedIndex();
     }
 
+    /**
+     * Clears the text area
+     * @param event 
+     */
     @FXML
     private void clearTextArea(ActionEvent event) {
         logTextArea.clear();
     }
 
-    // The list of sort algorithms to choose in the combobox
+    /**
+     * The list of sort algorithms to choose in the combobox
+     */
     private static List<String> getAlgorithmsList() {
         String[] algorithms
                 = {"Bubble", "Selection", "Insertion", "Merge", "Quick",
@@ -234,7 +267,9 @@ public class MainController implements Initializable {
         return Arrays.asList(algorithms);
     }
 
-    // The list of preset values to choose in the combobox
+    /**
+     * The list of preset values to choose in the combobox
+     */
     private static List<String> getPresetValuesList() {
         String[] presets
                 = {"Random", "Ordered", "Reverse", "Hundreds", "Thousands"};
