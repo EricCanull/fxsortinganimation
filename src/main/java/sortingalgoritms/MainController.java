@@ -125,7 +125,7 @@ public class MainController implements Initializable {
         countLabel.setText("0");
         
         // Load the selected algorithm and display the preset values in the text area
-        int sortIndex = algorithmComboBox.getSelectionModel().getSelectedIndex();
+        int sortIndex = getAlgorithmIndex();
         logTextArea.appendText(presetValuesComboBox.getValue() + " Values\n");
         logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
         
@@ -133,22 +133,25 @@ public class MainController implements Initializable {
         algorithmLabel.setText(sortName);
         logTextArea.appendText(sortName);
 
-        // Record the start time to measure efficency
-        LocalTime startTime = LocalTime.now();
-        
         timeline.play();
         executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
+            
+            // Record the start time to measure efficency
+            LocalTime startTime = LocalTime.now();
 
             // Perform the sort at the position in the list
             new BaseSortOperator(sortOperators.getList().get(sortIndex))
                     .sort(animationPane.getBarArray(),
                             0, animationPane.getBarArray().length - 1);
            
-            // Get the end time to measure efficiency
+            // Record the end time to measure efficency
+            LocalTime endTime = LocalTime.now();
+           
+            // Append text area with metric data
             Platform.runLater(() -> {
-                LocalTime endTime = LocalTime.now();
-                appendMetricText(sortName, startTime, endTime);
+               // LocalTime endTime = LocalTime.now();
+                appendMetricText(startTime, endTime);
                 updateViews();
             });
             stop();
@@ -171,7 +174,8 @@ public class MainController implements Initializable {
             // Sorting task is now complete 
             timeline.stop();      // stop timeline 
             disableUI.set(false); // enable UI
-              // Get the end time to measure efficiency
+           
+            // Get the end time to measure efficiency
             Platform.runLater(() -> (statusLabel.setText("Sorting complete")));
         }
     }
@@ -191,7 +195,7 @@ public class MainController implements Initializable {
     /**
      * Appends the info text area with the metric data for the sorting routine.
      */
-    private void appendMetricText(String sortName, LocalTime startTime, LocalTime endTime) {
+    private void appendMetricText(LocalTime startTime, LocalTime endTime) {
 
         // Current time mark
         endTime = LocalTime.now();
@@ -208,6 +212,10 @@ public class MainController implements Initializable {
         
         // Appends the time stamp to the text area on the left-side display
         logTextArea.appendText(sb.toString());
+    }
+    
+    private int getAlgorithmIndex() {
+        return algorithmComboBox.getSelectionModel().getSelectedIndex();
     }
 
     @FXML
