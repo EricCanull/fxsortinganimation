@@ -92,7 +92,7 @@ public class AnimationPane extends AnchorPane implements IHandler {
          });
      }
      
-     public void resetArray() {
+     private void resetArray() {
         setBarArray((Bar[]) randomData.getBarList().toArray());
          indexPos = 0;
     }
