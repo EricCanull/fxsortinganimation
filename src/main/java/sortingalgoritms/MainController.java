@@ -221,23 +221,14 @@ public class MainController implements Initializable {
         
         // Create a new string builder with metric data
         final StringBuilder sb = new StringBuilder();
-        sb.append("Start: ").append(convertToMillis(startTime)).append(" ms \n");
-        sb.append("Ended: ").append(convertToMillis(endTime)).append(" ms \n");
+        sb.append("Start: ").append(startTime.toEpochMilli()).append(" ms \n");
+        sb.append("Ended: ").append(endTime.toEpochMilli()).append(" ms \n");
         sb.append("Delay: ").append(delaySpinner.getValue()).append(" ms").append("\n");
         sb.append("Speed: ").append(delta).append(" ms").append("\n");
         sb.append("Steps: ").append(Logger.getCount()).append("\n\n");
         
         // Appends the time stamp to the text area on the left-side display
         logTextArea.appendText(sb.toString());
-    }
-    
-    /**
-     * Converts an Instant to milliseconds
-     * @param instant
-     * @return 
-     */
-    private long convertToMillis(Instant instant) {
-      return instant.toEpochMilli();
     }
     
     /**
