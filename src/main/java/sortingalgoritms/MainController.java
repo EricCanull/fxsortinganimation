@@ -150,10 +150,11 @@ public class MainController implements Initializable {
            
             // Append text area with metric data
             Platform.runLater(() -> {
-               // LocalTime endTime = LocalTime.now();
                 appendMetricText(startTime, endTime);
                 updateViews();
             });
+            
+            // Sort is complete stop the executor thread
             stop();
         });
    }
