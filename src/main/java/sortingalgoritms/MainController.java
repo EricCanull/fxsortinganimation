@@ -32,7 +32,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
 import sortingalgoritms.sorts.SortOperatorList;
 import sortingalgoritms.ui.AnimationPane;
 import sortingalgoritms.sorts.BaseSortOperator;
@@ -104,6 +103,7 @@ public class MainController implements Initializable {
 
         // Bind algorithm name to the label
         algorithmLabel.textProperty().set(algorithmComboBox.getValue());
+        statusLabel.setText("Status: Ready");
 
         // Bind the buttons disable property to the disable UI property
         startButton.disableProperty().bind(disableUI);
@@ -169,6 +169,7 @@ public class MainController implements Initializable {
             Platform.runLater(() -> {
                 appendMetricText(startTime, endTime);
                 updateViews();
+                statusLabel.setText("Status: Sorting complete");
             });
 
             // Sort completed 
@@ -181,14 +182,14 @@ public class MainController implements Initializable {
      */
     private void stop(ExecutorService executor) {
         try {
-            Platform.runLater(() -> (statusLabel.setText("Attempting to stop")));
+            Platform.runLater(() -> (statusLabel.setText("Status: Stoping")));
             executor.shutdown();
             executor.awaitTermination(1, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            Platform.runLater(() -> (statusLabel.setText("tasks interrupted")));
+            Platform.runLater(() -> (statusLabel.setText("Status: Interrupted")));
         } finally {
             if (!executor.isTerminated()) {
-                Platform.runLater(() -> (statusLabel.setText(("Still running tasks"))));
+                Platform.runLater(() -> (statusLabel.setText(("Status: Busy"))));
             }
             executor.shutdownNow();
 
@@ -196,7 +197,7 @@ public class MainController implements Initializable {
             disableUI.set(false); // enable UI
 
             // Get the end time to measure efficiency
-            Platform.runLater(() -> (statusLabel.setText("Sorting complete")));
+            Platform.runLater(() -> (statusLabel.setText("Status: Ready")));
         }
     }
 
@@ -206,7 +207,7 @@ public class MainController implements Initializable {
      */
     private void updateViews() {
         Platform.runLater(() -> {
-            statusLabel.setText("Sort running");
+            statusLabel.setText("Status: Sorting");
             countLabel.setText("" + Logger.getCount());
         });
         BaseSortHandler.SINGLETON.apply(animationPane.getBarArray(), animationPane);
