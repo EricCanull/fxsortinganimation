@@ -12,7 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import java.util.ResourceBundle;
-import java.util.stream.IntStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -52,16 +54,14 @@ public class MainController implements Initializable {
 
     @FXML private AnchorPane anchorPane;
     @FXML private TextArea logTextArea;
-    @FXML private Button startButton;
-    @FXML private Button clearButton;
-    @FXML private ComboBox<String> algorithmComboBox;
-    @FXML private ComboBox<String> presetValuesComboBox;
+    @FXML private Button startButton, clearButton;
+    @FXML private ComboBox<String> algorithmComboBox, presetValuesComboBox;
     @FXML private Spinner<Integer> delaySpinner;
-    @FXML private Label algorithmLabel, countLabel;
+    @FXML private Label algorithmLabel, countLabel, statusLabel;
 
     private AnimationPane animationPane;
+    private ExecutorService executor;
 
-    private Thread thread;
     private Timeline timeline;
 
     /**
@@ -113,68 +113,77 @@ public class MainController implements Initializable {
         animationPane.setPresetValues(presetValuesComboBox.getValue());
         animationPane.createBars();
     }
-
+    
     @FXML
     private void startAction(ActionEvent event) {
-         runSortOperation();
+        startSort();
     }
     
-    // Initialize the sorting process for one specified sort operation
-    private void runSortOperation() {
-        disableUI.set(true);
+    public void startSort() {
+        // Disable UI and reset count label
+        disableUI.set(true); 
+        countLabel.setText("0");
         
+        // Load the selected algorithm and display the preset values in the text area
         int sortIndex = algorithmComboBox.getSelectionModel().getSelectedIndex();
         logTextArea.appendText(presetValuesComboBox.getValue() + " Values\n");
         logTextArea.appendText(Arrays.toString(animationPane.getBarArray()) + "\n\n");
         
-        String sortName =  algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
+        String sortName = algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
         algorithmLabel.setText(sortName);
         logTextArea.appendText(sortName);
-    
-        // Reset count iteration
-        countLabel.setText(String.valueOf(0));
 
-        // Create a separate thread for the animation
-        thread = new Thread() {
-            
-            @Override
-            public void run() {
-
-                // Record the start time to measure efficency
-                LocalTime startTime = LocalTime.now();
-
-                // Perform the sort at the position in the list
-                new BaseSortOperator(sortOperators.getList().get(sortIndex))
-                        .sort(animationPane.getBarArray(),
-                                0, animationPane.getBarArray().length - 1);
-
-                // Get the end time to measure efficiency
-                LocalTime endTime = LocalTime.now();
-
-                // Record the end time to measure efficency               
-                Platform.runLater(() -> {
-                    appendMetricText(sortName, startTime, endTime);
-                });
-
-                // Stop the clock 
-                timeline.stop();
-                
-                Platform.runLater(() -> {
-                    updateViews();
-                    disableUI.set(false); 
-                });
-            }; 
-        };
-       
+        // Record the start time to measure efficency
+        LocalTime startTime = LocalTime.now();
+        
         timeline.play();
-        thread.start();
+        executor = Executors.newSingleThreadExecutor();
+        executor.submit(() -> {
+
+            // Perform the sort at the position in the list
+            new BaseSortOperator(sortOperators.getList().get(sortIndex))
+                    .sort(animationPane.getBarArray(),
+                            0, animationPane.getBarArray().length - 1);
+           
+            // Get the end time to measure efficiency
+            Platform.runLater(() -> {
+                LocalTime endTime = LocalTime.now();
+                appendMetricText(sortName, startTime, endTime);
+                updateViews();
+            });
+            stop();
+        });
+   }
+    
+    private void stop() {
+        try {
+            Platform.runLater(() -> (statusLabel.setText("Attempting to stop")));
+            executor.shutdown();
+            executor.awaitTermination(1, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Platform.runLater(() -> (statusLabel.setText("tasks interrupted")));
+        } finally {
+            if (!executor.isTerminated()) {
+                 Platform.runLater(() -> (statusLabel.setText(("Still running tasks"))));
+            }
+            executor.shutdownNow();
+            
+            // Sorting task is now complete 
+            timeline.stop();      // stop timeline 
+            disableUI.set(false); // enable UI
+              // Get the end time to measure efficiency
+            Platform.runLater(() -> (statusLabel.setText("Sorting complete")));
+        }
     }
 
     /**
      * Updates the animation pane bars and numbered text fields
      */
     private void updateViews() {
-         Platform.runLater(() -> countLabel.setText(""+Logger.getCount()));
+        Platform.runLater(() -> {
+            statusLabel.setText("Sort running");
+            countLabel.setText("" + Logger.getCount());
+        });
         BaseSortHandler.SINGLETON.apply(animationPane.getBarArray(), animationPane);
        
     }

@@ -1,11 +1,11 @@
 .root {
-   -fx-base: #262931;
+   -fx-base: #31363b;
    -fx-accent: #0096C9;
-   -fx-background: #232629;
-   -fx-focus-color: #0093FF;
-   -fx-control-inner-background: #262931;
-   -fx-inner-border: linear-gradient(from 0% 0% to 100% 100%, derive(#686971 73.6%) 0%, derive(#686971 29.2%) 100%);
-   -fx-body-color: linear-gradient(from 0% 0% to 100% 100%, derive(#686971 34.0%) 0%, derive(#686971 -18.0%) 100%);
+   -fx-background: #31363b;
+   -fx-focus-color: #3daee9;
+   -fx-control-inner-background: #232629;
+   -fx-inner-border: linear-gradient(from 0% 0% to 100% 100%, derive(#686971 89%) 0%, derive(#686971 66%) 100%);
+   -fx-body-color: linear-gradient(from 0% 0% to 100% 100%, derive(#686971 34%) 0%, derive(#686971 -18%) 100%);
  }
 
  .hyperlink {
@@ -26,28 +26,36 @@
  
  .title-bar {
      -fx-border-width: 0 0 2 0;
-     -fx-background-color: #262931;
+     -fx-background-color: #2d3136;
      -fx-border-color: #686971;
  }
  .bar {
-     -fx-background-color: #0093FF;
-     -fx-background-radius: 3, 3, 2, 1;
+     -fx-background-color: #3073b4;
+     -fx-border-radius: 3 3 1 1;
+     -fx-background-radius: 3 3 1 1;
  }
  
  .controls-grid-pane {
-     -fx-background-color: #232629;
+     -fx-background-color: #31363b;
      -fx-padding: 6px;
      -fx-background-radius: 3, 3, 2, 1;
  }
+ .number-field {
+    -fx-border-color: #3073b4; 
+    -fx-background-color: #3073b433;
+ }
  
  .split-pane {
-     -fx-background-color: #232629;
+     -fx-background-color: #31363b;
  }
  
  .split-pane:focused {
      -fx-background-color: transparent;
  }
- 
+
+.choice-box .label { /* Workaround for RT-20015 */
+    -fx-text-fill: -fx-text-base-color;
+}
  .label,
  .check-box,
  .text,
@@ -55,10 +63,12 @@
    -fx-fill: -fx-text-background-color;
    -fx-text-fill: -fx-text-background-color;
  }
-
- .text {
-   -fx-fill: -fx-text-background-color;
+ .control-button {
+     -fx-background-color: linear-gradient(from 48.0% 100.0% to 50.0% 43.0%, #960505 0.0%, #C21A4D 96.0%, #C21A4D 100.0%);
  }
+ .button, .toggle-button, .check-box .box, .radio-button .radio, .choice-box, .menu-button, .tab, .combo-box-base {
+/*    -fx-background-insets: 0 0 0 0, 0, 1, 1;*/
+}
 
  .choice-box .label {
   /* Workaround for RT-20015 */
@@ -71,5 +81,7 @@
  }
 
  .footer {
-     -fx-background-color: #03312E;
+     -fx-border-width: 1.5 0 0 0;
+     -fx-border-color: #464d54;
+     
  }

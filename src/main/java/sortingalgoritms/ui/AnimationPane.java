@@ -35,22 +35,10 @@ public class AnimationPane extends AnchorPane implements IHandler {
     @FXML private GridPane textFieldsGridPane;
     
     private Bar[] bars = new Bar[10];
-    private int labelIndex = 0;
+    private int indexPos = 0;
    
     public AnimationPane() {
         initialize();
-        
-        barsGridPane.heightProperty().addListener((observable) -> {
-            if (barsGridPane.getChildren().isEmpty()) {
-                createBars();
-                } else {
-                IntStream.range(0, 10).forEachOrdered(index -> {
-                    Bar bar = bars[index];
-                    //bar.getMaxY().bind(barsGridPane.heightProperty());
-                    bar.resize(getResizeHeight(bar));
-                });
-            }
-        });
     }
     
     /**
@@ -66,6 +54,41 @@ public class AnimationPane extends AnchorPane implements IHandler {
         } catch (IOException ex) {
             Logger.getLogger(AnimationPane.class.getName()).log(Level.SEVERE, null, ex);
         }
+        initializeBars();
+    }
+
+    private void initializeBars() {
+        barsGridPane.heightProperty().addListener((observable, oldValue, newValue) -> {
+            if (barsGridPane.getChildren().isEmpty()) {
+                System.out.println("empty");
+                // createBars();
+            } else {
+                IntStream.range(0, 10).forEachOrdered(barIndex -> {
+                    Bar bar = (Bar) barsGridPane.getChildren().get(barIndex);
+                    bar.setMaxY(newValue.doubleValue());
+                    bar.resize(getResizeHeight(bar));
+                });
+
+//                barsGridPane.getChildren().forEach((t) -> {
+//                    System.out.println("value: " + ((Bar) t).getValue());
+//                    ((Bar) t).setMaxY(newValue.doubleValue());
+//                    ((Bar) t).resize(getResizeHeight((Bar) t));
+//                });
+//            }
+//        });
+//        barsGridPane.heightProperty().addListener((observable) -> {
+//            if (barsGridPane.getChildren().isEmpty()) {
+//                createBars();
+//            } else {
+//                IntStream.range(0, 10).forEachOrdered(index -> {
+//                    Bar bar = bars[index];
+//                  //  bar.maxHeightProperty().bind(barsGridPane.heightProperty());
+//                    bar.resize(getResizeHeight(bar));
+//                });
+//            }
+//        });
+            }
+        });
     }
 
      public void setPresetValues(String presetChoice) {
@@ -83,17 +106,18 @@ public class AnimationPane extends AnchorPane implements IHandler {
 
         IntStream.range(0, 10).forEachOrdered(index -> {
              Bar bar = bars[index];
+             bar.getStyleClass().add("bar");
              bar.resize(getResizeHeight(bar));
+             
              bar.setBackground(new Background(new BackgroundFill(bar.getColor(),
                      CornerRadii.EMPTY, Insets.EMPTY)));
              barsGridPane.add(bar, index, 0);
          });
      }
      
-     
      public void resetArray() {
         setBarArray((Bar[]) randomData.getBarList().toArray());
-         labelIndex = 0;
+         indexPos = 0;
     }
 
     public void resetBars() {
@@ -132,25 +156,26 @@ public class AnimationPane extends AnchorPane implements IHandler {
 
     @Override
     public Object apply(Object number) {
-        if (labelIndex == 10) {
-            labelIndex = 0;
+        if (indexPos == 10) {
+            indexPos = 0;
              //System.out.println();
         }
 
-        while (labelIndex <= 9) {
-             Bar bar = (Bar) number;   
+        while (indexPos <= 9) {
+            Bar bar = (Bar) number;   
             String color = Integer.toHexString(bar.getColor().hashCode());
-            TextField textfield = (TextField) textFieldsGridPane.getChildren().get(labelIndex);
+            TextField textfield = (TextField) textFieldsGridPane.getChildren().get(indexPos);
             textfield.setText(String.valueOf(bar.getValue()));
             textfield.setStyle("-fx-border-color: #" + color + ";" 
                              + "-fx-background-color: #" + color.replace("ff", "33") + ";");
-            Bar reg = (Bar) barsGridPane.getChildren().get(labelIndex);
-            reg.setStyle("-fx-background-color: #" + color + ";");
-            reg.resize(getResizeHeight(bar));
+            
+            Bar bar1 = (Bar) barsGridPane.getChildren().get(indexPos);
+            bar1.setStyle("-fx-background-color: #" + color + ";");
+            bar1.resize(getResizeHeight(bar));
             
            // System.out.print(bar.getValue() + " ");
             
-            labelIndex++;
+            indexPos++;
             break;
         }
         return null;

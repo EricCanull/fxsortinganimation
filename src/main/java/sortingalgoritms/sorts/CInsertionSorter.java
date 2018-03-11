@@ -38,6 +38,7 @@ public final class CInsertionSorter extends ASortOperator {
         for (int i = 1; i < numbers.length; i++) {
             count();
             for (int j = i; j > 0; j--) {
+                count();
                 if (numbers[j].compare(numbers[j - 1]) == IComparable.LESS) {
                     temp = numbers[j];
                     numbers[j] = numbers[j - 1];

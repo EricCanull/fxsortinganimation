@@ -49,7 +49,7 @@ public final class Bar extends Region implements IComparable, IPainter {
     /**
      * Compares two values, changes their colors and returns -1, 0, or 1.
      * @param comparable
-     * @return An integer value representing less than, greater than, or equals
+     * @return An object with a value less than, greater than, or equals
      */
     @Override
     public int compare(IComparable comparable) {
@@ -71,7 +71,7 @@ public final class Bar extends Region implements IComparable, IPainter {
 
         return value < compareValue.value
                 ? IComparable.LESS : value > compareValue.value
-                        ? IComparable.GREATER : IComparable.EQUAL;
+                ? IComparable.GREATER : IComparable.EQUAL;
     }
     
     
