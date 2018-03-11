@@ -153,11 +153,14 @@ public class MainController implements Initializable {
                 updateViews();
             });
             
-            // Sort is complete stop the executor thread
+            // Sort completed 
             stop();
         });
    }
     
+    /**
+     * Shutdown the running threads 
+     */
     private void stop() {
         try {
             Platform.runLater(() -> (statusLabel.setText("Attempting to stop")));
@@ -167,14 +170,13 @@ public class MainController implements Initializable {
             Platform.runLater(() -> (statusLabel.setText("tasks interrupted")));
         } finally {
             if (!executor.isTerminated()) {
-                 Platform.runLater(() -> (statusLabel.setText(("Still running tasks"))));
+                Platform.runLater(() -> (statusLabel.setText(("Still running tasks"))));
             }
             executor.shutdownNow();
-            
-            // Sorting task is now complete 
+
             timeline.stop();      // stop timeline 
             disableUI.set(false); // enable UI
-           
+
             // Get the end time to measure efficiency
             Platform.runLater(() -> (statusLabel.setText("Sorting complete")));
         }
@@ -189,7 +191,6 @@ public class MainController implements Initializable {
             countLabel.setText("" + Logger.getCount());
         });
         BaseSortHandler.SINGLETON.apply(animationPane.getBarArray(), animationPane);
-       
     }
 
     /**
@@ -202,8 +203,8 @@ public class MainController implements Initializable {
         
         // Create a new string builder with metric data
         final StringBuilder sb = new StringBuilder();
-        sb.append("Start: ").append(convertDateTime(startTime)).append(" ms \n");
-        sb.append("Ended: ").append(convertDateTime(endTime)).append(" ms \n");
+        sb.append("Start: ").append(convertToMillis(startTime)).append(" ms \n");
+        sb.append("Ended: ").append(convertToMillis(endTime)).append(" ms \n");
         sb.append("Delay: ").append(delaySpinner.getValue()).append(" ms").append("\n");
         sb.append("Speed: ").append(delta).append(" ms").append("\n");
         sb.append("Steps: ").append(Logger.getCount()).append("\n\n");
@@ -212,7 +213,7 @@ public class MainController implements Initializable {
         logTextArea.appendText(sb.toString());
     }
     
-    private long convertDateTime(Instant instant) {
+    private long convertToMillis(Instant instant) {
       return instant.toEpochMilli();
     }
     
