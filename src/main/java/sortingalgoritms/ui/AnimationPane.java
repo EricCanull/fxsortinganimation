@@ -38,13 +38,13 @@ public class AnimationPane extends AnchorPane implements IHandler {
     private int indexPos = 0;
    
     public AnimationPane() {
-        initialize();
+        initializeController();
     }
     
     /**
      * Initializes the controller class.
      */
-    private void initialize() {
+    private void initializeController() {
         try {
             final FXMLLoader loader = new FXMLLoader();
             loader.setLocation(AnimationPane.class.getResource("/fxml/FXMLAnimationPane.fxml")); //NOI18N
@@ -59,35 +59,12 @@ public class AnimationPane extends AnchorPane implements IHandler {
 
     private void initializeBars() {
         barsGridPane.heightProperty().addListener((observable, oldValue, newValue) -> {
-            if (barsGridPane.getChildren().isEmpty()) {
-                System.out.println("empty");
-                // createBars();
-            } else {
-                IntStream.range(0, 10).forEachOrdered(barIndex -> {
-                    Bar bar = (Bar) barsGridPane.getChildren().get(barIndex);
-                    bar.setMaxY(newValue.doubleValue());
-                    bar.resize(getResizeHeight(bar));
-                });
-
-//                barsGridPane.getChildren().forEach((t) -> {
-//                    System.out.println("value: " + ((Bar) t).getValue());
-//                    ((Bar) t).setMaxY(newValue.doubleValue());
-//                    ((Bar) t).resize(getResizeHeight((Bar) t));
-//                });
-//            }
-//        });
-//        barsGridPane.heightProperty().addListener((observable) -> {
-//            if (barsGridPane.getChildren().isEmpty()) {
-//                createBars();
-//            } else {
-//                IntStream.range(0, 10).forEachOrdered(index -> {
-//                    Bar bar = bars[index];
-//                  //  bar.maxHeightProperty().bind(barsGridPane.heightProperty());
-//                    bar.resize(getResizeHeight(bar));
-//                });
-//            }
-//        });
-            }
+            barsGridPane.getChildren().forEach((t) -> {
+                Bar bar = (Bar) t;
+                bar.setMaxY(newValue.doubleValue());
+                bar.resize(getResizeHeight(bar));
+             // System.out.println("value: " + ((Bar) t).getValue());
+            });
         });
     }
 
@@ -123,7 +100,6 @@ public class AnimationPane extends AnchorPane implements IHandler {
     public void resetBars() {
         setBarArray((Bar[]) randomData.getBarList().toArray());
         Platform.runLater(() -> createBars());
-        
     }
 
     // Use some maths for resizing the bars dynamically
@@ -172,7 +148,6 @@ public class AnimationPane extends AnchorPane implements IHandler {
             Bar bar1 = (Bar) barsGridPane.getChildren().get(indexPos);
             bar1.setStyle("-fx-background-color: #" + color + ";");
             bar1.resize(getResizeHeight(bar));
-            
            // System.out.print(bar.getValue() + " ");
             
             indexPos++;
