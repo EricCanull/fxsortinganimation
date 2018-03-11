@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Generates an array of values that are in random order, ascending, or reverse
+ * Generates an array of barsArray that are in random order, ascending, or reverse
  order.
  *
  * @author Eric Canull
@@ -16,12 +16,12 @@ import java.util.Random;
  */
 public class RandomBars {
         
-    private Bar[] values = new Bar[10];
+    private Bar[] barsArray = new Bar[10];
     
     private List<Bar> barList;
        
     /**
-     * Gets the specified values array based on the type.
+     * Gets the specified barsArray array based on the type.
      *
      * @param type a String representing the name of the data type
      * @return 
@@ -42,8 +42,8 @@ public class RandomBars {
         return null;
     }
     
-    public Bar[] getValues() {
-        return values;
+    public Bar[] getBarArray() {
+        return barsArray;
     }
      
     //final int max = barList.stream().reduce(0, Math::max);
@@ -78,100 +78,100 @@ public class RandomBars {
      * @return An array of integers arranged in a specified order
      */
     private Bar[] randomTen() {
-        values = new Bar[10];
+        barsArray = new Bar[10];
 
-        int limit = values.length;
+        int limit = barsArray.length;
 
         for (int i = 0; i < limit; i++) {
-            values[i] = new Bar(i, i + 1);
+            barsArray[i] = new Bar(i, i + 1);
         }
 
         for (int i = 0; i < limit - 1; i++) {
             int randomIndex = (int) (Math.random() * (limit - i)) + i;
-            int tempArray = values[i].getValue();
-            values[i].setValue(values[randomIndex].getValue());
-            values[randomIndex].setValue(tempArray);
+            int tempArray = barsArray[i].getValue();
+            barsArray[i].setValue(barsArray[randomIndex].getValue());
+            barsArray[randomIndex].setValue(tempArray);
         }
-        setBarlist(values);
-        return values;
+        setBarlist(barsArray);
+        return barsArray;
     }
 
     
     /**
-     * Returns an array with values (1-10) in ascending order; no duplicates
+     * Returns an array with barsArray (1-10) in ascending order; no duplicates
      *
      * @return An array of integers arranged in a specified order
      */
     private Bar[] inorderSet() {
-        values = new Bar[10];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = new Bar(i, i);
+        barsArray = new Bar[10];
+        for (int i = 0; i < barsArray.length; i++) {
+            barsArray[i] = new Bar(i, i);
         }
 
-        for (int index = 0; index < values.length; index++) {
-            values[index].setValue(index + 1);
+        for (int index = 0; index < barsArray.length; index++) {
+            barsArray[index].setValue(index + 1);
         }
-        setBarlist(values);
-        return values;
+        setBarlist(barsArray);
+        return barsArray;
     }
     
     /**
-     * Returns an array with values (1-10) in reverse order; no duplicates
+     * Returns an array with barsArray (1-10) in reverse order; no duplicates
      *
      * @return An array of integers arranged in a specified order
      */
     private Bar[] reverseSet() {
-       values = new Bar[10];
-       for (int i = 0; i < values.length; i++) {
-            values[i] = new Bar(i, i);
+       barsArray = new Bar[10];
+       for (int i = 0; i < barsArray.length; i++) {
+            barsArray[i] = new Bar(i, i);
         }
         
-        int lastIndex = values.length;
-        for (Bar value : values) {
+        int lastIndex = barsArray.length;
+        for (Bar value : barsArray) {
             value.setValue(lastIndex);
             lastIndex--;
         }
         
-        setBarlist(values);
-        return values;
+        setBarlist(barsArray);
+        return barsArray;
     }
     
     /**
-     * Returns an array with random values between (1 - 10,000).
+     * Returns an array with random barsArray between (1 - 10,000).
      *
      * @return An array of integers arranged in a specified order
      */
     private Bar[] randomHundreds() {
-        values = new Bar[10];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = new Bar(i, i);
+        barsArray = new Bar[10];
+        for (int i = 0; i < barsArray.length; i++) {
+            barsArray[i] = new Bar(i, i);
         }
-        for (Bar value : values) {
+        for (Bar value : barsArray) {
             
             int randomInt = new Random().nextInt(1000) + 100;
             value.setValue(randomInt);
         }
-         setBarlist(values);
-         return values;
+         setBarlist(barsArray);
+         return barsArray;
     }
     
     /**
-     * Returns an array with random values between (1 - 999,000).
+     * Returns an array with random barsArray between (1 - 999,000).
      *
      * @return An array of integers arranged in a specified order
      */
     private Bar[] randomThousands() {
-        values = new Bar[10];
-        for (int i = 0; i < values.length; i++) {
-            values[i] = new Bar(i, i);
+        barsArray = new Bar[10];
+        for (int i = 0; i < barsArray.length; i++) {
+            barsArray[i] = new Bar(i, i);
         }
 
-        for (Bar value : values) {
+        for (Bar value : barsArray) {
             int randomInt = new Random().nextInt(999000) + 1;
             value.setValue(randomInt);
         }
-        setBarlist(values);
-        return values;
+        setBarlist(barsArray);
+        return barsArray;
     }
     
     public String getString() {

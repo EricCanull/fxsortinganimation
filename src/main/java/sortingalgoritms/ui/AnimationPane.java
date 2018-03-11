@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -29,12 +28,11 @@ import sortingalgoritms.util.RandomBars;
  */
 public class AnimationPane extends AnchorPane implements IHandler {
    
-    private final RandomBars randomData = new RandomBars();
+    private final RandomBars randomBars = new RandomBars();
     
     @FXML private GridPane barsGridPane;
     @FXML private GridPane textFieldsGridPane;
     
-    private Bar[] bars = new Bar[10];
     private int indexPos = 0;
    
     public AnimationPane() {
@@ -69,12 +67,11 @@ public class AnimationPane extends AnchorPane implements IHandler {
     }
 
      public void setPresetValues(String presetChoice) {
-        randomData.getRandomSet(presetChoice);
-        bars = (Bar[]) randomData.getBarList().toArray();
+        randomBars.getRandomSet(presetChoice);
         
         IntStream.range(0, 10).forEachOrdered(index -> {
             TextField tf = (TextField) textFieldsGridPane.getChildren().get(index);
-            tf.setText(String.valueOf(bars[index].getValue()));
+            tf.setText(String.valueOf(randomBars.getBarArray()[index].getValue()));
         });
     }
     
@@ -82,7 +79,7 @@ public class AnimationPane extends AnchorPane implements IHandler {
        barsGridPane.getChildren().removeAll(barsGridPane.getChildren());
 
         IntStream.range(0, 10).forEachOrdered(index -> {
-             Bar bar = bars[index];
+             Bar bar = randomBars.getBarArray()[index];
              bar.getStyleClass().add("bar");
              bar.resize(getResizeHeight(bar));
              
@@ -91,23 +88,13 @@ public class AnimationPane extends AnchorPane implements IHandler {
              barsGridPane.add(bar, index, 0);
          });
      }
-     
-     private void resetArray() {
-        setBarArray((Bar[]) randomData.getBarList().toArray());
-         indexPos = 0;
-    }
-
-    public void resetBars() {
-        setBarArray((Bar[]) randomData.getBarList().toArray());
-        Platform.runLater(() -> createBars());
-    }
 
     // Use some maths for resizing the bars dynamically
     private double getResizeHeight(Bar bar) {
         double y1 = 0;
         double y2 = bar.getMaxY().get();
         
-        double x1 = randomData.getMax();
+        double x1 = randomBars.getMax();
         double x2 = 0;
         
         // First calculate the slope
@@ -122,14 +109,10 @@ public class AnimationPane extends AnchorPane implements IHandler {
         return height;
     }
     
-    public void setBarArray(Bar[] bars) {
-        this.bars = bars;
-    }
-
     public Bar[] getBarArray() {
-        return bars;
+        return randomBars.getBarArray();
     }
-
+    
     @Override
     public Object apply(Object number) {
         if (indexPos == 10) {
@@ -145,9 +128,9 @@ public class AnimationPane extends AnchorPane implements IHandler {
             textfield.setStyle("-fx-border-color: #" + color + ";" 
                              + "-fx-background-color: #" + color.replace("ff", "33") + ";");
             
-            Bar bar1 = (Bar) barsGridPane.getChildren().get(indexPos);
-            bar1.setStyle("-fx-background-color: #" + color + ";");
-            bar1.resize(getResizeHeight(bar));
+            Bar gridBar = (Bar) barsGridPane.getChildren().get(indexPos);
+            gridBar.setStyle("-fx-background-color: #" + color + ";");
+            gridBar.resize(getResizeHeight(bar));
            // System.out.print(bar.getValue() + " ");
             
             indexPos++;

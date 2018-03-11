@@ -96,7 +96,7 @@ public class MainController implements Initializable {
         delaySpinner.setValueFactory(valueFactory);
         DELAY_PROPERTY.bind(delaySpinner.valueProperty());
 
-        // Create a timeline with animation delay and infinite cycle count
+        // Create a timeline with animation delay and indefinite cycle count
         timeline = new Timeline(new KeyFrame(
                 javafx.util.Duration.millis(delaySpinner.getValue()), ae -> updateViews()));
         timeline.setCycleCount(Animation.INDEFINITE);
@@ -167,8 +167,8 @@ public class MainController implements Initializable {
 
             // Append text area with metric data
             Platform.runLater(() -> {
-                appendMetricText(startTime, endTime);
                 updateViews();
+                appendMetricText(startTime, endTime);
                 statusLabel.setText("Status: Sorting complete");
             });
 

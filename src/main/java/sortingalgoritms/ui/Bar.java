@@ -18,7 +18,7 @@ import sortingalgoritms.util.IPainter;
 */
 public final class Bar extends Region implements IComparable, IPainter {
        
-    private final int index;
+    private int index;
     private int value; 
    
     private Color color = Color.rgb(48, 115, 180);
@@ -32,6 +32,10 @@ public final class Bar extends Region implements IComparable, IPainter {
 
     public void setMaxY(double maxY) {
          this.maxY.set(maxY);
+    }
+    
+    public void setIndex(int index) {
+        this.index = index;
     }
        
     /**
