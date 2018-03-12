@@ -58,7 +58,7 @@ public class MainController implements Initializable {
     @FXML private Button startButton, clearButton;
     @FXML private ComboBox<String> algorithmComboBox, presetValuesComboBox;
     @FXML private Spinner<Integer> delaySpinner;
-    @FXML private Label algorithmLabel, countLabel, statusLabel;
+    @FXML private Label algorithmLabel, countLabel, statusLabel, hourGlassLabel;
 
     private Timeline timeline;
 
@@ -101,13 +101,13 @@ public class MainController implements Initializable {
 
         // Bind algorithm name to the label
         algorithmLabel.textProperty().set(algorithmComboBox.getValue());
-        statusLabel.setText("Status: Ready");
 
         // Bind the buttons disable property to the disable UI property
         startButton.disableProperty().bind(disableUI);
         clearButton.disableProperty().bind(disableUI);
         algorithmComboBox.disableProperty().bind(disableUI);
         presetValuesComboBox.disableProperty().bind(disableUI);
+        hourGlassLabel.visibleProperty().bind(disableUI);
     }
     
     /**
@@ -168,7 +168,6 @@ public class MainController implements Initializable {
                 updateViews();
                 appendMetricText(startTime, endTime);
             });
-            
              setStatusText("Status: Sorting complete");
 
             // Sort completed 
@@ -194,7 +193,7 @@ public class MainController implements Initializable {
 
             timeline.stop();      // stop timeline 
             disableUI.set(false); // enable UI
-            
+          
             setStatusText("Status: Ready");
         }
     }
@@ -204,12 +203,11 @@ public class MainController implements Initializable {
      * with progressive sort data until the sorting is complete.
      */
     private void updateViews() {
-        Platform.runLater(() -> {
+        BaseSortHandler.SINGLETON.apply(animationPane.getBarArray(), animationPane);
+         Platform.runLater(() -> {
             statusLabel.setText("Status: Sorting");
             countLabel.setText("" + Logger.getCount());
         });
-        
-        BaseSortHandler.SINGLETON.apply(animationPane.getBarArray(), animationPane);
     }
     
     /**
