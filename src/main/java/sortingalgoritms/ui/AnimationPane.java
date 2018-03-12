@@ -56,14 +56,14 @@ public class AnimationPane extends AnchorPane implements IHandler {
     }
 
     private void initializeBars() {
-        barsGridPane.heightProperty().addListener((observable, oldValue, newValue) -> {
-            barsGridPane.getChildren().forEach((t) -> {
-                Bar bar = (Bar) t;
-                bar.setMaxY(newValue.doubleValue());
-                bar.resize(getResizeHeight(bar));
-             // System.out.println("value: " + ((Bar) t).getValue());
-            });
-        });
+//        barsGridPane.heightProperty().addListener((observable, oldValue, newValue) -> {
+//            barsGridPane.getChildren().forEach((t) -> {
+//                Bar bar = (Bar) t;
+//                bar.setMaxY(newValue.doubleValue());
+//                bar.resize(getResizeHeight(bar));
+//             // System.out.println("value: " + ((Bar) t).getValue());
+//            });
+//        });
     }
 
      public void setPresetValues(String presetChoice) {

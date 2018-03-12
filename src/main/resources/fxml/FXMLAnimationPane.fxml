@@ -9,7 +9,7 @@
 
 <fx:root id="Content" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="550.0" prefWidth="800.0" stylesheets="@../styles/graphicspane.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <GridPane fx:id="barsGridPane" hgap="6.0" layoutX="94.0" layoutY="387.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" AnchorPane.bottomAnchor="249.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
+      <GridPane fx:id="barsGridPane" hgap="6.0" layoutX="94.0" layoutY="387.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="320.0" prefWidth="800.0" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -26,10 +26,10 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="BOTTOM" vgrow="ALWAYS" />
          </rowConstraints>
          <effect>
-            <Reflection bottomOpacity="0.79" fraction="0.79" topOpacity="0.0" />
+            <Reflection bottomOpacity="0.73" fraction="1.0" topOffset="10.0" topOpacity="0.0" />
          </effect>
       </GridPane>
-      <GridPane fx:id="textFieldsGridPane" hgap="6.0" layoutX="134.0" layoutY="499.0" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0">
+      <GridPane fx:id="textFieldsGridPane" hgap="6.0" layoutX="134.0" layoutY="499.0" AnchorPane.bottomAnchor="218.0" AnchorPane.leftAnchor="6.0" AnchorPane.rightAnchor="6.0">
          <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

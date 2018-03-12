@@ -24,7 +24,7 @@ public final class Bar extends Region implements IComparable, IPainter {
     private Color color = Color.rgb(48, 115, 180);
            
     // The maximum height
-    private final SimpleDoubleProperty maxY = new SimpleDoubleProperty(250);
+    private final SimpleDoubleProperty maxY = new SimpleDoubleProperty(240);
    
     public SimpleDoubleProperty getMaxY() {
         return maxY;
