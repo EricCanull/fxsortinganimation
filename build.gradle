@@ -53,6 +53,6 @@ jpro {
   //jpro version (optional)
   jproVersion = "2018.1.1"
 
-  openingPath = ""
+  //openingPath = ""
 }
 
