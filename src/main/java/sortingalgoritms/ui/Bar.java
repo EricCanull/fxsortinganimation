@@ -14,10 +14,13 @@ import sortingalgoritms.util.IPainter;
  */
 public final class Bar extends Region implements IComparable, IPainter {
     
-    private Color barColor; 
+    private final Color NORMAL_COLOR = Color.rgb(48, 115, 180);
+    private final Color SELECTED_COLOR = Color.rgb(160, 118, 23);
     
     private int index;
     private int value;
+    
+    private Color color;
    
     /**
      * Creates a rectangular bar with a index and value.
@@ -28,10 +31,9 @@ public final class Bar extends Region implements IComparable, IPainter {
     public Bar(int index, int value) {
         this.index = index;
         this.value = value;
-        this.barColor = Color.rgb(48, 115, 180);
-
+        this.color = NORMAL_COLOR;
     }
-
+    
     /**
      * Compares two values, changes their colors and returns -1, 0, or 1.
      *
@@ -41,11 +43,10 @@ public final class Bar extends Region implements IComparable, IPainter {
     @Override
     public int compare(IComparable comparable) {
         Bar compareValue = (Bar) comparable;
-        Color mainColor = barColor;
-        Color compareColor = compareValue.barColor;
-        barColor = Color.rgb(160, 118, 23);
+        
+        color = SELECTED_COLOR;
 
-        compareValue.barColor = barColor;
+        compareValue.color = SELECTED_COLOR;
 
         try {
             Thread.sleep(MainController.DELAY_PROPERTY.get());
@@ -53,12 +54,13 @@ public final class Bar extends Region implements IComparable, IPainter {
             System.out.println(e.getMessage());
         }
 
-        compareValue.barColor = compareColor;
-        barColor = mainColor;
+        compareValue.color = NORMAL_COLOR;
+        
+        color = NORMAL_COLOR;
 
-        return value < compareValue.value
-                ? IComparable.LESS : value > compareValue.value
-                        ? IComparable.GREATER : IComparable.EQUAL;
+        return value < compareValue.value ? IComparable.LESS // -1 
+                : value > compareValue.value ? IComparable.GREATER  // 1
+                        : IComparable.EQUAL;  // 0                              
     }
 
     /**
@@ -101,7 +103,7 @@ public final class Bar extends Region implements IComparable, IPainter {
      */
     @Override
     public void setColor(Color color) {
-        this.barColor = color;
+        this.color = color;
     }
 
     /**
@@ -110,7 +112,7 @@ public final class Bar extends Region implements IComparable, IPainter {
      */
     @Override
     public Color getColor() {
-        return this.barColor;
+        return this.color;
     }
     
     /**
