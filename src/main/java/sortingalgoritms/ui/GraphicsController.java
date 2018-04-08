@@ -53,7 +53,6 @@ public class GraphicsController extends AnchorPane implements IHandler {
         
         widthProperty().addListener(evt -> loadBars());
         heightProperty().addListener(evt -> loadBars());
-
     }
     
     public void setPresetValues(String presetChoice) {
@@ -63,7 +62,8 @@ public class GraphicsController extends AnchorPane implements IHandler {
             TextField tf = (TextField) textFieldsGrid.getChildren().get(index);
             tf.setText(String.valueOf(RandomBars.barsArray[index].getValue()));
         });
-         loadBars();
+        
+        loadBars();
     }
      public void loadBars() {
 
