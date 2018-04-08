@@ -33,10 +33,11 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import sortingalgoritms.sorts.SortOperatorList;
-import sortingalgoritms.ui.AnimationPane;
+import sortingalgoritms.ui.GraphicsController;
 import sortingalgoritms.sorts.BaseSortOperator;
 import sortingalgoritms.util.Logger;
 import sortingalgoritms.sorts.BaseSortHandler;
+import sortingalgoritms.util.RandomBars;
 
 /**
  * FXML Controller class
@@ -51,16 +52,16 @@ public class MainController implements Initializable {
 
     private final SortOperatorList sortOperators = new SortOperatorList();
     
-    private final AnimationPane animationPane = new AnimationPane();
+    private GraphicsController graphicsController;
     
+    private Timeline timeline;
+       
     @FXML private AnchorPane anchorPane;
     @FXML private TextArea logTextArea;
     @FXML private Button startButton, clearButton;
     @FXML private ComboBox<String> algorithmComboBox, presetValuesComboBox;
     @FXML private Spinner<Integer> delaySpinner;
     @FXML private Label algorithmLabel, countLabel, statusLabel, hourGlassLabel;
-
-    private Timeline timeline;
 
     /**
      * Initializes the main controller class.
@@ -69,14 +70,14 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         // Add and anchor the animation controller pane 
-        AnchorPane.setTopAnchor(animationPane, 50.0);
-        AnchorPane.setBottomAnchor(animationPane, 0.0);
-        AnchorPane.setLeftAnchor(animationPane, 0.0);
-        AnchorPane.setRightAnchor(animationPane, 0.0);
-        anchorPane.getChildren().add(animationPane);
-
+        graphicsController = new GraphicsController();
+        AnchorPane.setTopAnchor(graphicsController, 50.0);
+        AnchorPane.setBottomAnchor(graphicsController, 0.0);
+        AnchorPane.setLeftAnchor(graphicsController, 0.0);
+        AnchorPane.setRightAnchor(graphicsController, 0.0);
+        anchorPane.getChildren().add(graphicsController);
+        
         // Add algoritms list and select the first index in the combobox
         algorithmComboBox.getItems().setAll(getAlgorithmsList());
         algorithmComboBox.getSelectionModel().select(1);
@@ -84,7 +85,7 @@ public class MainController implements Initializable {
         // Add preset values list and listener to combobox
         presetValuesComboBox.getItems().setAll(getPresetValuesList());
         presetValuesComboBox.valueProperty().addListener(o -> presetValuesAction());
-        presetValuesComboBox.getSelectionModel().select(2);
+        presetValuesComboBox.getSelectionModel().select(0);
 
         // Create spinner factory with default min, max, current, step
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory
@@ -108,6 +109,7 @@ public class MainController implements Initializable {
         algorithmComboBox.disableProperty().bind(disableUI);
         presetValuesComboBox.disableProperty().bind(disableUI);
         hourGlassLabel.visibleProperty().bind(disableUI);
+        
     }
     
     /**
@@ -115,8 +117,7 @@ public class MainController implements Initializable {
      * occur.
      */
     private void presetValuesAction() {
-        animationPane.setPresetValues(presetValuesComboBox.getValue());
-        animationPane.createBars();
+        graphicsController.setPresetValues(presetValuesComboBox.getValue());
     }
     
     /**
@@ -138,13 +139,13 @@ public class MainController implements Initializable {
         // Load the selected algorithm and display the preset values in the text area
         int sortIndex = getAlgorithmIndex();
         appendTextArea(presetValuesComboBox.getValue(), " Values\n");
-        appendTextArea(Arrays.toString(animationPane.getBarArray()), "\n\n");
+        appendTextArea(RandomBars.getString(), "\n\n");
         
         // Update the algorithm name to the labels and text area
         String sortName = algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
         algorithmLabel.setText(sortName);
         logTextArea.appendText(sortName);
-        
+       
         // Start the timeline
         timeline.play();
         
@@ -157,8 +158,8 @@ public class MainController implements Initializable {
 
             // Perform the sort at the position in the list
             new BaseSortOperator(sortOperators.getList().get(sortIndex))
-                    .sort(animationPane.getBarArray(),
-                            0, animationPane.getBarArray().length - 1);
+                    .sort(RandomBars.barsArray,
+                            0, RandomBars.barsArray.length - 1);
 
             // Record the end time to measure efficency
             Instant endTime = Instant.now();
@@ -168,10 +169,10 @@ public class MainController implements Initializable {
                 updateViews();
                 appendMetricText(startTime, endTime);
             });
-             setStatusText("Status: Sorting complete");
-
-            // Sort completed 
+            
+             // Sort completed 
             stop(executor);
+           
         });
     }
     
@@ -190,11 +191,13 @@ public class MainController implements Initializable {
                 setStatusText("Status: Busy");
             }
             executor.shutdownNow();
-
+            
             timeline.stop();      // stop timeline 
+           
+            setStatusText("Status: Ready");
+            
             disableUI.set(false); // enable UI
           
-            setStatusText("Status: Ready");
         }
     }
 
@@ -203,7 +206,8 @@ public class MainController implements Initializable {
      * with progressive sort data until the sorting is complete.
      */
     private void updateViews() {
-        BaseSortHandler.SINGLETON.apply(animationPane.getBarArray(), animationPane);
+        BaseSortHandler.SINGLETON.apply(RandomBars.barsArray, graphicsController);
+     
          Platform.runLater(() -> {
             statusLabel.setText("Status: Sorting");
             countLabel.setText("" + Logger.getCount());

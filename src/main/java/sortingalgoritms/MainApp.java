@@ -13,10 +13,12 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXMLMainPane.fxml"));
-       
+        
+        // Load custom fonts used in css stylesheet
         Font.loadFont(MainApp.class.getResource("/fonts/OpenSans-Regular.ttf").toExternalForm(), 10);
         Font.loadFont(MainApp.class.getResource("/fonts/FiraCode-Regular.ttf").toExternalForm(), 10);
+        
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXMLMainPane.fxml"));
         
         Scene scene = new Scene(root);
         

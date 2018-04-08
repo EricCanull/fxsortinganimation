@@ -35,7 +35,7 @@
       </HBox>
       <SplitPane dividerPositions="0.2996" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <items>
-            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="340.0">
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="340.0" styleClass="controls-anchor-pane">
                <children>
                   <Label layoutX="14.0" layoutY="15.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" styleClass="sort-label" text="Log" textAlignment="CENTER" wrapText="false">
                      <font>
@@ -61,7 +61,7 @@
                       <RowConstraints minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Label prefHeight="32.0" text="Preset Values" GridPane.rowIndex="1">
+                        <Label prefHeight="32.0" styleClass="control-label" text="Preset Values" GridPane.rowIndex="1">
                            <font>
                               <Font name="Open Sans" size="13.0" />
                            </font>
@@ -72,16 +72,16 @@
                         <ComboBox fx:id="presetValuesComboBox" prefHeight="32.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label prefHeight="32.0" text="Algorithm" GridPane.rowIndex="2">
                            <font>
-                              <Font name="Open Sans" size="13.0" />
+                              <Font name="Open Sans" size="14.0" />
                            </font>
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Label>
                         <ComboBox fx:id="algorithmComboBox" prefHeight="32.0" prefWidth="130.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label alignment="CENTER_RIGHT" prefHeight="32.0" text="Delay">
+                        <Label alignment="CENTER_RIGHT" prefHeight="32.0" styleClass="control-label" text="Delay">
                            <font>
-                              <Font name="Open Sans" size="13.0" />
+                              <Font name="Open Sans" size="14.0" />
                            </font>
                            <GridPane.margin>
                               <Insets />
@@ -96,7 +96,7 @@
             </AnchorPane>
             <AnchorPane id="Content" fx:id="anchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0">
                <children>
-                  <Label fx:id="algorithmLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" styleClass="sort-label" text="Algorithm" textAlignment="CENTER" wrapText="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0" />
+                  <Label fx:id="algorithmLabel" alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" styleClass="sort-label" text="Label" textAlignment="CENTER" wrapText="false" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0" />
                   <GridPane hgap="6.0" layoutX="630.0" layoutY="18.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="14.0">
                      <columnConstraints>
                         <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="10.0" />
@@ -118,7 +118,7 @@
          <children>
             <Pane maxWidth="1.7976931348623157E308" prefWidth="250.0" HBox.hgrow="ALWAYS">
                <children>
-                  <Label fx:id="statusLabel" alignment="TOP_RIGHT" layoutX="14.0" layoutY="9.0" maxWidth="-1.0" text="Status: Ready">
+                  <Label fx:id="statusLabel" alignment="TOP_RIGHT" layoutX="14.0" layoutY="9.0" maxWidth="-1.0" styleClass="status-label" text="Status: Ready">
                      <font>
                         <Font size="11.0" />
                      </font>

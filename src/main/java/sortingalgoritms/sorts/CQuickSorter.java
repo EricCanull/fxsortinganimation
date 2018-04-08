@@ -55,7 +55,7 @@ public final class CQuickSorter extends ASortOperator {
     }
 
     /**
-     * Recursive method to partition the array.
+     * Partitions the array.
      *
      * @param numbers an array of numbers used for the sorting
      * @param lowIndex a integer representing the lowest index position in the
@@ -76,8 +76,8 @@ public final class CQuickSorter extends ASortOperator {
                 count();
             }
 
-            // scan down down to find first item less than v
-            // or quit if there are none
+            // scan down down to find first item less in partion
+            // or quit if none
             while (pivot.compare(numbers[--high]) == IComparable.LESS) {
                 count();
                 if (high == lowIndex) {

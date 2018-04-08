@@ -2,8 +2,6 @@ package sortingalgoritms.util;
 
 import sortingalgoritms.ui.Bar;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -16,55 +14,43 @@ import java.util.Random;
  */
 public class RandomBars {
         
-    private Bar[] barsArray = new Bar[10];
+    public static Bar[] barsArray = new Bar[10];
     
-    private List<Bar> barList;
-       
     /**
      * Gets the specified barsArray array based on the type.
      *
-     * @param type a String representing the name of the data type
-     * @return 
+     * @param type a String representing the name of the data type 
      */
-    public Bar[] getRandomSet(String type) {
+    public static void setRandomSet(String type) {
         switch (type) {
             case "Random":
-                return randomTen();
+                barsArray = randomTen();
+                break;
             case "Ordered":
-                return inorderSet();
+                barsArray = inorderSet();
+                break;
             case "Reverse":
-                return reverseSet();
+                barsArray = reverseSet();
+                break;
             case "Hundreds":
-                return randomHundreds();
+                barsArray = randomHundreds();
+                break;
             case "Thousands":
-                return randomThousands();
+                barsArray = randomThousands();
+                break;
         }
-        return null;
-    }
-    
-    public Bar[] getBarArray() {
-        return barsArray;
-    }
-     
-    public List<Bar> getBarList() {
-        return this.barList;
-    }
-
-    private List<Bar> setBarlist(Bar[] bars) {
-        barList = Collections.unmodifiableList(Arrays.asList(bars));
-        return barList;
     }
     
     /**
      * Determines the highest value in the array.
      * @return max highest value in the array of entered numbers
      */
-    public int getMax() {
-        int max = barList.get(0).getValue();
+    public static int getMax() {
+        int max = barsArray[0].getValue();
 
-        for (int i = 1; i < barList.size(); i++) {
-            if (barList.get(i).getValue() > max) {
-                max = barList.get(i).getValue();
+        for (int i = 1; i < barsArray.length; i++) {
+            if (barsArray[i].getValue() > max) {
+                max = barsArray[i].getValue();
             }
         }
 
@@ -76,7 +62,7 @@ public class RandomBars {
      *
      * @return An array of integers arranged in a specified order
      */
-    private Bar[] randomTen() {
+    private static Bar[] randomTen() {
         barsArray = new Bar[10];
 
         int limit = barsArray.length;
@@ -91,7 +77,7 @@ public class RandomBars {
             barsArray[i].setValue(barsArray[randomIndex].getValue());
             barsArray[randomIndex].setValue(tempArray);
         }
-        setBarlist(barsArray);
+
         return barsArray;
     }
 
@@ -101,8 +87,9 @@ public class RandomBars {
      *
      * @return An array of integers arranged in a specified order
      */
-    private Bar[] inorderSet() {
+    private static Bar[] inorderSet() {
         barsArray = new Bar[10];
+        
         for (int i = 0; i < barsArray.length; i++) {
             barsArray[i] = new Bar(i, i);
         }
@@ -110,7 +97,6 @@ public class RandomBars {
         for (int index = 0; index < barsArray.length; index++) {
             barsArray[index].setValue(index + 1);
         }
-        setBarlist(barsArray);
         return barsArray;
     }
     
@@ -119,39 +105,38 @@ public class RandomBars {
      *
      * @return An array of integers arranged in a specified order
      */
-    private Bar[] reverseSet() {
-       barsArray = new Bar[10];
-       for (int i = 0; i < barsArray.length; i++) {
+    private static Bar[] reverseSet() {
+        barsArray = new Bar[10];
+
+        for (int i = 0; i < barsArray.length; i++) {
             barsArray[i] = new Bar(i, i);
         }
-        
+
         int lastIndex = barsArray.length;
         for (Bar value : barsArray) {
             value.setValue(lastIndex);
             lastIndex--;
         }
-        
-        setBarlist(barsArray);
         return barsArray;
     }
-    
+
     /**
      * Returns an array with random barsArray between (1 - 10,000).
      *
      * @return An array of integers arranged in a specified order
      */
-    private Bar[] randomHundreds() {
+    private static Bar[] randomHundreds() {
         barsArray = new Bar[10];
+
         for (int i = 0; i < barsArray.length; i++) {
             barsArray[i] = new Bar(i, i);
         }
         for (Bar value : barsArray) {
-            
+
             int randomInt = new Random().nextInt(1000) + 100;
             value.setValue(randomInt);
         }
-         setBarlist(barsArray);
-         return barsArray;
+        return barsArray;
     }
     
     /**
@@ -159,8 +144,9 @@ public class RandomBars {
      *
      * @return An array of integers arranged in a specified order
      */
-    private Bar[] randomThousands() {
+    private static Bar[] randomThousands() {
         barsArray = new Bar[10];
+
         for (int i = 0; i < barsArray.length; i++) {
             barsArray[i] = new Bar(i, i);
         }
@@ -169,14 +155,13 @@ public class RandomBars {
             int randomInt = new Random().nextInt(999000) + 1;
             value.setValue(randomInt);
         }
-        setBarlist(barsArray);
         return barsArray;
     }
     
-    public String getString() {
-        return getBarList().toString()
+    public static String getString() {
+        return Arrays.asList(barsArray).toString()
                 .replace("[", "")
                 .replace("]", "")
-                .replaceAll(",", "\r") + "\n\n";
+                .replaceAll(",", "\r");
     }
 }
