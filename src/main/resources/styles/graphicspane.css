@@ -18,14 +18,12 @@
      -fx-font-family: FiraCode-Regular;
      -fx-font-size: 13px;
      -fx-text-fill: #AAA;
-      
  }
  
- .log-text-area .scroll-pane:fitToWidth:fitToHeight .viewport .content {
-      -fx-border-color: #000;
+ .log-text-area .content {
       -fx-background-color: #151718;
  }
-
+ 
  .toggle-button:selected {
    -fx-text-fill: -fx-text-base-color;
  }

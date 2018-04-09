@@ -23,21 +23,11 @@ public class RandomBars {
      */
     public static void setRandomSet(String type) {
         switch (type) {
-            case "Random":
-                barsArray = randomTen();
-                break;
-            case "Ordered":
-                barsArray = inorderSet();
-                break;
-            case "Reverse":
-                barsArray = reverseSet();
-                break;
-            case "Hundreds":
-                barsArray = randomHundreds();
-                break;
-            case "Thousands":
-                barsArray = randomThousands();
-                break;
+            case "Random"   : barsArray = randomTen();       break;
+            case "Ordered"  : barsArray = inorderSet();      break;
+            case "Reverse"  : barsArray = reverseSet();      break;
+            case "Hundreds" : barsArray = randomHundreds();  break;
+            case "Thousands": barsArray = randomThousands(); break;
         }
     }
     
@@ -161,7 +151,10 @@ public class RandomBars {
     public static String getString() {
         return Arrays.asList(barsArray).toString()
                 .replace("[", "")
-                .replace("]", "")
-                .replaceAll(",", "\r");
+                .replace("]", "");
+//        return Arrays.asList(barsArray).toString()
+//                .replace("[", "")
+//                .replace("]", "")
+//                .replaceAll(",", "\r");
     }
 }
