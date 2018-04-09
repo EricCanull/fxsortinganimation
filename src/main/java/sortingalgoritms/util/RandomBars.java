@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 /**
- * Generates an array of barsArray that are in random order, ascending, or reverse
- order.
+ * Creates an array of ten bars with values in random, reversed or ascending
+ * order based on the requested type.
  *
  * @author Eric Canull
  * @version 1.0
@@ -70,7 +70,6 @@ public class RandomBars {
 
         return barsArray;
     }
-
     
     /**
      * Returns an array with barsArray (1-10) in ascending order; no duplicates
@@ -148,13 +147,14 @@ public class RandomBars {
         return barsArray;
     }
     
+    /**
+     * The values in the array as a string.
+     * 
+     * @return A String of integer values
+     */
     public static String getString() {
         return Arrays.asList(barsArray).toString()
                 .replace("[", "")
                 .replace("]", "");
-//        return Arrays.asList(barsArray).toString()
-//                .replace("[", "")
-//                .replace("]", "")
-//                .replaceAll(",", "\r");
     }
 }

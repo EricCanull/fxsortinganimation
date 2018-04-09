@@ -6,6 +6,7 @@
 package sortingalgoritms.ui;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
@@ -31,7 +32,7 @@ public class GraphicsController extends AnchorPane implements IHandler {
     @FXML private GridPane barsGridPane;
     @FXML private GridPane textFieldsGrid;
    
-    private int indexPos = 0;
+    private int indexPos;
    
     public GraphicsController() {
         initialize();
@@ -51,8 +52,8 @@ public class GraphicsController extends AnchorPane implements IHandler {
             Logger.getLogger(GraphicsController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        widthProperty().addListener(evt -> loadBars());
-        heightProperty().addListener(evt -> loadBars());
+        widthProperty().addListener(evt -> addGridBars());
+        heightProperty().addListener(evt -> addGridBars());
     }
     
     public void setPresetValues(String presetChoice) {
@@ -63,9 +64,9 @@ public class GraphicsController extends AnchorPane implements IHandler {
             tf.setText(String.valueOf(RandomBars.barsArray[index].getValue()));
         });
         
-        loadBars();
+        addGridBars();
     }
-     public void loadBars() {
+     public void addGridBars() {
 
          if (Double.isNaN(this.getWidth()) || Double.isNaN(this.getHeight())
                 || RandomBars.barsArray[0] == null) {
@@ -95,7 +96,7 @@ public class GraphicsController extends AnchorPane implements IHandler {
         double x1 = RandomBars.getMax();
         double x2 = 0;
 
-        // 1st calculate the slope
+        // 1st calculate the slope 
         double slope = (y1 - y2) / (x1 - x2);
 
         // 2nd calculate the y-Intercept

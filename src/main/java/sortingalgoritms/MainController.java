@@ -78,8 +78,6 @@ public class MainController implements Initializable {
         AnchorPane.setRightAnchor(graphicsController, 0.0);
         anchorPane.getChildren().add(graphicsController);
         
-        logTextArea.setWrapText(true);
-       
         // Add algoritms list and select the first index in the combobox
         algorithmComboBox.getItems().setAll(getAlgorithmsList());
         algorithmComboBox.getSelectionModel().select(1);
