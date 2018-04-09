@@ -1,8 +1,18 @@
+/*
+ * Permissions of this free software license are conditioned on making available
+ * complete source code of licensed works and modifications under the same 
+ * license or the GNU GPLv3. Copyright and license notices must be preserved.
+ * Contributors provide an express grant of patent rights. However, a larger 
+ * work using the licensed work through interfaces provided by the licensed 
+ * work may be distributed under different terms and without source code 
+ * for the larger work.
+ */
 package sortingalgoritms.util;
 
 import sortingalgoritms.ui.Bar;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.stream.IntStream;
 
 /**
  * Creates an array of ten bars with values in random, reversed or ascending
@@ -39,13 +49,10 @@ public class RandomBars {
     
     private static void setManualSet(int[] values) {
         barsArray = new Bar[10];
-         
-        int index = 0;
-        for (int value : values) {
-            Bar bar = new Bar(index, value);
+        IntStream.range(0, 10).forEachOrdered(index -> {
+            Bar bar = new Bar(index, values[index]);
             barsArray[index] = bar;
-            index++;
-        }
+        });
     }
 
     /**
@@ -53,7 +60,7 @@ public class RandomBars {
      * @return max highest value in the array of entered numbers
      */
     public static int getMax() {
-        int max = barsArray[0].getValue();
+       int max = barsArray[0].getValue();
 
         for (int i = 1; i < barsArray.length; i++) {
             if (barsArray[i].getValue() > max) {

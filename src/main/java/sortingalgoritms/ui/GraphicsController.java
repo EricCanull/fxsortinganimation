@@ -1,7 +1,11 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Permissions of this free software license are conditioned on making available
+ * complete source code of licensed works and modifications under the same 
+ * license or the GNU GPLv3. Copyright and license notices must be preserved.
+ * Contributors provide an express grant of patent rights. However, a larger 
+ * work using the licensed work through interfaces provided by the licensed 
+ * work may be distributed under different terms and without source code 
+ * for the larger work.
  */
 package sortingalgoritms.ui;
 
@@ -67,8 +71,7 @@ public class GraphicsController extends AnchorPane implements IHandler {
     }
      public void addGridBars() {
 
-         if (Double.isNaN(this.getWidth())
-                 || Double.isNaN(this.getHeight())
+         if (Double.isNaN(this.getWidth()) || Double.isNaN(this.getHeight())
                  || RandomBars.barsArray[0] == null) {
              return;
          }
@@ -78,7 +81,8 @@ public class GraphicsController extends AnchorPane implements IHandler {
         IntStream.range(0, 10).forEachOrdered(index -> {
             Bar bar = RandomBars.barsArray[index];
             bar.getStyleClass().add("bar");
-            final double height = calculateHeight(bar);
+            
+            double height = calculateHeight(bar);
             bar.setMaxHeight(height);
             bar.setPrefHeight(height);
 

@@ -1,10 +1,13 @@
 /*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
+ * Permissions of this free software license are conditioned on making available
+ * complete source code of licensed works and modifications under the same 
+ * license or the GNU GPLv3. Copyright and license notices must be preserved.
+ * Contributors provide an express grant of patent rights. However, a larger 
+ * work using the licensed work through interfaces provided by the licensed 
+ * work may be distributed under different terms and without source code 
+ * for the larger work.
  */
 package sortingalgoritms;
-
 
 import java.net.URL;
 import java.time.*;
@@ -31,7 +34,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import sortingalgoritms.sorts.SortOperatorList;
@@ -72,7 +74,8 @@ public class MainController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // Add and anchor the animation controller pane 
+        
+        // Add the graphics controller pane 
         graphicsController = new GraphicsController();
         AnchorPane.setTopAnchor(graphicsController, 50.0);
         AnchorPane.setBottomAnchor(graphicsController, 0.0);
@@ -105,9 +108,10 @@ public class MainController implements Initializable {
         // Bind algorithm name to the label
         algorithmLabel.textProperty().set(algorithmComboBox.getValue());
 
-        // Bind the buttons disable property to the disable UI property
+        // Bind the UI controls disable property
         startButton.disableProperty().bind(disableUI);
         clearButton.disableProperty().bind(disableUI);
+        delaySpinner.disableProperty().bind(disableUI);
         algorithmComboBox.disableProperty().bind(disableUI);
         presetValuesComboBox.disableProperty().bind(disableUI);
         hourGlassLabel.visibleProperty().bind(disableUI);
