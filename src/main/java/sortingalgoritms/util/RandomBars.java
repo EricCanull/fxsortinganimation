@@ -20,17 +20,34 @@ public class RandomBars {
      * Gets the specified barsArray array based on the type.
      *
      * @param type a String representing the name of the data type 
+     * @param values 
      */
-    public static void setRandomSet(String type) {
-        switch (type) {
+    public static void setRandomSet(String type, int[] values) {
+       
+        if (values == null) {
+            switch (type) {
             case "Random"   : barsArray = randomTen();       break;
             case "Ordered"  : barsArray = inorderSet();      break;
             case "Reverse"  : barsArray = reverseSet();      break;
             case "Hundreds" : barsArray = randomHundreds();  break;
             case "Thousands": barsArray = randomThousands(); break;
+            }
+        } else {
+            setManualSet(values);
         }
     }
     
+    private static void setManualSet(int[] values) {
+        barsArray = new Bar[10];
+         
+        int index = 0;
+        for (int value : values) {
+            Bar bar = new Bar(index, value);
+            barsArray[index] = bar;
+            index++;
+        }
+    }
+
     /**
      * Determines the highest value in the array.
      * @return max highest value in the array of entered numbers

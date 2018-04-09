@@ -6,7 +6,6 @@
 package sortingalgoritms.ui;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
@@ -57,7 +56,7 @@ public class GraphicsController extends AnchorPane implements IHandler {
     }
     
     public void setPresetValues(String presetChoice) {
-        RandomBars.setRandomSet(presetChoice);
+        RandomBars.setRandomSet(presetChoice, null);
      
         IntStream.range(0, 10).forEachOrdered(index -> {
             TextField tf = (TextField) textFieldsGrid.getChildren().get(index);
@@ -68,10 +67,11 @@ public class GraphicsController extends AnchorPane implements IHandler {
     }
      public void addGridBars() {
 
-         if (Double.isNaN(this.getWidth()) || Double.isNaN(this.getHeight())
-                || RandomBars.barsArray[0] == null) {
-            return;
-        }
+         if (Double.isNaN(this.getWidth())
+                 || Double.isNaN(this.getHeight())
+                 || RandomBars.barsArray[0] == null) {
+             return;
+         }
 
         barsGridPane.getChildren().removeAll(barsGridPane.getChildren());
 

@@ -87,7 +87,7 @@
                               <Insets />
                            </GridPane.margin>
                         </Label>
-                        <Spinner fx:id="delaySpinner" prefHeight="32.0" prefWidth="90.0" GridPane.columnIndex="1" />
+                        <Spinner fx:id="delaySpinner" onScroll="#spinnerScrollAction" prefHeight="32.0" prefWidth="90.0" GridPane.columnIndex="1" />
                         <Button fx:id="startButton" alignment="CENTER" mnemonicParsing="false" onAction="#startAction" prefHeight="32.0" prefWidth="82.0" text="Start" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>

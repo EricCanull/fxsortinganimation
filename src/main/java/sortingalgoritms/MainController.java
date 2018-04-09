@@ -31,6 +31,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import sortingalgoritms.sorts.SortOperatorList;
 import sortingalgoritms.ui.GraphicsController;
@@ -118,6 +120,21 @@ public class MainController implements Initializable {
      */
     private void presetValuesAction() {
         graphicsController.setPresetValues(presetValuesComboBox.getValue());
+    }
+    
+    /**
+     * Mouse listener increases or decreases the spinner value with
+     * the mouse scroll wheel.
+     * 
+     * @param event 
+     */
+    @FXML
+    private void spinnerScrollAction(ScrollEvent event) {
+        if (event.getDeltaY() > 0) {
+            delaySpinner.increment();
+        } else if (event.getDeltaY() < 0) {
+            delaySpinner.decrement();
+        }
     }
     
     /**
