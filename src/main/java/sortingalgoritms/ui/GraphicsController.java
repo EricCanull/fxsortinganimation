@@ -55,8 +55,8 @@ public class GraphicsController extends AnchorPane implements IHandler {
             Logger.getLogger(GraphicsController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        widthProperty().addListener(evt -> addGridBars());
-        heightProperty().addListener(evt -> addGridBars());
+        barsGridPane.widthProperty().addListener(evt -> addGridBars());
+        barsGridPane.heightProperty().addListener(evt -> addGridBars());
     }
     
     public void setPresetValues(String presetChoice) {
@@ -71,7 +71,7 @@ public class GraphicsController extends AnchorPane implements IHandler {
     }
      public void addGridBars() {
 
-         if (Double.isNaN(this.getWidth()) || Double.isNaN(this.getHeight())
+         if (Double.isNaN(barsGridPane.getWidth()) || Double.isNaN(barsGridPane.getHeight())
                  || RandomBars.barsArray[0] == null) {
              return;
          }
@@ -95,7 +95,7 @@ public class GraphicsController extends AnchorPane implements IHandler {
     // Use some maths for resizing the bars dynamically
     private double calculateHeight(Bar bar) {
         double y1 = 0;
-        double y2 = this.getHeight();
+        double y2 = barsGridPane.getHeight();
 
         double x1 = RandomBars.getMax();
         double x2 = 0;
