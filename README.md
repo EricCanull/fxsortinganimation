@@ -21,6 +21,6 @@
   </tr>
 </table>
 
-#### Check it out!
+#### Shout out to [jpro](https://www.jpro.io/ "jpro") team for making a live demo version available to run this app in your web-browser  ..[link](www.jpro.one/?page=demos "link").
 ![alt text](https://github.com/EricCanull/fxsortinganimation/blob/master/src/main/resources/images/sortanimation.gif "Sort Demo")
 
