@@ -32,7 +32,7 @@ import sortingalgoritms.util.RandomBars;
  */
 public class GraphicsController extends AnchorPane implements IHandler {
     
-    @FXML private GridPane barsGridPane;
+    @FXML private GridPane barsGrid;
     @FXML private GridPane textFieldsGrid;
    
     private int indexPos;
@@ -47,7 +47,7 @@ public class GraphicsController extends AnchorPane implements IHandler {
     private void initialize() {
         try {
             final FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(GraphicsController.class.getResource("/fxml/FXMLAnimationPane.fxml")); //NOI18N
+            loader.setLocation(GraphicsController.class.getResource("/fxml/FXMLGraphicsPane.fxml")); //NOI18N
             loader.setController(this);
             loader.setRoot(this);
             loader.load();
@@ -55,8 +55,8 @@ public class GraphicsController extends AnchorPane implements IHandler {
             Logger.getLogger(GraphicsController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        barsGridPane.widthProperty().addListener(evt -> addGridBars());
-        barsGridPane.heightProperty().addListener(evt -> addGridBars());
+        barsGrid.widthProperty().addListener(evt -> addGridBars());
+        barsGrid.heightProperty().addListener(evt -> addGridBars());
     }
     
     public void setPresetValues(String presetChoice) {
@@ -69,33 +69,38 @@ public class GraphicsController extends AnchorPane implements IHandler {
         
         addGridBars();
     }
-     public void addGridBars() {
 
-         if (Double.isNaN(barsGridPane.getWidth()) || Double.isNaN(barsGridPane.getHeight())
-                 || RandomBars.barsArray[0] == null) {
-             return;
-         }
+    public void addGridBars() {
 
-        barsGridPane.getChildren().removeAll(barsGridPane.getChildren());
+        if (Double.isNaN(barsGrid.getWidth()) || Double.isNaN(barsGrid.getHeight())
+                || RandomBars.barsArray[0] == null) {
+            return;
+        }
+
+        barsGrid.getChildren().removeAll(barsGrid.getChildren());
 
         IntStream.range(0, 10).forEachOrdered(index -> {
             Bar bar = RandomBars.barsArray[index];
             bar.getStyleClass().add("bar");
-            
-            double height = calculateHeight(bar);
+
+            double height = calculateHeight(bar.getValue());
             bar.setMaxHeight(height);
             bar.setPrefHeight(height);
 
             bar.setBackground(new Background(new BackgroundFill(bar.getColor(),
                     CornerRadii.EMPTY, Insets.EMPTY)));
-            barsGridPane.add(bar, index, 0);
+            barsGrid.add(bar, index, 0);
         });
     }
-     
-    // Use some maths for resizing the bars dynamically
-    private double calculateHeight(Bar bar) {
+
+    /**
+     * Uses slope formulas to calculate the bars height in proportion to
+     * the max value in the array and the bar value.
+     * 
+     */
+    private double calculateHeight(double value) {
         double y1 = 0;
-        double y2 = barsGridPane.getHeight();
+        double y2 = barsGrid.getHeight();
 
         double x1 = RandomBars.getMax();
         double x2 = 0;
@@ -107,35 +112,38 @@ public class GraphicsController extends AnchorPane implements IHandler {
         double yIntercept = (y2 * x1 - y1 * x2) / (x1 - x2);
 
         // 3rd calculate the new height
-        double height = y2 - (slope * bar.getValue() + yIntercept);
+        double height = y2 - (slope * value + yIntercept);
 
         return height;
     }
 
     @Override
-    public Object apply(Object number) {
+    public Object apply(Object object) {
         if (indexPos == 10) {
             indexPos = 0;
         }
 
         while (indexPos <= 9) {
-            Bar bar = (Bar) number;   
+            Bar bar = (Bar) object;   
             String color = Integer.toHexString(bar.getColor().hashCode());
+            
+            Bar gridBar = (Bar) barsGrid.getChildren().get(indexPos);   
             TextField textfield = (TextField) textFieldsGrid.getChildren().get(indexPos);
-            textfield.setText(String.valueOf(bar.getValue()));
+            
+            gridBar.setStyle("-fx-background-color: #" + color + ";");
+            
             textfield.setStyle("-fx-border-color: #" + color + ";" 
                              + "-fx-background-color: #" + color.replace("ff", "33") + ";");
           
-            Bar gridBar = (Bar) barsGridPane.getChildren().get(indexPos);           
-            gridBar.setStyle("-fx-background-color: #" + color + ";");
-           
-            double height = calculateHeight(bar);
+            double height = calculateHeight(bar.getValue());
             gridBar.setMaxHeight(height);
             gridBar.setPrefHeight(height);
+            textfield.setText(String.valueOf(bar.getValue()));
 
             indexPos++;
             break;
         }
+        
         return null;
     }
 }

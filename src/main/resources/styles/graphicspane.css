@@ -1,11 +1,17 @@
 .root {
     -fx-base: #31363b;
-    -fx-accent: #0096C9;
+    -fx-accent: #3073b4;
     -fx-background: #31363b;
-    -fx-focus-color: #3daee9;
+    -fx-focus-color: 004FE499;
     -fx-control-inner-background: #232629;
-    -fx-inner-border: linear-gradient(from 0% 0% to 40% 80%, derive(#676971, -10%) 18%, derive(#676971, -15%) 100%);
-    -fx-body-color: linear-gradient(from 0% 0% to 0% 100%, derive(#41464b, -5%) 0%, derive(#31363b, -10%) 100%);
+    -fx-inner-border: linear-gradient(to bottom, 
+        derive(-fx-color,30%) 0%, 
+        derive(-fx-color,-5%) 100%);
+    -fx-body-color: linear-gradient(to bottom, 
+        derive(-fx-color, -0%) 0%,
+        derive(-fx-color, -2%) 20%,
+        derive(-fx-color, -5%) 60%, 
+        derive(-fx-color, -8%) 100%);
 }
 #Content {
 
@@ -18,12 +24,12 @@
 .log-text-area {
     -fx-font-family: FiraCode-Regular;
     -fx-font-size: 13px;
-    -fx-text-fill: #C2C2C2;
+    -fx-text-fill: #BDBDBD;
     -fx-background-insets: -1;
 }
 
 .log-text-area .content {
-    -fx-background-color: #151718;
+    -fx-background-color: #171819E6;
 }
 
 .toggle-button:selected {
