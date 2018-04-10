@@ -119,8 +119,9 @@ public class MainController implements Initializable {
     }
     
     /**
-     * Observable helper method updates the preset values whenever changes 
-     * occur.
+     * Observable helper method updates the preset values
+     * on selection change. 
+     * 
      */
     private void presetValuesAction() {
         graphicsController.setPresetValues(presetValuesComboBox.getValue());
@@ -193,7 +194,6 @@ public class MainController implements Initializable {
             
              // Sort completed 
             stop(executor);
-           
         });
     }
     
@@ -206,19 +206,21 @@ public class MainController implements Initializable {
             executor.shutdown();
             executor.awaitTermination(1, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-             setStatusText("Status: Interrupted");
+            setStatusText("Status: Interrupted");
         } finally {
             if (!executor.isTerminated()) {
                 setStatusText("Status: Busy");
             }
-            executor.shutdownNow();
-            
+            while (!executor.isShutdown()) {
+                executor.shutdownNow();
+                System.out.println("execute");
+            }
+
             timeline.stop();      // stop timeline 
-           
-            setStatusText("Status: Ready");
-            
+
             disableUI.set(false); // enable UI
-          
+            setStatusText("Status: Ready");
+
         }
     }
 

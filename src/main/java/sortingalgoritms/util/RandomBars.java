@@ -32,7 +32,8 @@ public class RandomBars {
      * @param type a String representing the name of the data type 
      * @param values 
      */
-    public static void setRandomSet(String type, int[] values) {
+    public static void setRandomSet(int[] values) {
+        loadArray();
        
         if (values == null) {
             switch (type) {
@@ -43,11 +44,11 @@ public class RandomBars {
             case "Thousands": barsArray = randomThousands(); break;
             }
         } else {
-            setManualSet(values);
+            setRandomSet(values);
         }
     }
     
-    private static void setManualSet(int[] values) {
+    private static void setRandomSet(int[] values) {
         barsArray = new Bar[10];
         IntStream.range(0, 10).forEachOrdered(index -> {
             Bar bar = new Bar(index, values[index]);
@@ -60,35 +61,31 @@ public class RandomBars {
      * @return max highest value in the array of entered numbers
      */
     public static int getMax() {
-       int max = barsArray[0].getValue();
-
-        for (int i = 1; i < barsArray.length; i++) {
-            if (barsArray[i].getValue() > max) {
-                max = barsArray[i].getValue();
-            }
+        int max = 0;
+        for (Bar value : barsArray) {
+            max = value.getValue() > max ? value.getValue() : max;
         }
-
         return max;
     }
     
+    public static void loadArray() {
+        barsArray = new Bar[10];
+        
+        IntStream.range(0, barsArray.length).forEachOrdered(index -> {
+            barsArray[index] = new Bar(index, index + 1);
+        });
+    }
+
     /**
      * Randomly distributes integers 1-10 without duplicates
      *
      * @return An array of integers arranged in a specified order
      */
     private static Bar[] randomTen() {
-        barsArray = new Bar[10];
-
-        int limit = barsArray.length;
-
-        for (int i = 0; i < limit; i++) {
-            barsArray[i] = new Bar(i, i + 1);
-        }
-
-        for (int i = 0; i < limit - 1; i++) {
-            int randomIndex = (int) (Math.random() * (limit - i)) + i;
-            int tempArray = barsArray[i].getValue();
-            barsArray[i].setValue(barsArray[randomIndex].getValue());
+        for (int index = 0; index < barsArray.length - 1; index++) {
+            int randomIndex = (int) (Math.random() * (barsArray.length - index)) + index;
+            int tempArray = barsArray[index].getValue();
+            barsArray[index].setValue(barsArray[randomIndex].getValue());
             barsArray[randomIndex].setValue(tempArray);
         }
 
@@ -101,15 +98,6 @@ public class RandomBars {
      * @return An array of integers arranged in a specified order
      */
     private static Bar[] inorderSet() {
-        barsArray = new Bar[10];
-        
-        for (int i = 0; i < barsArray.length; i++) {
-            barsArray[i] = new Bar(i, i);
-        }
-
-        for (int index = 0; index < barsArray.length; index++) {
-            barsArray[index].setValue(index + 1);
-        }
         return barsArray;
     }
     
@@ -119,12 +107,6 @@ public class RandomBars {
      * @return An array of integers arranged in a specified order
      */
     private static Bar[] reverseSet() {
-        barsArray = new Bar[10];
-
-        for (int i = 0; i < barsArray.length; i++) {
-            barsArray[i] = new Bar(i, i);
-        }
-
         int lastIndex = barsArray.length;
         for (Bar value : barsArray) {
             value.setValue(lastIndex);
@@ -139,38 +121,26 @@ public class RandomBars {
      * @return An array of integers arranged in a specified order
      */
     private static Bar[] randomHundreds() {
-        barsArray = new Bar[10];
-
-        for (int i = 0; i < barsArray.length; i++) {
-            barsArray[i] = new Bar(i, i);
-        }
         for (Bar value : barsArray) {
-
             int randomInt = new Random().nextInt(1000) + 100;
             value.setValue(randomInt);
         }
         return barsArray;
     }
-    
+
     /**
      * Returns an array with random barsArray between (1 - 999,000).
      *
      * @return An array of integers arranged in a specified order
      */
     private static Bar[] randomThousands() {
-        barsArray = new Bar[10];
-
-        for (int i = 0; i < barsArray.length; i++) {
-            barsArray[i] = new Bar(i, i);
-        }
-
         for (Bar value : barsArray) {
             int randomInt = new Random().nextInt(999000) + 1;
             value.setValue(randomInt);
         }
         return barsArray;
     }
-    
+
     /**
      * The values in the array as a string.
      * 
