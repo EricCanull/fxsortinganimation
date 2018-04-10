@@ -32,7 +32,7 @@ public class RandomBars {
      * @param type a String representing the name of the data type 
      * @param values 
      */
-    public static void setRandomSet(int[] values) {
+    public static void setRandomSet(String type, int[] values) {
         loadArray();
        
         if (values == null) {
@@ -44,11 +44,11 @@ public class RandomBars {
             case "Thousands": barsArray = randomThousands(); break;
             }
         } else {
-            setRandomSet(values);
+            setManualSet(values);
         }
     }
     
-    private static void setRandomSet(int[] values) {
+    private static void setManualSet(int[] values) {
         barsArray = new Bar[10];
         IntStream.range(0, 10).forEachOrdered(index -> {
             Bar bar = new Bar(index, values[index]);
