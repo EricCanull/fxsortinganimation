@@ -1,9 +1,9 @@
-# FX Sort Animation Demo
+## FX Sort Animation Demo
 
-## WebVersion
+### WebVersion
 A [web version](https://demos.jpro.one/sorting.html) is hosted at [www.jpro.one](https://www.jpro.one/).
 
-## Visualize the following sorting algorithms
+### Visualize the following sorting algorithms
 <td style="white-space: nowrap">
 <tr>  
 <table style="width:100%">
@@ -23,7 +23,7 @@ A [web version](https://demos.jpro.one/sorting.html) is hosted at [www.jpro.one]
   </tr>
 </table>
 
-## Preview
+### Preview
 ![alt text](https://github.com/EricCanull/fxsortinganimation/blob/master/src/main/resources/images/sortanimation.gif "Sort Demo")
 
 
