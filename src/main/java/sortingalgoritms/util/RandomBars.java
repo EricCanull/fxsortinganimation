@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
  */
 public class RandomBars {
         
-    public static Bar[] barsArray = new Bar[10];
+    public static Bar[] barsArray = null;
     
     /**
      * Gets the specified barsArray array based on the type.

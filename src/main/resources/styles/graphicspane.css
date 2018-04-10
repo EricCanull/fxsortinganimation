@@ -2,7 +2,7 @@
     -fx-base: #31363b;
     -fx-accent: #3073b4;
     -fx-background: #31363b;
-    -fx-focus-color: 004FE499;
+    -fx-focus-color: #3073b4;
     -fx-control-inner-background: #232629;
     -fx-inner-border: linear-gradient(to bottom, 
         derive(-fx-color,30%) 0%, 

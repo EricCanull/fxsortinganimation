@@ -73,7 +73,7 @@ public class GraphicsController extends AnchorPane implements IHandler {
     public void addGridBars() {
 
         if (Double.isNaN(barsGrid.getWidth()) || Double.isNaN(barsGrid.getHeight())
-                || RandomBars.barsArray[0] == null) {
+                || RandomBars.barsArray == null) {
             return;
         }
 
