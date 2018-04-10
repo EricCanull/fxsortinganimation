@@ -1,6 +1,6 @@
 # FX Sort Animation Demo
 
-Visualizes the following sorting algorithms:
+Visualize the following sorting algorithms:
 <td style="white-space: nowrap">
 <tr>  
 <table style="width:100%">
