@@ -1,4 +1,4 @@
-## FX Sort Animation Demo
+# FX Sort Animation Demo
 
 ### WebVersion
 A [web version](https://demos.jpro.one/sorting.html) is hosted at [www.jpro.one](https://www.jpro.one/).
