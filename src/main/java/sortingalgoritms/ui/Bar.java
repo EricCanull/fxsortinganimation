@@ -23,8 +23,8 @@ import sortingalgoritms.util.IPainter;
  */
 public final class Bar extends Region implements IComparable, IPainter {
     
-    private final Color DEFAULT_COLOR = Color.rgb(48, 115, 180);
-    private final Color SELECTED_COLOR = Color.rgb(160, 118, 23);
+    private final Color NORMAL_COLOR = Color.web("#3073b4");
+    private final Color SELECTED_COLOR = Color.web("#a07617");
     
     private int index;
     private int value;
@@ -40,7 +40,7 @@ public final class Bar extends Region implements IComparable, IPainter {
     public Bar(int index, int value) {
         this.index = index;
         this.value = value;
-        this.color = DEFAULT_COLOR;
+        this.color = NORMAL_COLOR;
     }
     
     /**
@@ -63,13 +63,13 @@ public final class Bar extends Region implements IComparable, IPainter {
             System.out.println(e.getMessage());
         }
 
-        compareValue.color = DEFAULT_COLOR;
+        compareValue.color = NORMAL_COLOR;
         
-        color = DEFAULT_COLOR;
+        color = NORMAL_COLOR;
 
-        return value < compareValue.value ? IComparable.LESS // -1 
-                : value > compareValue.value ? IComparable.GREATER  // 1
-                        : IComparable.EQUAL;  // 0                              
+        return    value < compareValue.value ? IComparable.LESS    // -1 
+                : value > compareValue.value ? IComparable.GREATER //  1
+                                             : IComparable.EQUAL;  //  0                              
     }
 
     /**

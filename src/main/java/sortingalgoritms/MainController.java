@@ -10,7 +10,6 @@
 package sortingalgoritms;
 
 import java.net.URL;
-import java.time.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -115,7 +114,6 @@ public class MainController implements Initializable {
         algorithmComboBox.disableProperty().bind(disableUI);
         presetValuesComboBox.disableProperty().bind(disableUI);
         hourGlassLabel.visibleProperty().bind(disableUI);
-        
     }
     
     /**
@@ -176,7 +174,7 @@ public class MainController implements Initializable {
         executor.submit(() -> {
 
             // Record the start time to measure efficency
-            Instant startTime = Instant.now();
+           final long startTime = System.nanoTime();
 
             // Perform the sort at the position in the list
             new BaseSortOperator(sortOperators.getList().get(sortIndex))
@@ -184,7 +182,7 @@ public class MainController implements Initializable {
                             0, RandomBars.barsArray.length - 1);
 
             // Record the end time to measure efficency
-            Instant endTime = Instant.now();
+           final long endTime = System.nanoTime();
 
             // Append text area with metric data
             Platform.runLater(() -> {
@@ -209,23 +207,17 @@ public class MainController implements Initializable {
             setStatusText("Status: Interrupted");
         } finally {
             if (!executor.isTerminated()) {
-                setStatusText("Status: Busy");
-            }
-            while (!executor.isShutdown()) {
-                executor.shutdownNow();
-                System.out.println("execute");
+                executor.shutdownNow(); 
             }
 
-            timeline.stop();      // stop timeline 
-
+            timeline.stop(); // stop timeline 
             disableUI.set(false); // enable UI
-            setStatusText("Status: Ready");
-
+            setStatusText("Status: Ready"); // Set status
         }
     }
 
     /**
-     * Continously updates the animation pane bars and numbered text fields
+     * Updates the animation pane bars and numbered text fields
      * with progressive sort data until the sorting is complete.
      */
     private void updateViews() {
@@ -261,17 +253,17 @@ public class MainController implements Initializable {
     /**
      * Appends the info text area with the metric data for the sorting routine.
      */
-    private void appendMetricText(Instant startTime, Instant endTime) {
+    private void appendMetricText(long startTime, long endTime) {
 
         // Calculates the difference between start and end time
-        long delta = Duration.between(startTime, endTime).toMillis();
+        long delta = endTime - startTime;
         
         // Create a new string builder with metric data
         final StringBuilder sb = new StringBuilder();
-        sb.append("Start: ").append(startTime.toEpochMilli()).append(" ms \n");
-        sb.append("Ended: ").append(endTime.toEpochMilli()).append(" ms \n");
+        sb.append("Start: ").append(startTime).append(" ns \n");
+        sb.append("Ended: ").append(endTime).append(" ns \n");
         sb.append("Delay: ").append(delaySpinner.getValue()).append(" ms").append("\n");
-        sb.append("Speed: ").append(delta).append(" ms").append("\n");
+        sb.append("Speed: ").append(delta).append(" ns").append("\n");
         sb.append("Steps: ").append(Logger.getCount()).append("\n\n");
         
         // Appends the time stamp to the text area on the left-side display

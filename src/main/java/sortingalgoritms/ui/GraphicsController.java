@@ -15,12 +15,8 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import sortingalgoritms.util.IHandler;
 import sortingalgoritms.util.RandomBars;
@@ -72,8 +68,9 @@ public class GraphicsController extends AnchorPane implements IHandler {
 
     public void addGridBars() {
 
-        if (Double.isNaN(barsGrid.getWidth()) || Double.isNaN(barsGrid.getHeight())
-                || RandomBars.barsArray == null) {
+        if (RandomBars.barsArray == null
+                || Double.isNaN(barsGrid.getWidth())
+                || Double.isNaN(barsGrid.getHeight())) {
             return;
         }
 
@@ -86,23 +83,19 @@ public class GraphicsController extends AnchorPane implements IHandler {
             double height = calculateHeight(bar.getValue());
             bar.setMaxHeight(height);
             bar.setPrefHeight(height);
-
-            bar.setBackground(new Background(new BackgroundFill(bar.getColor(),
-                    CornerRadii.EMPTY, Insets.EMPTY)));
             barsGrid.add(bar, index, 0);
         });
     }
 
     /**
-     * Uses slope formulas to calculate the bars height in proportion to
-     * the max value in the array and the bar value.
-     * 
+     * Use slope and y-intercept formulas to calculate the bars height
+     * for resizing.
      */
     private double calculateHeight(double value) {
         double y1 = 0;
         double y2 = barsGrid.getHeight();
 
-        double x1 = RandomBars.getMax();
+        double x1 = RandomBars.getMaxValue();
         double x2 = 0;
 
         // 1st calculate the slope 
@@ -119,11 +112,11 @@ public class GraphicsController extends AnchorPane implements IHandler {
 
     @Override
     public Object apply(Object object) {
-        if (indexPos == 10) {
+        if (indexPos == RandomBars.MAX_SIZE) {
             indexPos = 0;
         }
 
-        while (indexPos <= 9) {
+        while (indexPos < RandomBars.MAX_SIZE) {
             Bar bar = (Bar) object;   
             String color = Integer.toHexString(bar.getColor().hashCode());
             

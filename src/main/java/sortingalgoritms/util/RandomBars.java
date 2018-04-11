@@ -16,15 +16,18 @@ import java.util.stream.IntStream;
 
 /**
  * Creates an array of ten bars with values in random, reversed or ascending
- * order based on the requested type.
+ * order based on the selected number set.
  *
  * @author Eric Canull
  * @version 1.0
  *
  */
 public class RandomBars {
-        
+  
+    public static final int MAX_SIZE = 10;
+    
     public static Bar[] barsArray = null;
+
     
     /**
      * Gets the specified barsArray array based on the type.
@@ -49,25 +52,13 @@ public class RandomBars {
     }
     
     private static void setManualSet(int[] values) {
-        barsArray = new Bar[10];
+        barsArray = new Bar[MAX_SIZE];
         IntStream.range(0, 10).forEachOrdered(index -> {
             Bar bar = new Bar(index, values[index]);
             barsArray[index] = bar;
         });
     }
 
-    /**
-     * Determines the highest value in the array.
-     * @return max highest value in the array of entered numbers
-     */
-    public static int getMax() {
-        int max = 0;
-        for (Bar value : barsArray) {
-            max = value.getValue() > max ? value.getValue() : max;
-        }
-        return max;
-    }
-    
     public static void loadArray() {
         barsArray = new Bar[10];
         
@@ -75,9 +66,22 @@ public class RandomBars {
             barsArray[index] = new Bar(index, index + 1);
         });
     }
+    
+     /**
+     * Determines the highest value in the array.
+     * 
+     * @return Max value in the array
+     */
+    public static int getMaxValue() {
+        int max = 0;
+        for (Bar value : barsArray) {
+            max = value.getValue() > max ? value.getValue() : max;
+        }
+        return max;
+    }
 
     /**
-     * Randomly distributes integers 1-10 without duplicates
+     * Randomly distributes integers (1-10); no duplicates
      *
      * @return An array of integers arranged in a specified order
      */
@@ -88,7 +92,6 @@ public class RandomBars {
             barsArray[index].setValue(barsArray[randomIndex].getValue());
             barsArray[randomIndex].setValue(tempArray);
         }
-
         return barsArray;
     }
     

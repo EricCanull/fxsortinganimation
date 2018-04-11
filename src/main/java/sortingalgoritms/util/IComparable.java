@@ -11,6 +11,7 @@ package sortingalgoritms.util;
 
 /**
  * Implements the functionality of the collection lists java.lang.Comparable.
+ *
  * @author Eric Canull
  * @version 1.0
  */
