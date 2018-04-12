@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/EricCanull/fxsortinganimation.svg?branch=master)](https://travis-ci.org/EricCanull/fxsortinganimation)
 
 ### JPRO WebVersion
-Thanks to JPRO for featuring a live demo version using their beta software which runs Java on the web.
+Thanks to JPRO for featuring a live demo version using their software which runs Java on the web.
 - The [web version](https://demos.jpro.one/sorting.html) is hosted at [www.jpro.one](https://www.jpro.one/).
 
 ### Visualize the following sorting algorithms
