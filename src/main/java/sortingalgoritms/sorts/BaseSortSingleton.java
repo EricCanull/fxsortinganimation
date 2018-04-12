@@ -9,34 +9,33 @@
  */
 package sortingalgoritms.sorts;
 
-import sortingalgoritms.util.IHandler;
+import sortingalgoritms.util.ISortHandler;
 
 /**
- * Used to create a singleton sort class and handle the incremental sorting 
- * changes during the timer animation update.
+ * Creates a singleton sorting algorithm class and applies the method to
+ * retrieve bars array updates as its being sorted when the timer animation is
+ * started.
+ *
  * @author Eric Canull
  * @version 1.0
  */
-public final class BaseSortHandler implements IHandler {
+public class BaseSortSingleton implements ISortHandler {
+
+    private static final BaseSortSingleton SINGLETON = new BaseSortSingleton();
     
-    /**
-     * A singleton sorting class object
-     */
-    public final static BaseSortHandler SINGLETON = new BaseSortHandler();
-    
-    /**
-     * Private constructor 
-     */
-    private BaseSortHandler(){
+    public static BaseSortSingleton getSingleton() {
+        return SINGLETON;
     }
-    
+ 
+    private BaseSortSingleton(){ /*private constructor */ }
+
     /**
      * Returns the sorted array every time the timer running
      * @param array an array of objects to be evaluated
      * @param cmd input object to compare values
      * @return an output sorted object or null
      */
-    public Object[] apply(Object array[], IHandler cmd) {
+    public Object[] apply(Object array[], ISortHandler cmd) {
         Object[] result = new Object[array.length];
         for(int i = 0; i < array.length; i++) {
             result[i] = cmd.apply (array[i]);

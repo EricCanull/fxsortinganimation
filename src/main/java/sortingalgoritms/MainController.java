@@ -39,7 +39,7 @@ import sortingalgoritms.sorts.SortOperatorList;
 import sortingalgoritms.ui.GraphicsController;
 import sortingalgoritms.sorts.BaseSortOperator;
 import sortingalgoritms.util.Logger;
-import sortingalgoritms.sorts.BaseSortHandler;
+import sortingalgoritms.sorts.BaseSortSingleton;
 import sortingalgoritms.util.RandomBars;
 
 /**
@@ -65,7 +65,7 @@ public class MainController implements Initializable {
     @FXML private ComboBox<String> algorithmComboBox, presetValuesComboBox;
     @FXML private Spinner<Integer> delaySpinner;
     @FXML private Label algorithmLabel, countLabel, statusLabel, hourGlassLabel;
-
+    
     /**
      * Initializes the main controller class.
      * @param url 
@@ -221,7 +221,7 @@ public class MainController implements Initializable {
      * with progressive sort data until the sorting is complete.
      */
     private void updateViews() {
-        BaseSortHandler.SINGLETON.apply(RandomBars.barsArray, graphicsController);
+        BaseSortSingleton.getSingleton().apply(RandomBars.barsArray, graphicsController);
      
          Platform.runLater(() -> {
             statusLabel.setText("Status: Sorting");

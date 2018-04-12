@@ -18,15 +18,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import sortingalgoritms.util.IHandler;
 import sortingalgoritms.util.RandomBars;
+import sortingalgoritms.util.ISortHandler;
 
 /**
  * FXML Controller class
  *
  * @author andje22
  */
-public class GraphicsController extends AnchorPane implements IHandler {
+public class GraphicsController extends AnchorPane implements ISortHandler {
     
     @FXML private GridPane barsGrid;
     @FXML private GridPane textFieldsGrid;

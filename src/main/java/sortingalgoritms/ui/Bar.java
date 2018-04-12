@@ -67,9 +67,9 @@ public final class Bar extends Region implements IComparable, IPainter {
         
         color = NORMAL_COLOR;
 
-        return    value < compareValue.value ? IComparable.LESS    // -1 
+        return value < compareValue.value ? IComparable.LESS // -1 
                 : value > compareValue.value ? IComparable.GREATER //  1
-                                             : IComparable.EQUAL;  //  0                              
+                        : IComparable.EQUAL;  //  0                              
     }
 
     /**

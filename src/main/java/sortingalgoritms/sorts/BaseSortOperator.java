@@ -19,9 +19,9 @@ import sortingalgoritms.util.IComparable;
  * @version 1.0
  *
  */
-public class BaseSortOperator extends ASortOperator {
-
-    private final ASortOperator sortOperator;
+public class BaseSortOperator extends ASortOperator{
+    
+    public final ASortOperator sortOperator;
 
     /**
      * Passes the selected sort operation to the abstract base sorting algorithm
@@ -40,8 +40,8 @@ public class BaseSortOperator extends ASortOperator {
      * @param lowIndex the low index of the array.
      * @param highIndex the high index of array.
      */
+    @Override
     protected void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
         sortOperator.startSort(numbers, lowIndex, highIndex); // delegates to decoree
-
     }
 }

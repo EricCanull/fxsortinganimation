@@ -19,7 +19,7 @@ import sortingalgoritms.util.Logger;
  * @version 1.0
  */
 public abstract class ASortOperator {
-       
+        
     /**
      * Sets up the sorting data and then invokes the abstract method to start
      * sorting.
@@ -54,28 +54,4 @@ public abstract class ASortOperator {
     protected void count() {
         Logger.count();
     }
-    
-//     /**
-//     * Returns either a sort or a null object
-//     * @param array an array of objects to be evaluated
-//     * @param handler input object to compare values
-//     * @return an output sorted object or null
-//     */
-//    public Object[] apply(Object array[], IHandler handler) {
-//        Object[] result = new Object[array.length];
-//        for (int i = 0; i < array.length; i++) {
-//            result[i] = handler.apply (array[i]);
-//        }
-//        return result;
-//    }
-//    
-//    /**
-//     * Null object pattern method
-//     * @param arg an object
-//     * @return 
-//     */
-//    @Override
-//    public Object apply(Object arg) {
-//        return null;
-//    }
-}
+ }
