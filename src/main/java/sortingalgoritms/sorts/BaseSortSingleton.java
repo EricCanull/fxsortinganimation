@@ -12,9 +12,8 @@ package sortingalgoritms.sorts;
 import sortingalgoritms.util.ISortHandler;
 
 /**
- * Creates a singleton sorting algorithm class and applies the method to
- * retrieve bars array updates as its being sorted when the timer animation is
- * started.
+ * Creates a singleton for retrieving the bars array data as its being sorted
+ * after the timer animation is started.
  *
  * @author Eric Canull
  * @version 1.0
