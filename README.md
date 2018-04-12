@@ -1,4 +1,5 @@
 # FX Sort Animation Demo
+[![Build Status](https://travis-ci.org/EricCanull/fxsortinganimation.svg?branch=master)](https://travis-ci.org/EricCanull/fxsortinganimation)
 
 ### JPRO WebVersion
 Thanks to JPRO for featuring a live demo version using their beta software which runs JavaFX on the web.
