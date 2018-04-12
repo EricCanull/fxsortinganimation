@@ -16,7 +16,7 @@ package sortingalgoritms.util;
  * @author Eric Canull
  * @version 1.0
  */
-public interface IHandler {
+public interface ISortHandler {
 
     /**
      * @param arg input object for the lambda expression.
