@@ -23,10 +23,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import javafx.animation.Animation;
-import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.beans.Observable;
 
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -94,12 +94,12 @@ public class MainController implements Initializable {
         
         // Add preset values list and listener to combobox
         presetValuesComboBox.getItems().setAll(getPresetValuesList());
-        presetValuesComboBox.valueProperty().addListener(o -> presetValuesAction());
+        presetValuesComboBox.valueProperty().addListener(this::presetValuesAction);
         presetValuesComboBox.getSelectionModel().select(0);
 
         // Create spinner factory with default min, max, current, step
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory
-                .IntegerSpinnerValueFactory(0, 2000, 50, 10);
+                .IntegerSpinnerValueFactory(0, 2000, 100, 10);
 
         // Set the spinner value factory
         delaySpinner.setValueFactory(valueFactory);
@@ -127,7 +127,7 @@ public class MainController implements Initializable {
      * on selection change. 
      * 
      */
-    private void presetValuesAction() {
+    private void presetValuesAction(Observable observable) {
         graphicsController.setPresetValues(presetValuesComboBox.getValue());
     }
     
@@ -213,10 +213,10 @@ public class MainController implements Initializable {
         } finally {
             if (!executor.isTerminated()) {
                 executor.shutdownNow();
-                timeline.stop();
-                setDisableUI(false); // enable UI
-                setStatusText("Status: Ready"); // Set status
             }
+            timeline.stop();
+            setDisableUI(false); // enable UI
+            setStatusText("Status: Ready"); // Set status
         }
     }
 
@@ -234,7 +234,7 @@ public class MainController implements Initializable {
     }
     
     /**
-     * Sets the status label text
+     * Sets the disable UI flag in the FX thread
      * @param status 
      */
     private void setDisableUI(Boolean isDisable) {
@@ -242,7 +242,7 @@ public class MainController implements Initializable {
     }
     
     /**
-     * Sets the status label text
+     * Sets the status label text in the FX thread
      * @param status 
      */
     private void setStatusText(String status) {
