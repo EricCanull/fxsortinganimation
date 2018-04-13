@@ -23,6 +23,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import javafx.animation.Animation;
+import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -61,7 +62,7 @@ public class MainController implements Initializable {
     private final SortOperatorList sortOperators = new SortOperatorList();
     
     private GraphicsController graphicsController;
-    
+
     private Timeline timeline;
        
     @FXML private AnchorPane anchorPane;
@@ -69,7 +70,7 @@ public class MainController implements Initializable {
     @FXML private Button startButton, clearButton;
     @FXML private ComboBox<String> algorithmComboBox, presetValuesComboBox;
     @FXML private Spinner<Integer> delaySpinner;
-    @FXML private Label algorithmLabel, countLabel, statusLabel, hourGlassLabel;
+    @FXML private Label algorithmLabel, countLabel, statusLabel;
     
     /**
      * Initializes the main controller class.
@@ -108,19 +109,19 @@ public class MainController implements Initializable {
         timeline = new Timeline(new KeyFrame(javafx.util.Duration.millis(
                 delaySpinner.getValue()), ae -> updateViews()));
         timeline.setCycleCount(Animation.INDEFINITE);
-
+      
         // Bind algorithm name to the label
         algorithmLabel.textProperty().set(algorithmComboBox.getValue());
 
         // Bind the UI controls disable property
+        statusLabel.getGraphic().visibleProperty().bind(disableUI);
         startButton.disableProperty().bind(disableUI);
         clearButton.disableProperty().bind(disableUI);
         delaySpinner.disableProperty().bind(disableUI);
         algorithmComboBox.disableProperty().bind(disableUI);
         presetValuesComboBox.disableProperty().bind(disableUI);
-        hourGlassLabel.visibleProperty().bind(disableUI);
     }
-    
+       
     /**
      * Observable helper method updates the preset values
      * on selection change. 
@@ -158,9 +159,9 @@ public class MainController implements Initializable {
      */
     public void startSort() {
         
-        disableUI.set(true); // Disable UI
+        disableUI.set(true);     // Disable UI
         countLabel.setText("0"); // Reset count label
-        
+
         // Load the selected algorithm and display the preset values in the text area
         int sortIndex = getAlgorithmIndex();
         appendTextArea(presetValuesComboBox.getValue(), " Values\n");
@@ -173,13 +174,13 @@ public class MainController implements Initializable {
        
         // Start the timeline
         timeline.play();
-        
+
         // Create a new thread to run the sorting algorithm
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
 
             // Record the start time to measure efficency
-           final long startTime = System.nanoTime();
+            final long startTime = System.nanoTime();
 
             // Perform the sort at the position in the list
             new BaseSortOperator(sortOperators.getList().get(sortIndex))
@@ -187,37 +188,35 @@ public class MainController implements Initializable {
                             0, RandomBars.barsArray.length - 1);
 
             // Record the end time to measure efficency
-           final long endTime = System.nanoTime();
+            final long endTime = System.nanoTime();
 
             // Append text area with metric data
             Platform.runLater(() -> {
                 updateViews();
                 appendMetricText(startTime, endTime);
             });
-            
-             // Sort completed 
+
+            // Sort completed 
             stop(executor);
         });
     }
     
     /**
-     * Shutdown running threads and update the status label
+     * Shutdown running tasks and update the status label
      */
     private void stop(ExecutorService executor) {
         try {
-            setStatusText("Status: Stoping");
             executor.shutdown();
-            executor.awaitTermination(1, TimeUnit.SECONDS);
+            executor.awaitTermination(100, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             setStatusText("Status: Interrupted");
         } finally {
             if (!executor.isTerminated()) {
-                executor.shutdownNow(); 
+                executor.shutdownNow();
+                timeline.stop();
+                setDisableUI(false); // enable UI
+                setStatusText("Status: Ready"); // Set status
             }
-
-            timeline.stop(); // stop timeline 
-            disableUI.set(false); // enable UI
-            setStatusText("Status: Ready"); // Set status
         }
     }
 
@@ -230,8 +229,16 @@ public class MainController implements Initializable {
      
          Platform.runLater(() -> {
             statusLabel.setText("Status: Sorting");
-            countLabel.setText("" + Logger.getCount());
+            countLabel.setText(Long.toString(Logger.getCount()));
         });
+    }
+    
+    /**
+     * Sets the status label text
+     * @param status 
+     */
+    private void setDisableUI(Boolean isDisable) {
+         Platform.runLater(() -> (this.disableUI.set(isDisable)));
     }
     
     /**

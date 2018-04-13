@@ -116,32 +116,25 @@
       </SplitPane>
       <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="32.0" spacing="6.0" styleClass="footer" VBox.vgrow="NEVER">
          <children>
-            <Pane maxWidth="1.7976931348623157E308" prefWidth="250.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <Label fx:id="statusLabel" alignment="TOP_RIGHT" layoutX="14.0" layoutY="9.0" maxWidth="-1.0" styleClass="status-label" text="Status: Ready">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                     <textFill>
-                        <Color blue="0.625" green="0.625" red="0.625" />
-                     </textFill>
-                  </Label>
-                  <Label fx:id="hourGlassLabel" alignment="TOP_RIGHT" layoutX="98.0" layoutY="7.0">
-                     <font>
-                        <Font size="11.0" />
-                     </font>
-                     <textFill>
-                        <Color blue="0.625" green="0.625" red="0.625" />
-                     </textFill>
-                     <graphic>
-                        <ImageView fitHeight="20.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../images/hourglass.gif" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Label>
-               </children></Pane>
+            <Label fx:id="statusLabel" alignment="TOP_RIGHT" contentDisplay="RIGHT" maxWidth="-1.0" styleClass="status-label" text="Status: Ready" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="11.0" />
+               </font>
+               <textFill>
+                  <Color blue="0.625" green="0.625" red="0.625" />
+               </textFill>
+               <graphic>
+                  <ImageView fitHeight="20.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/hourglass.gif" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <HBox.margin>
+                  <Insets left="6.0" />
+               </HBox.margin>
+            </Label>
+            <Pane maxWidth="1.7976931348623157E308" prefWidth="240.0" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </children>

@@ -15,7 +15,6 @@
 package sortingalgoritms;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,7 +37,7 @@ public class MainApp extends Application {
         Font.loadFont(MainApp.class.getResource("/fonts/FiraCode-Regular.ttf").toExternalForm(), 10);
         
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXMLMainPane.fxml"));
-        
+
         Scene scene = new Scene(root);
         
         stage.setTitle("Sorting Demo");
