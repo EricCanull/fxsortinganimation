@@ -22,25 +22,25 @@ import java.util.List;
  */
 public class SortOperatorList {
     
-    private final List<ASorter> operators;
+    private final List<AbstractSort> operators;
     
     public SortOperatorList() {
         
         // Add the Sorting classes into the arrayList
         operators = new ArrayList<>();
-        operators.add(CBubbleSorter.SINGLETON);
-        operators.add(CSelectionSorter.SINGLETON);
-        operators.add(CInsertionSorter.SINGLETON);
-        operators.add(CMergeSorter.SINGLETON);
-        operators.add(CQuickSorter.SINGLETON);
-        operators.add(CShellSorter.SINGLETON);
-        operators.add(CPancakeSorter.SINGLETON);
-        operators.add(CCocktailSorter.SINGLETON);
-        operators.add(CHeapSorter.SINGLETON);
-        operators.add(CExchangeSorter.SINGLETON);
+        operators.add(CBubbleSort.SINGLETON);
+        operators.add(CSelectionSort.SINGLETON);
+        operators.add(CInsertionSort.SINGLETON);
+        operators.add(CMergeSort.SINGLETON);
+        operators.add(CQuickSort.SINGLETON);
+        operators.add(CShellSort.SINGLETON);
+        operators.add(CPancakeSort.SINGLETON);
+        operators.add(CCocktailSort.SINGLETON);
+        operators.add(CHeapSort.SINGLETON);
+        operators.add(CExchangeSort.SINGLETON);
     }
     
-    public List<ASorter> getList() {
+    public List<AbstractSort> getList() {
         return operators;
     } 
     
@@ -50,8 +50,8 @@ public class SortOperatorList {
      * @param condition
      * @return 
      */
-    public List<ASorter> getOperator(SortOperatorEquals condition) {
-        List<ASorter> getSortOperator = new ArrayList<>();
+    public List<AbstractSort> getOperator(SortOperatorEquals condition) {
+        List<AbstractSort> getSortOperator = new ArrayList<>();
         operators.stream().filter((b) -> (condition.test(b))).forEachOrdered((b) -> {
             getSortOperator.add(b);
         });
@@ -59,6 +59,6 @@ public class SortOperatorList {
     }
 
     public interface SortOperatorEquals {
-        boolean test(ASorter a);
+        boolean test(AbstractSort a);
     }
 }

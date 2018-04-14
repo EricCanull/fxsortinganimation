@@ -14,7 +14,7 @@
  */
 package sortingalgoritms.sorts;
 
-import sortingalgoritms.util.ISortHandler;
+import sortingalgoritms.util.ISortOperator;
 
 /**
  * Creates a singleton for retrieving the bars array data as its being sorted
@@ -23,15 +23,18 @@ import sortingalgoritms.util.ISortHandler;
  * @author Eric Canull
  * @version 1.0
  */
-public class SortNullSingleton implements ISortHandler {
+public class SortOperator implements ISortOperator {
 
-    private static final SortNullSingleton SINGLETON = new SortNullSingleton();
-    
-    public static SortNullSingleton getSingleton() {
-        return SINGLETON;
+    private static SortOperator INSTANCE = null;
+
+    public static synchronized SortOperator getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new SortOperator();
+        }
+        return INSTANCE;
     }
  
-    private SortNullSingleton(){ /*private constructor */ }
+    private SortOperator(){ /*private constructor */ }
 
     /**
      * Returns the sorted array every time the timer running
@@ -39,10 +42,10 @@ public class SortNullSingleton implements ISortHandler {
      * @param cmd input object to compare values
      * @return an output sorted object or null
      */
-    public Object[] apply(Object array[], ISortHandler cmd) {
+    public Object[] apply(Object array[], ISortOperator cmd) {
         Object[] result = new Object[array.length];
         for(int i = 0; i < array.length; i++) {
-            result[i] = cmd.apply (array[i]);
+            result[i] = cmd.apply(array[i]);
         }
         return result;
     }

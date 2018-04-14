@@ -22,16 +22,15 @@ import sortingalgoritms.util.IComparable;
  * @author Eric Canull
  * @version 1.0
  */
-public final class CCocktailSorter extends ASorter {
+public final class CCocktailSort extends AbstractSort {
 
-    public static final CCocktailSorter SINGLETON = new CCocktailSorter();
+    public static final CCocktailSort SINGLETON = new CCocktailSort();
 
     /**
      * Implementation of the Cocktail or Shaker sorting algorithm.
      */
-    private CCocktailSorter() {
-        // Private Constructor will prevent the instantiation of this class
-        // directly
+    private CCocktailSort() { /* private constructor */
+        super(SINGLETON);
     }
 
     /**

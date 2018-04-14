@@ -21,16 +21,15 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CMergeSorter extends ASorter {
+public final class CMergeSort extends AbstractSort {
 
-    public static final CMergeSorter SINGLETON = new CMergeSorter();
+    public static final CMergeSort SINGLETON = new CMergeSort();
 
     /**
      * Merges then copies back to numbers list.
      */
-    private CMergeSorter() {
-        //Private Constructor will prevent the instantiation of this class
-        //directly
+    private CMergeSort() { /* private constructor */
+        super(SINGLETON);
     }
 
     /**

@@ -21,9 +21,9 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CHeapSorter extends ASorter {
+public final class CHeapSort extends AbstractSort {
 
-    public static final CHeapSorter SINGLETON = new CHeapSorter();
+    public static final CHeapSort SINGLETON = new CHeapSort();
 
     private IComparable temp[];
     private int number;
@@ -34,9 +34,8 @@ public final class CHeapSorter extends ASorter {
     /**
      * Implementation of the Heap Sort algorithm.
      */
-    private CHeapSorter() {
-        // Private Constructor will prevent the instantiation of this class
-        // directly
+    private CHeapSort() { /* private constructor */
+        super(SINGLETON);
     }
 
     /**

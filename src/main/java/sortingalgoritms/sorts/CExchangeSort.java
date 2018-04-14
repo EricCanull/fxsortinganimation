@@ -21,16 +21,15 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CExchangeSorter extends ASorter {
+public final class CExchangeSort extends AbstractSort {
 
-    public static final CExchangeSorter SINGLETON = new CExchangeSorter();
+    public static final CExchangeSort SINGLETON = new CExchangeSort();
 
     /**
      * Implementation of the Exchange sort algorithm.
      */
-    private CExchangeSorter() {
-        // Private Constructor will prevent the instantiation of this class
-        // directly
+    private CExchangeSort() { /* private constructor */
+        super(SINGLETON);
     }
 
     /**

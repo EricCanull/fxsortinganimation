@@ -21,16 +21,15 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CInsertionSorter extends ASorter {
+public final class CInsertionSort extends AbstractSort {
 
-    public static final CInsertionSorter SINGLETON = new CInsertionSorter();
+    public static final CInsertionSort SINGLETON = new CInsertionSort();
 
     /**
      * Implementation of the Insertion Sorting algorithm.
      */
-    private CInsertionSorter() {
-        //Private Constructor will prevent the instantiation of this class
-        //directly
+    private CInsertionSort() { /* private constructor */
+        super(SINGLETON);
     }
 
     /**

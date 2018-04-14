@@ -21,16 +21,15 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CShellSorter extends ASorter {
+public final class CShellSort extends AbstractSort {
 
-    public static final CShellSorter SINGLETON = new CShellSorter();
+    public static final CShellSort SINGLETON = new CShellSort();
 
     /**
      * Implementation of the Shell Sort algorithm.
      */
-    private CShellSorter() {
-        //Private Constructor will prevent the instantiation of this class
-        //directly
+    private CShellSort() { /* private constructor */
+        super(SINGLETON);
     }
 
     /**

@@ -29,7 +29,10 @@
 }
 
 .log-text-area .content {
-    -fx-background-color: #171819E6;
+    -fx-background-color: #192022;
+}
+.spinner .text-field:readonly {
+	-fx-background-color: #192022;
 }
 
 .toggle-button:selected {

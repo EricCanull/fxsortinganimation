@@ -21,16 +21,15 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CQuickSorter extends ASorter {
+public final class CQuickSort extends AbstractSort {
 
-    public static final CQuickSorter SINGLETON = new CQuickSorter();
+    public static final CQuickSort SINGLETON = new CQuickSort();
 
     /**
      * Implementation of Quick Sort Algorithm
      */
-    private CQuickSorter() {
-        //Private Constructor will prevent the instantiation of this class
-        //directly
+    private CQuickSort() { /* private constructor */
+        super(SINGLETON);
     }
 
     /**

@@ -18,7 +18,7 @@ package sortingalgoritms.util;
  * Represents the abstract lambda expression whose sole purpose in life is to
  * evaluate itself on an input and return the result of the evaluation.
  */
-public interface ISortHandler {
+public interface ISortOperator {
 
     /**
      * @param arg input object for the lambda expression.

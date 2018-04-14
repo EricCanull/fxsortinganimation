@@ -24,14 +24,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import sortingalgoritms.util.RandomBars;
-import sortingalgoritms.util.ISortHandler;
+import sortingalgoritms.util.ISortOperator;
 
 /**
  * FXML Controller class
  *
  * @author Eric Canull
  */
-public class GraphicsController extends AnchorPane implements ISortHandler {
+public class GraphicsController extends AnchorPane implements ISortOperator {
     
     @FXML private GridPane barsGrid;
     @FXML private GridPane textFieldsGrid;

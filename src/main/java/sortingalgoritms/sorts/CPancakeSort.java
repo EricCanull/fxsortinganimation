@@ -21,16 +21,15 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CPancakeSorter extends ASorter {
+public final class CPancakeSort extends AbstractSort {
 
-    public static final CPancakeSorter SINGLETON = new CPancakeSorter();
+    public static final CPancakeSort SINGLETON = new CPancakeSort();
 
     /**
      * Implementation of the Pancake Sort algorithm.
      */
-    private CPancakeSorter() {
-        //Private Constructor will prevent the instantiation of this class
-        //directly
+    private CPancakeSort() { /* private constructor */
+        super(SINGLETON);
     }
 
     /**

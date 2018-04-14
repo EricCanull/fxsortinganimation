@@ -21,16 +21,15 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CSelectionSorter extends ASorter {
+public final class CSelectionSort extends AbstractSort {
 
-    public static final CSelectionSorter SINGLETON = new CSelectionSorter();
+    public static final CSelectionSort SINGLETON = new CSelectionSort();
 
     /**
      * Implementation of the Selection Sort algorithm.
      */
-    private CSelectionSorter() {
-        //Private Constructor will prevent the instantiation of this class
-        //directly
+    private CSelectionSort() { /* private constructor */
+        super(SINGLETON);
     }
 
     /**

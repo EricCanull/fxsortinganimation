@@ -21,16 +21,15 @@ import sortingalgoritms.util.IComparable;
  * @author Eric Canull
  * @version 1.0
  */
-public final class CBubbleSorter extends ASorter {
+public final class CBubbleSort extends AbstractSort {
    
-    public static final CBubbleSorter SINGLETON = new CBubbleSorter();
+    public static final CBubbleSort SINGLETON = new CBubbleSort();
     
     /**
      * Implementation of the Bubble Sort algorithm.
      */
-    private CBubbleSorter() {
-        //Private Constructor will prevent the instantiation of this class
-        //directly
+    private CBubbleSort() { /* private constructor */
+        super(SINGLETON);
     }
     
     /**

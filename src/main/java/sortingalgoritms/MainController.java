@@ -41,11 +41,11 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import sortingalgoritms.sorts.AbstractSort;
 import sortingalgoritms.sorts.SortOperatorList;
 import sortingalgoritms.ui.GraphicsController;
-import sortingalgoritms.sorts.BaseSorter;
 import sortingalgoritms.util.Logger;
-import sortingalgoritms.sorts.SortNullSingleton;
+import sortingalgoritms.sorts.SortOperator;
 import sortingalgoritms.util.RandomBars;
 
 /**
@@ -68,7 +68,7 @@ public class MainController implements Initializable {
     @FXML private AnchorPane anchorPane;
     @FXML private TextArea logTextArea;
     @FXML private Button startButton, clearButton;
-    @FXML private ComboBox<String> algorithmComboBox, presetValuesComboBox;
+    @FXML private ComboBox<String> algorithmsComboBox, presetsComboBox;
     @FXML private Spinner<Integer> delaySpinner;
     @FXML private Label algorithmLabel, countLabel, statusLabel;
     
@@ -89,13 +89,13 @@ public class MainController implements Initializable {
         anchorPane.getChildren().add(graphicsController);
         
         // Add algoritms list and select the first index in the combobox
-        algorithmComboBox.getItems().setAll(getAlgorithmsList());
-        algorithmComboBox.getSelectionModel().select(1);
+        algorithmsComboBox.getItems().setAll(getAlgorithmsList());
+        algorithmsComboBox.getSelectionModel().select(1);
         
         // Add preset values list and listener to combobox
-        presetValuesComboBox.getItems().setAll(getPresetValuesList());
-        presetValuesComboBox.valueProperty().addListener(this::presetValuesAction);
-        presetValuesComboBox.getSelectionModel().select(0);
+        presetsComboBox.getItems().setAll(getPresetsList());
+        presetsComboBox.valueProperty().addListener(this::presetComboBoxAction);
+        presetsComboBox.getSelectionModel().select(0);
 
         // Create spinner factory with default min, max, current, step
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory
@@ -111,30 +111,28 @@ public class MainController implements Initializable {
         timeline.setCycleCount(Animation.INDEFINITE);
       
         // Bind algorithm name to the label
-        algorithmLabel.textProperty().set(algorithmComboBox.getValue());
+        algorithmLabel.textProperty().set(algorithmsComboBox.getValue());
 
         // Bind the UI controls to the disableUI boolean property 
         statusLabel.getGraphic().visibleProperty().bind(disableUI);
         startButton.disableProperty().bind(disableUI);
         clearButton.disableProperty().bind(disableUI);
         delaySpinner.disableProperty().bind(disableUI);
-        algorithmComboBox.disableProperty().bind(disableUI);
-        presetValuesComboBox.disableProperty().bind(disableUI);
+        algorithmsComboBox.disableProperty().bind(disableUI);
+        presetsComboBox.disableProperty().bind(disableUI);
     }
        
     /**
      * Observable helper method updates the preset values
      * on selection change. 
-     * 
      */
-    private void presetValuesAction(Observable observable) {
-        graphicsController.setPresetValues(presetValuesComboBox.getValue());
+    private void presetComboBoxAction(Observable observable) {
+        graphicsController.setPresetValues(presetsComboBox.getValue());
     }
     
     /**
      * Mouse listener increases or decreases the spinner value with
      * the mouse scroll wheel.
-     * 
      * @param event 
      */
     @FXML
@@ -162,13 +160,16 @@ public class MainController implements Initializable {
         disableUI.set(true);     // Disable UI
         countLabel.setText("0"); // Reset count label
 
-        // Load the selected algorithm and display the preset values in the text area
+        // Load the selected algorithm 
         int sortIndex = getAlgorithmIndex();
-        appendTextArea(presetValuesComboBox.getValue(), " Values\n");
-        appendTextArea(RandomBars.getString(), "\n\n");
-        
+       
+        //display the preset values in the text area
+        logTextArea.appendText("Preset Values\n");
+        logTextArea.appendText(RandomBars.getString()
+                .concat("\n\n"));
+
         // Update the algorithm name to the labels and text area
-        String sortName = algorithmComboBox.getSelectionModel().getSelectedItem() + " Sort\n";
+        String sortName = algorithmsComboBox.getValue().concat(" Sort\n");
         algorithmLabel.setText(sortName);
         logTextArea.appendText(sortName);
        
@@ -179,15 +180,14 @@ public class MainController implements Initializable {
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
 
-            // Record the start time to measure efficency
+            // Mark start time
             final long startTime = System.nanoTime();
 
             // Perform the sort at the position in the list
-            new BaseSorter(sortOperators.getList().get(sortIndex))
-                    .sort(RandomBars.getArray(),
-                            0, RandomBars.getArray().length - 1);
+           AbstractSort sorter = sortOperators.getList().get(sortIndex);
+           sorter.sort(RandomBars.getArray(), 0, RandomBars.MAX_SIZE-1);
 
-            // Record the end time to measure efficency
+            // Mark end time
             final long endTime = System.nanoTime();
 
             // Append text area with metric data
@@ -225,8 +225,8 @@ public class MainController implements Initializable {
      * with progressive sort data until the sorting is complete.
      */
     private void updateViews() {
-        SortNullSingleton.getSingleton().apply(RandomBars.getArray(), graphicsController);
-     
+        SortOperator.getInstance().apply(
+                RandomBars.getArray(), graphicsController);
          Platform.runLater(() -> {
             statusLabel.setText("Status: Sorting");
             countLabel.setText(Long.toString(Logger.getCount()));
@@ -250,19 +250,6 @@ public class MainController implements Initializable {
     }
 
     /**
-     * Appends text area with logging data
-     * @param text1
-     * @param text2 
-     */
-    private void appendTextArea(String text1, String text2) {
-        // Create a new string builder  
-        final StringBuilder sb = new StringBuilder();
-        sb.append(text1).append(" ").append(text2);
-        
-        logTextArea.appendText(sb.toString());
-    }
-
-    /**
      * Appends the info text area with the metric data for the sorting routine.
      */
     private void appendMetricText(long startTime, long endTime) {
@@ -274,7 +261,7 @@ public class MainController implements Initializable {
         final StringBuilder sb = new StringBuilder();
         sb.append("Start: ").append(startTime).append(" ns \n");
         sb.append("Ended: ").append(endTime).append(" ns \n");
-        sb.append("Delay: ").append(delaySpinner.getValue()).append(" ms").append("\n");
+        sb.append("Delay: ").append(delaySpinner.getValue()).append(" ms\n");
         sb.append("Speed: ").append(delta).append(" ns").append("\n");
         sb.append("Steps: ").append(Logger.getCount()).append("\n\n");
         
@@ -287,7 +274,7 @@ public class MainController implements Initializable {
      * @return 
      */
     private int getAlgorithmIndex() {
-        return algorithmComboBox.getSelectionModel().getSelectedIndex();
+        return algorithmsComboBox.getSelectionModel().getSelectedIndex();
     }
 
     /**
@@ -312,7 +299,7 @@ public class MainController implements Initializable {
     /**
      * The list of preset values to choose in the combobox
      */
-    private static List<String> getPresetValuesList() {
+    private static List<String> getPresetsList() {
         String[] presets
                 = {"Random", "Ordered", "Reverse", "Hundreds", "Thousands"};
         return Arrays.asList(presets);

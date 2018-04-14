@@ -22,8 +22,14 @@ import sortingalgoritms.util.Logger;
  *
  * @author Eric Canull
  */
-public abstract class ASorter {
-        
+public abstract class AbstractSort {
+    
+    private AbstractSort sorter = null;
+    
+    public AbstractSort(AbstractSort sorter) {
+        this.sorter = sorter;
+    }
+    
     /**
      * Sets up the sorting data and then invokes the abstract method to start
      * sorting.
