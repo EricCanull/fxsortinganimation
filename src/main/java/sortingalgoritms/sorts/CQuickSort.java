@@ -28,9 +28,7 @@ public final class CQuickSort extends AbstractSort {
     /**
      * Implementation of Quick Sort Algorithm
      */
-    private CQuickSort() { /* private constructor */
-        super(SINGLETON);
-    }
+    private CQuickSort() { } /* private constructor */
 
     /**
      * Starts the Quick Sort algorithm.

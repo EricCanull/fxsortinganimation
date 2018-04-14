@@ -24,11 +24,11 @@ import sortingalgoritms.util.Logger;
  */
 public abstract class AbstractSort {
     
-    private AbstractSort sorter = null;
-    
-    public AbstractSort(AbstractSort sorter) {
-        this.sorter = sorter;
-    }
+//    private AbstractSort sort = null;
+//    
+//    public AbstractSort(AbstractSort sort) {
+//        this.sort = sort;
+//    }
     
     /**
      * Sets up the sorting data and then invokes the abstract method to start

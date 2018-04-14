@@ -28,9 +28,7 @@ public final class CSelectionSort extends AbstractSort {
     /**
      * Implementation of the Selection Sort algorithm.
      */
-    private CSelectionSort() { /* private constructor */
-        super(SINGLETON);
-    }
+    private CSelectionSort() { }/* private constructor */
 
     /**
      * Starts of the Selection Sort algorithm.

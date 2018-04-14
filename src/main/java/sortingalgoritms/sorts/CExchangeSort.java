@@ -28,9 +28,7 @@ public final class CExchangeSort extends AbstractSort {
     /**
      * Implementation of the Exchange sort algorithm.
      */
-    private CExchangeSort() { /* private constructor */
-        super(SINGLETON);
-    }
+    private CExchangeSort() { }/* private constructor */
 
     /**
      * Starts the Exchange Sort algorithm.

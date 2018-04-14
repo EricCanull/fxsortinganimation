@@ -28,9 +28,7 @@ public final class CInsertionSort extends AbstractSort {
     /**
      * Implementation of the Insertion Sorting algorithm.
      */
-    private CInsertionSort() { /* private constructor */
-        super(SINGLETON);
-    }
+    private CInsertionSort() { }/* private constructor */
 
     /**
      * Implementation of the Insertion Sorting algorithm.

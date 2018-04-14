@@ -28,9 +28,7 @@ public final class CPancakeSort extends AbstractSort {
     /**
      * Implementation of the Pancake Sort algorithm.
      */
-    private CPancakeSort() { /* private constructor */
-        super(SINGLETON);
-    }
+    private CPancakeSort() { }/* private constructor */
 
     /**
      * Starts the Pancake Sort algorithm.

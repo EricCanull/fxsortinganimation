@@ -28,9 +28,7 @@ public final class CShellSort extends AbstractSort {
     /**
      * Implementation of the Shell Sort algorithm.
      */
-    private CShellSort() { /* private constructor */
-        super(SINGLETON);
-    }
+    private CShellSort() { } /* private constructor */
 
     /**
      * Starts the Shell Sort algorithm.

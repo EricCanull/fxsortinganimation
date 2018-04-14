@@ -28,9 +28,7 @@ public final class CBubbleSort extends AbstractSort {
     /**
      * Implementation of the Bubble Sort algorithm.
      */
-    private CBubbleSort() { /* private constructor */
-        super(SINGLETON);
-    }
+    private CBubbleSort() { }/* private constructor */
     
     /**
      * Starts the Bubble Sort algorithm.

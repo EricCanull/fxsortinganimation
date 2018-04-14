@@ -34,9 +34,7 @@ public final class CHeapSort extends AbstractSort {
     /**
      * Implementation of the Heap Sort algorithm.
      */
-    private CHeapSort() { /* private constructor */
-        super(SINGLETON);
-    }
+    private CHeapSort() { }/* private constructor */
 
     /**
      * Starts the Heap Sort algorithm.
