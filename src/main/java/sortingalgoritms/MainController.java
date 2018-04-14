@@ -113,7 +113,7 @@ public class MainController implements Initializable {
         // Bind algorithm name to the label
         algorithmLabel.textProperty().set(algorithmComboBox.getValue());
 
-        // Bind the UI controls disable property
+        // Bind the UI controls to the disableUI boolean property 
         statusLabel.getGraphic().visibleProperty().bind(disableUI);
         startButton.disableProperty().bind(disableUI);
         clearButton.disableProperty().bind(disableUI);
@@ -184,8 +184,8 @@ public class MainController implements Initializable {
 
             // Perform the sort at the position in the list
             new BaseSortOperator(sortOperators.getList().get(sortIndex))
-                    .sort(RandomBars.barsArray,
-                            0, RandomBars.barsArray.length - 1);
+                    .sort(RandomBars.getArray(),
+                            0, RandomBars.getArray().length - 1);
 
             // Record the end time to measure efficency
             final long endTime = System.nanoTime();
@@ -225,7 +225,7 @@ public class MainController implements Initializable {
      * with progressive sort data until the sorting is complete.
      */
     private void updateViews() {
-        BaseSortSingleton.getSingleton().apply(RandomBars.barsArray, graphicsController);
+        BaseSortSingleton.getSingleton().apply(RandomBars.getArray(), graphicsController);
      
          Platform.runLater(() -> {
             statusLabel.setText("Status: Sorting");

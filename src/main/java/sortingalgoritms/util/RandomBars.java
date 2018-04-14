@@ -27,132 +27,142 @@ import java.util.stream.IntStream;
  */
 public class RandomBars {
   
-    public static final int MAX_SIZE = 10;
+    public static final int MAX_SIZE = 10; // max array indices
     
-    public static Bar[] barsArray = null;
+    private static Bar[] array = null;
     
     /**
-     * Gets the specified barsArray array based on the type.
-     *
-     * @param type a String representing the name of the data type 
-     * @param values 
+     * Gets the array.
+     * @return an array of values to be sorted
+     */
+    public static Bar[] getArray() {
+        return array;
+    }
+    
+    private static int maxValue; // array max value
+    
+    /**
+     * Gets the max value in the array.
+     * @return an array of values to be sorted
+     */
+    public static int getMaxValue() {
+        return maxValue;
+    }
+    
+    /**
+     * Sets the values in the array array
+     * @param type a String representing the name of the data type
+     * @param values
      */
     public static void setRandomSet(String type, int[] values) {
-        loadArray();
+        resetArray();
        
         if (values == null) {
             switch (type) {
-            case "Random"   : barsArray = randomTen();       break;
-            case "Ordered"  : barsArray = inorderSet();      break;
-            case "Reverse"  : barsArray = reverseSet();      break;
-            case "Hundreds" : barsArray = randomHundreds();  break;
-            case "Thousands": barsArray = randomThousands(); break;
+            case "Random"   : array = randomValues();    break;
+            case "Ordered"  : array = inorderValues();   break;
+            case "Reverse"  : array = reverseValues();   break;
+            case "Hundreds" : array = randomHundreds();  break;
+            case "Thousands": array = randomThousands(); break;
             }
         } else {
             setManualSet(values);
         }
+        
+        setMaxValue();
     }
     
+    /** Sets the array with values manually entered by the user. */
     private static void setManualSet(int[] values) {
-        barsArray = new Bar[MAX_SIZE];
-        IntStream.range(0, 10).forEachOrdered(index -> {
+        array = new Bar[MAX_SIZE];
+        IntStream.range(0, array.length).forEachOrdered(index -> {
             Bar bar = new Bar(index, values[index]);
-            barsArray[index] = bar;
+            array[index] = bar;
         });
     }
 
-    public static void loadArray() {
-        barsArray = new Bar[10];
-        
-        IntStream.range(0, barsArray.length).forEachOrdered(index -> {
-            barsArray[index] = new Bar(index, index + 1);
+    /** Resets the array. */
+    public static void resetArray() {
+        array = new Bar[MAX_SIZE];
+        IntStream.range(0, array.length).forEachOrdered(index -> {
+            array[index] = new Bar(index, index + 1);
         });
     }
-    
-     /**
-     * Determines the highest value in the array.
-     * 
-     * @return Max value in the array
-     */
-    public static int getMaxValue() {
+
+     /** Determines the highest value in the array. */
+    public static void setMaxValue() {
         int max = 0;
-        for (Bar value : barsArray) {
+        for (Bar value : array) {
             max = value.getValue() > max ? value.getValue() : max;
         }
-        return max;
+       RandomBars.maxValue = max;
     }
 
     /**
-     * Randomly distributes integers (1-10); no duplicates
-     *
-     * @return An array of integers arranged in a specified order
+     * Randomly distributes values 1-10 without duplicates
+     * @return an array of random values
      */
-    private static Bar[] randomTen() {
-        for (int index = 0; index < barsArray.length - 1; index++) {
-            int randomIndex = (int) (Math.random() * (barsArray.length - index)) + index;
-            int tempArray = barsArray[index].getValue();
-            barsArray[index].setValue(barsArray[randomIndex].getValue());
-            barsArray[randomIndex].setValue(tempArray);
+    private static Bar[] randomValues() {
+        for (int index = 0; index < array.length - 1; index++) {
+            int randomIndex = (int) (Math.random() * (array.length - index)) + index;
+            int tempArray = array[index].getValue();
+            array[index].setValue(array[randomIndex].getValue());
+            array[randomIndex].setValue(tempArray);
         }
-        return barsArray;
+        return array;
     }
     
     /**
-     * Returns an array with barsArray (1-10) in ascending order; no duplicates
-     *
-     * @return An array of integers arranged in a specified order
+     * Gets the array with values 1-10 in ascending order without duplicates
+     * @return An array of values in-order
      */
-    private static Bar[] inorderSet() {
-        return barsArray;
+    private static Bar[] inorderValues() {
+        return array;
     }
     
     /**
-     * Returns an array with barsArray (1-10) in reverse order; no duplicates
-     *
-     * @return An array of integers arranged in a specified order
+     * Gets an array with values 1-10 in reverse order without duplicates
+     * @return An array of values in reverse order
      */
-    private static Bar[] reverseSet() {
-        int lastIndex = barsArray.length;
-        for (Bar value : barsArray) {
+    private static Bar[] reverseValues() {
+        int lastIndex = array.length;
+        for (Bar value : array) {
             value.setValue(lastIndex);
             lastIndex--;
         }
-        return barsArray;
+        return array;
     }
 
     /**
-     * Returns an array with random barsArray between (1 - 10,000).
-     *
-     * @return An array of integers arranged in a specified order
+     * Gets an array with random values between 1-10,000.
+     * @return an array of random values
      */
     private static Bar[] randomHundreds() {
-        for (Bar value : barsArray) {
+        for (Bar value : array) {
             int randomInt = new Random().nextInt(1000) + 100;
             value.setValue(randomInt);
         }
-        return barsArray;
+        return array;
     }
 
     /**
-     * Returns an array with random barsArray between (1 - 999,000).
-     *
-     * @return An array of integers arranged in a specified order
+     * Gets an array with random array between 1-999,000.
+     * @return an array of random values
      */
     private static Bar[] randomThousands() {
-        for (Bar value : barsArray) {
+        for (Bar value : array) {
             int randomInt = new Random().nextInt(999000) + 1;
             value.setValue(randomInt);
         }
-        return barsArray;
+        return array;
     }
 
     /**
      * The values in the array as a string.
-     * 
-     * @return A String of integer values
+     * @return a String of the values stored in the array
      */
     public static String getString() {
-        return Arrays.asList(barsArray).toString()
+        return Arrays.asList(array).toString()
                 .replace("[", "")
                 .replace("]", "");
     }

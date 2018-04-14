@@ -65,7 +65,7 @@ public class GraphicsController extends AnchorPane implements ISortHandler {
      
         IntStream.range(0, 10).forEachOrdered(index -> {
             TextField tf = (TextField) textFieldsGrid.getChildren().get(index);
-            tf.setText(String.valueOf(RandomBars.barsArray[index].getValue()));
+            tf.setText(String.valueOf(RandomBars.getArray()[index].getValue()));
         });
         
         addGridBars();
@@ -73,7 +73,7 @@ public class GraphicsController extends AnchorPane implements ISortHandler {
 
     public void addGridBars() {
 
-        if (RandomBars.barsArray == null
+        if (RandomBars.getArray() == null
                 || Double.isNaN(barsGrid.getWidth())
                 || Double.isNaN(barsGrid.getHeight())) {
             return;
@@ -82,7 +82,7 @@ public class GraphicsController extends AnchorPane implements ISortHandler {
         barsGrid.getChildren().removeAll(barsGrid.getChildren());
 
         IntStream.range(0, 10).forEachOrdered(index -> {
-            Bar bar = RandomBars.barsArray[index];
+            Bar bar = RandomBars.getArray()[index];
             bar.getStyleClass().add("bar");
 
             double height = calculateHeight(bar.getValue());
