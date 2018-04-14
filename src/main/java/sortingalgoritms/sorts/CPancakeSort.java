@@ -25,10 +25,8 @@ public final class CPancakeSort extends AbstractSort {
 
     public static final CPancakeSort SINGLETON = new CPancakeSort();
 
-    /**
-     * Implementation of the Pancake Sort algorithm.
-     */
-    private CPancakeSort() { }/* private constructor */
+    /** Private constructor prevents direct instances of this class */
+    private CPancakeSort() { }
 
     /**
      * Starts the Pancake Sort algorithm.

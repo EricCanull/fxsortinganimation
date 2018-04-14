@@ -25,10 +25,8 @@ public final class CInsertionSort extends AbstractSort {
 
     public static final CInsertionSort SINGLETON = new CInsertionSort();
 
-    /**
-     * Implementation of the Insertion Sorting algorithm.
-     */
-    private CInsertionSort() { }/* private constructor */
+    /** Private constructor prevents direct instances of this class */
+    private CInsertionSort() { }
 
     /**
      * Implementation of the Insertion Sorting algorithm.

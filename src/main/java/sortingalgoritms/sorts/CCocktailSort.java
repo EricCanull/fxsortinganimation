@@ -29,7 +29,7 @@ public final class CCocktailSort extends AbstractSort {
     /**
      * Implementation of the Cocktail or Shaker sorting algorithm.
      */
-    private CCocktailSort() { }/* private constructor */
+    private CCocktailSort() { /* private constructor */ }
 
     /**
      * Starts the Cocktail Sorting algorithm.

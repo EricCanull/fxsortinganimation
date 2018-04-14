@@ -25,10 +25,8 @@ public final class CSelectionSort extends AbstractSort {
 
     public static final CSelectionSort SINGLETON = new CSelectionSort();
 
-    /**
-     * Implementation of the Selection Sort algorithm.
-     */
-    private CSelectionSort() { }/* private constructor */
+    /** Private constructor prevents direct instances of this class */
+    private CSelectionSort() { }
 
     /**
      * Starts of the Selection Sort algorithm.

@@ -25,10 +25,8 @@ public final class CMergeSort extends AbstractSort {
 
     public static final CMergeSort SINGLETON = new CMergeSort();
 
-    /**
-     * Merges then copies back to numbers list.
-     */
-    private CMergeSort() { } /* private constructor */
+    /** Private constructor prevents direct instances of this class */
+    private CMergeSort() { } 
 
     /**
      * Starts the Merge Sort algorithm.
