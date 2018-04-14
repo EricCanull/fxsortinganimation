@@ -50,7 +50,7 @@ public class RandomBars {
     }
     
     /**
-     * Sets the values in the array array
+     * Sets the values in the array
      * @param type a String representing the name of the data type
      * @param values
      */
