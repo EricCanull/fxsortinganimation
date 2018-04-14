@@ -29,7 +29,7 @@ public final class CShellSort extends AbstractSort {
     private CShellSort() { } 
 
     /**
-     * Starts the Shell Sort algorithm.
+     * Starts the shell sort algorithm.
      *
      * @param numbers an array of numbers used for the sorting
      * @param lowIndex the lowest index position in the array

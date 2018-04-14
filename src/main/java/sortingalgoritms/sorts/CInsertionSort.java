@@ -29,7 +29,7 @@ public final class CInsertionSort extends AbstractSort {
     private CInsertionSort() { }
 
     /**
-     * Starts the sorting
+     * Starts the insertion sort algorithm
      *
      * @param numbers an array of numbers used for the sorting
      * @param lowIndex  the lowest index position in the array

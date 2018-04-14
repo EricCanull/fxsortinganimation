@@ -29,7 +29,7 @@ public final class CQuickSort extends AbstractSort {
     private CQuickSort() { } 
 
     /**
-     * Starts the Quick Sort algorithm.
+     * Starts the quick sort algorithm.
      *
      * @param numbers an array of numbers used for the sorting
      * @param lowIndex a integer representing the lowest index position in the
@@ -101,7 +101,6 @@ public final class CQuickSort extends AbstractSort {
             tmp = numbers[low];
             numbers[low] = numbers[high];
             numbers[high] = tmp;
-
         }
 
         // final swap

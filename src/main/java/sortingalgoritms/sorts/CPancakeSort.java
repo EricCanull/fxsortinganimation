@@ -29,7 +29,7 @@ public final class CPancakeSort extends AbstractSort {
     private CPancakeSort() { }
 
     /**
-     * Starts the Pancake Sort algorithm.
+     * Starts the pancake sort algorithm.
      *
      * @param numbers an array of numbers used for the sorting
      * @param lowIndex a integer representing the lowest index position in the

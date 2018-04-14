@@ -29,7 +29,7 @@ public final class CMergeSort extends AbstractSort {
     private CMergeSort() { } 
 
     /**
-     * Starts the Merge Sort algorithm.
+     * Starts the merge sort algorithm.
      *
      * @param numbers an array of numbers used for the sorting
      * @param lowIndex the lowest index position in the array

@@ -17,7 +17,7 @@ package sortingalgoritms.sorts;
 import sortingalgoritms.util.IComparable;
 
 /**
- * Implementation of the Selection Sort algorithm.
+ * Implementation of the selection sort algorithm.
  *
  * @author Eric Canull
  */
@@ -25,11 +25,11 @@ public final class CSelectionSort extends AbstractSort {
 
     public static final CSelectionSort SINGLETON = new CSelectionSort();
 
-    /** Implementation of the quick sort algorithm */
+    /** Implementation of the selection sort algorithm */
     private CSelectionSort() { }
 
     /**
-     * Starts of the Selection Sort algorithm.
+     * Starts of the selection sort algorithm.
      *
      * @param numbers an array of numbers used for the sorting
      * @param lowIndex the lowest index position in the array
@@ -38,7 +38,7 @@ public final class CSelectionSort extends AbstractSort {
     @Override
     public void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
         resetCount();
-        IComparable minValue = numbers[highIndex];
+        IComparable minValue;
 
         int index, minIndex;
         for (lowIndex = 0; lowIndex < numbers.length; lowIndex++) {
