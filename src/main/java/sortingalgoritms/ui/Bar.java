@@ -66,10 +66,10 @@ public final class Bar extends Region implements IComparable, IPainter {
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
-
-        compareValue.color = NORMAL_COLOR;
         
         color = NORMAL_COLOR;
+        
+        compareValue.color = NORMAL_COLOR;
 
         return value < compareValue.value ? IComparable.LESS // -1 
                 : value > compareValue.value ? IComparable.GREATER //  1
