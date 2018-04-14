@@ -145,7 +145,7 @@ public class MainController implements Initializable {
     }
     
     /**
-     * Start button method to run the sorting operation
+     * Start button method to startSort the sorting operation
      */
     @FXML
     private void startAction(ActionEvent event) {
@@ -176,7 +176,7 @@ public class MainController implements Initializable {
         // Start the timeline
         timeline.play();
 
-        // Create a new thread to run the sorting algorithm
+        // Create a new thread to startSort the sorting algorithm
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
 
