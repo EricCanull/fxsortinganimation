@@ -25,11 +25,11 @@ public final class CExchangeSort extends AbstractSort {
 
     public static final CExchangeSort SINGLETON = new CExchangeSort();
 
-    /** Implementation of the Exchange sort algorithm. */
+    /** Implementation of the exchange sort algorithm. */
     private CExchangeSort() { }
 
     /**
-     * Starts the Exchange Sort algorithm.
+     * Starts the exchange sort algorithm.
      *
      * @param numbers an array of numbers used for the sorting
      * @param lowIndex a integer representing the lowest index position in the
