@@ -36,10 +36,7 @@ public class MainApp extends Application {
         Font.loadFont(MainApp.class.getResource("/fonts/OpenSans-Regular.ttf").toExternalForm(), 10);
         Font.loadFont(MainApp.class.getResource("/fonts/FiraCode-Regular.ttf").toExternalForm(), 10);
         
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/FXMLMainPane.fxml"));
-
-        Scene scene = new Scene(root);
-        
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/FXMLMainPane.fxml")));
         stage.setTitle("Sorting Demo");
         stage.setScene(scene);
         stage.show();
