@@ -21,7 +21,7 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CPancakeSorter extends ASortOperator {
+public final class CPancakeSorter extends ASorter {
 
     public static final CPancakeSorter SINGLETON = new CPancakeSorter();
 

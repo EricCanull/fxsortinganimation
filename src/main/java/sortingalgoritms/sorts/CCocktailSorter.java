@@ -22,7 +22,7 @@ import sortingalgoritms.util.IComparable;
  * @author Eric Canull
  * @version 1.0
  */
-public final class CCocktailSorter extends ASortOperator {
+public final class CCocktailSorter extends ASorter {
 
     public static final CCocktailSorter SINGLETON = new CCocktailSorter();
 

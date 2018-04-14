@@ -21,7 +21,7 @@ import sortingalgoritms.util.IComparable;
  * @author Eric Canull
  * @version 1.0
  */
-public final class CBubbleSorter extends ASortOperator {
+public final class CBubbleSorter extends ASorter {
    
     public static final CBubbleSorter SINGLETON = new CBubbleSorter();
     

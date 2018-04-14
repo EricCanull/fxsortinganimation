@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class SortOperatorList {
     
-    private final List<ASortOperator> operators;
+    private final List<ASorter> operators;
     
     public SortOperatorList() {
         
@@ -40,7 +40,7 @@ public class SortOperatorList {
         operators.add(CExchangeSorter.SINGLETON);
     }
     
-    public List<ASortOperator> getList() {
+    public List<ASorter> getList() {
         return operators;
     } 
     
@@ -50,8 +50,8 @@ public class SortOperatorList {
      * @param condition
      * @return 
      */
-    public List<ASortOperator> getOperator(SortOperatorEquals condition) {
-        List<ASortOperator> getSortOperator = new ArrayList<>();
+    public List<ASorter> getOperator(SortOperatorEquals condition) {
+        List<ASorter> getSortOperator = new ArrayList<>();
         operators.stream().filter((b) -> (condition.test(b))).forEachOrdered((b) -> {
             getSortOperator.add(b);
         });
@@ -59,6 +59,6 @@ public class SortOperatorList {
     }
 
     public interface SortOperatorEquals {
-        boolean test(ASortOperator a);
+        boolean test(ASorter a);
     }
 }

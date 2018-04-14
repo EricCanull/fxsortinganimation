@@ -43,9 +43,9 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import sortingalgoritms.sorts.SortOperatorList;
 import sortingalgoritms.ui.GraphicsController;
-import sortingalgoritms.sorts.BaseSortOperator;
+import sortingalgoritms.sorts.BaseSorter;
 import sortingalgoritms.util.Logger;
-import sortingalgoritms.sorts.BaseSortSingleton;
+import sortingalgoritms.sorts.SortNullSingleton;
 import sortingalgoritms.util.RandomBars;
 
 /**
@@ -183,7 +183,7 @@ public class MainController implements Initializable {
             final long startTime = System.nanoTime();
 
             // Perform the sort at the position in the list
-            new BaseSortOperator(sortOperators.getList().get(sortIndex))
+            new BaseSorter(sortOperators.getList().get(sortIndex))
                     .sort(RandomBars.getArray(),
                             0, RandomBars.getArray().length - 1);
 
@@ -225,7 +225,7 @@ public class MainController implements Initializable {
      * with progressive sort data until the sorting is complete.
      */
     private void updateViews() {
-        BaseSortSingleton.getSingleton().apply(RandomBars.getArray(), graphicsController);
+        SortNullSingleton.getSingleton().apply(RandomBars.getArray(), graphicsController);
      
          Platform.runLater(() -> {
             statusLabel.setText("Status: Sorting");

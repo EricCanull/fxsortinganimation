@@ -21,7 +21,7 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CSelectionSorter extends ASortOperator {
+public final class CSelectionSorter extends ASorter {
 
     public static final CSelectionSorter SINGLETON = new CSelectionSorter();
 

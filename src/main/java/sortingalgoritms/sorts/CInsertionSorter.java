@@ -21,7 +21,7 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CInsertionSorter extends ASortOperator {
+public final class CInsertionSorter extends ASorter {
 
     public static final CInsertionSorter SINGLETON = new CInsertionSorter();
 

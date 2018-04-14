@@ -23,15 +23,15 @@ import sortingalgoritms.util.ISortHandler;
  * @author Eric Canull
  * @version 1.0
  */
-public class BaseSortSingleton implements ISortHandler {
+public class SortNullSingleton implements ISortHandler {
 
-    private static final BaseSortSingleton SINGLETON = new BaseSortSingleton();
+    private static final SortNullSingleton SINGLETON = new SortNullSingleton();
     
-    public static BaseSortSingleton getSingleton() {
+    public static SortNullSingleton getSingleton() {
         return SINGLETON;
     }
  
-    private BaseSortSingleton(){ /*private constructor */ }
+    private SortNullSingleton(){ /*private constructor */ }
 
     /**
      * Returns the sorted array every time the timer running
@@ -55,5 +55,4 @@ public class BaseSortSingleton implements ISortHandler {
     public Object apply(Object arg) {
         return null;
     }
-    
 }

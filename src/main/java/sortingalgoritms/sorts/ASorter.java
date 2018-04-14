@@ -22,7 +22,7 @@ import sortingalgoritms.util.Logger;
  *
  * @author Eric Canull
  */
-public abstract class ASortOperator {
+public abstract class ASorter {
         
     /**
      * Sets up the sorting data and then invokes the abstract method to start

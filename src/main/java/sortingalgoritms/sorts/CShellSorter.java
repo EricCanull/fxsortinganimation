@@ -21,7 +21,7 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CShellSorter extends ASortOperator {
+public final class CShellSorter extends ASorter {
 
     public static final CShellSorter SINGLETON = new CShellSorter();
 

@@ -21,7 +21,7 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CHeapSorter extends ASortOperator {
+public final class CHeapSorter extends ASorter {
 
     public static final CHeapSorter SINGLETON = new CHeapSorter();
 

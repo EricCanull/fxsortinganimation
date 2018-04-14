@@ -21,7 +21,7 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CExchangeSorter extends ASortOperator {
+public final class CExchangeSorter extends ASorter {
 
     public static final CExchangeSorter SINGLETON = new CExchangeSorter();
 

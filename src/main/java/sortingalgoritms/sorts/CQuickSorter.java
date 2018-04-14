@@ -21,7 +21,7 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CQuickSorter extends ASortOperator {
+public final class CQuickSorter extends ASorter {
 
     public static final CQuickSorter SINGLETON = new CQuickSorter();
 

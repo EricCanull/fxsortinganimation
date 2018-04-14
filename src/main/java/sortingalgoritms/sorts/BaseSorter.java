@@ -22,9 +22,9 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public class BaseSortOperator extends ASortOperator {
+public class BaseSorter extends ASorter {
 
-    public final ASortOperator sortOperator;
+    public final ASorter sortOperator;
 
     /**
      * Passes the selected sort operation to the abstract base sorting algorithm
@@ -32,7 +32,7 @@ public class BaseSortOperator extends ASortOperator {
      *
      * @param sortOperator
      */
-    public BaseSortOperator(ASortOperator sortOperator) {
+    public BaseSorter(ASorter sortOperator) {
         this.sortOperator = sortOperator;
     }
 

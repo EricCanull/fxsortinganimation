@@ -21,7 +21,7 @@ import sortingalgoritms.util.IComparable;
  *
  * @author Eric Canull
  */
-public final class CMergeSorter extends ASortOperator {
+public final class CMergeSorter extends ASorter {
 
     public static final CMergeSorter SINGLETON = new CMergeSorter();
 
