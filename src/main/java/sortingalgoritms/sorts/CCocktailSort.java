@@ -17,7 +17,7 @@ package sortingalgoritms.sorts;
 import sortingalgoritms.util.IComparable;
 
 /**
- * Implementation of the Cocktail or Shaker sorting algorithm.
+ * Implementation of the cocktail or shaker sort algorithm.
  *
  * @author Eric Canull
  * @version 1.0
@@ -26,10 +26,8 @@ public final class CCocktailSort extends AbstractSort {
 
     public static final CCocktailSort SINGLETON = new CCocktailSort();
 
-    /**
-     * Implementation of the Cocktail or Shaker sorting algorithm.
-     */
-    private CCocktailSort() { /* private constructor */ }
+    /** Implementation of the cocktail or shaker sort algorithm. */
+    private CCocktailSort() { }
 
     /**
      * Starts the Cocktail Sorting algorithm.

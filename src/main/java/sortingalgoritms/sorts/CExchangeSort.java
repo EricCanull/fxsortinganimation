@@ -17,7 +17,7 @@ package sortingalgoritms.sorts;
 import sortingalgoritms.util.IComparable;
 
 /**
- * Implementation of the Exchange sort algorithm.
+ * Implementation of the exchange sort algorithm.
  *
  * @author Eric Canull
  */
@@ -25,10 +25,8 @@ public final class CExchangeSort extends AbstractSort {
 
     public static final CExchangeSort SINGLETON = new CExchangeSort();
 
-    /**
-     * Implementation of the Exchange sort algorithm.
-     */
-    private CExchangeSort() { /* private constructor */ }
+    /** Implementation of the Exchange sort algorithm. */
+    private CExchangeSort() { }
 
     /**
      * Starts the Exchange Sort algorithm.

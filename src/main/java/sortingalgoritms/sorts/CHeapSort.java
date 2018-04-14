@@ -31,7 +31,7 @@ public final class CHeapSort extends AbstractSort {
     private int right;
     private int largest;
 
-    /** Private constructor prevents direct instances of this class */
+    /** Implementation of the Heap Sort algorithm. */
     private CHeapSort() { }
 
     /**

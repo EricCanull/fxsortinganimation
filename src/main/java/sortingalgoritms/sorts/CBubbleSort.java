@@ -17,7 +17,7 @@ package sortingalgoritms.sorts;
 import sortingalgoritms.util.IComparable;
 
 /**
- * Implementation of the Bubble Sort algorithm.
+ * Implementation of the bubble sort algorithm.
  * @author Eric Canull
  * @version 1.0
  */
@@ -25,10 +25,8 @@ public final class CBubbleSort extends AbstractSort {
    
     public static final CBubbleSort SINGLETON = new CBubbleSort();
     
-    /**
-     * Implementation of the Bubble Sort algorithm.
-     */
-    private CBubbleSort() { /* private constructor */ }
+    /** Implementation of the bubble sort algorithm. */
+    private CBubbleSort() { }
     
     /**
      * Starts the Bubble Sort algorithm.

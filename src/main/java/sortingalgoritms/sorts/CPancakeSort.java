@@ -17,7 +17,7 @@ package sortingalgoritms.sorts;
 import sortingalgoritms.util.IComparable;
 
 /**
- * Implementation of the Pancake Sort algorithm.
+ * Implementation of the pancake sort algorithm.
  *
  * @author Eric Canull
  */
@@ -25,7 +25,7 @@ public final class CPancakeSort extends AbstractSort {
 
     public static final CPancakeSort SINGLETON = new CPancakeSort();
 
-    /** Private constructor prevents direct instances of this class */
+    /** Implementation of the pancake sort algorithm. */
     private CPancakeSort() { }
 
     /**

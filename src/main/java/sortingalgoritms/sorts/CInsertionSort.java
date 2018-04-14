@@ -17,7 +17,7 @@ package sortingalgoritms.sorts;
 import sortingalgoritms.util.IComparable;
 
 /**
- * Implementation of the Insertion Sorting algorithm.
+ *  Implementation of the insertion sort algorithm.
  *
  * @author Eric Canull
  */
@@ -25,11 +25,11 @@ public final class CInsertionSort extends AbstractSort {
 
     public static final CInsertionSort SINGLETON = new CInsertionSort();
 
-    /** Private constructor prevents direct instances of this class */
+    /** Implementation of the insertion sort algorithm. */
     private CInsertionSort() { }
 
     /**
-     * Implementation of the Insertion Sorting algorithm.
+     * Starts the sorting
      *
      * @param numbers an array of numbers used for the sorting
      * @param lowIndex  the lowest index position in the array

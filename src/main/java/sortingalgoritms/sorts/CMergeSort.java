@@ -17,7 +17,7 @@ package sortingalgoritms.sorts;
 import sortingalgoritms.util.IComparable;
 
 /**
- * Implementation of the Merge Sort algorithm.
+ * Implementation of the merge sort algorithm.
  *
  * @author Eric Canull
  */
@@ -25,7 +25,7 @@ public final class CMergeSort extends AbstractSort {
 
     public static final CMergeSort SINGLETON = new CMergeSort();
 
-    /** Private constructor prevents direct instances of this class */
+    /** Implementation of the merge sort algorithm. */
     private CMergeSort() { } 
 
     /**

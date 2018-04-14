@@ -17,7 +17,7 @@ package sortingalgoritms.sorts;
 import sortingalgoritms.util.IComparable;
 
 /**
- * Implementation of the Shell Sort algorithm.
+ * Implementation of the shell sort algorithm.
  *
  * @author Eric Canull
  */
@@ -25,7 +25,7 @@ public final class CShellSort extends AbstractSort {
 
     public static final CShellSort SINGLETON = new CShellSort();
 
-    /** Private constructor prevents direct instances of this class */
+    /** Implementation of the shell sort algorithm. */
     private CShellSort() { } 
 
     /**

@@ -17,7 +17,7 @@ package sortingalgoritms.sorts;
 import sortingalgoritms.util.IComparable;
 
 /**
- * Implementation of Quick Sort Algorithm
+ * Implementation of the quick sort algorithm
  *
  * @author Eric Canull
  */
@@ -25,7 +25,7 @@ public final class CQuickSort extends AbstractSort {
 
     public static final CQuickSort SINGLETON = new CQuickSort();
 
-    /** Private constructor prevents direct instances of this class */
+    /** Implementation of the quick sort algorithm */
     private CQuickSort() { } 
 
     /**
