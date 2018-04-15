@@ -14,18 +14,16 @@
  */
 package sortingalgoritms.ui;
 
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import sortingalgoritms.MainController;
 import sortingalgoritms.util.IComparable;
-import sortingalgoritms.util.IPainter;
 
 /**
  *  A rectangular bar with an index and given value.
  *
  * @author Eric Canull
  */
-public final class Bar extends Region implements IComparable, IPainter {
+public final class CompareValue implements IComparable {
     
     private final Color NORMAL_COLOR = Color.web("#3073b4");
     private final Color SELECTED_COLOR = Color.web("#a07617");
@@ -41,7 +39,7 @@ public final class Bar extends Region implements IComparable, IPainter {
      * @param index
      * @param value an integer reference to a number
      */
-    public Bar(int index, int value) {
+    public CompareValue(int index, int value) {
         this.index = index;
         this.value = value;
         this.color = NORMAL_COLOR;
@@ -55,7 +53,7 @@ public final class Bar extends Region implements IComparable, IPainter {
      */
     @Override
     public int compare(IComparable comparable) {
-        Bar compareValue = (Bar) comparable;
+        CompareValue compareValue = (CompareValue) comparable;
         
         color = SELECTED_COLOR;
 

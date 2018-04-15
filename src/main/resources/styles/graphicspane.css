@@ -60,7 +60,7 @@
     -fx-border-color: #686971;
 }
 .bar {
-    -fx-background-color: #3073b4;
+/*    -fx-background-fills: #3073b4;*/
     -fx-border-radius: 3 3 1 1;
     -fx-background-radius: 3 3 1 1;
 }

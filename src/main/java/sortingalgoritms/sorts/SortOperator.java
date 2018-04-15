@@ -24,28 +24,27 @@ import sortingalgoritms.util.ISortOperator;
  * @version 1.0
  */
 public class SortOperator implements ISortOperator {
+    private SortOperator() {} /* non-use private constructor */
 
-    private static SortOperator INSTANCE = null;
-
-    public static synchronized SortOperator getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new SortOperator();
+    private static SortOperator sortOperator = null;
+    
+    public static SortOperator getInstance() {
+        if (sortOperator == null) {
+            sortOperator = new SortOperator();
         }
-        return INSTANCE;
+        return sortOperator;
     }
  
-    private SortOperator(){ /*private constructor */ }
-
     /**
      * Returns the sorted array every time the timer running
-     * @param array an array of objects to be evaluated
-     * @param cmd input object to compare values
+     * @param objects an array being sorted
+     * @param sortOperator an object that returns the sorted array
      * @return an output sorted object or null
      */
-    public Object[] apply(Object array[], ISortOperator cmd) {
-        Object[] result = new Object[array.length];
-        for(int i = 0; i < array.length; i++) {
-            result[i] = cmd.apply(array[i]);
+    public Object[] apply(Object objects[], ISortOperator sortOperator) {
+        Object[] result = new Object[objects.length];
+        for(int i = 0; i < objects.length; i++) {
+            result[i] = sortOperator.apply(objects[i]);
         }
         return result;
     }

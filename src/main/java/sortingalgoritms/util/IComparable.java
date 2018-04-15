@@ -14,6 +14,8 @@
  */
 package sortingalgoritms.util;
 
+import javafx.scene.paint.Color;
+
 /**
  * Implements the functionality of the collection lists java.lang.Comparable.
  */
@@ -30,4 +32,8 @@ public interface IComparable {
      * @return the result of the comparison
      */
     int compare(IComparable number);
+    
+    void setColor(Color color);
+
+   Color getColor();
 }

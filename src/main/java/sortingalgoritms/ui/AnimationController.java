@@ -18,12 +18,19 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.IntStream;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import sortingalgoritms.util.RandomBars;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
+
+import sortingalgoritms.util.RandomValues;
 import sortingalgoritms.util.ISortOperator;
 
 /**
@@ -31,14 +38,14 @@ import sortingalgoritms.util.ISortOperator;
  *
  * @author Eric Canull
  */
-public class GraphicsController extends AnchorPane implements ISortOperator {
+public class AnimationController extends AnchorPane implements ISortOperator {
     
     @FXML private GridPane barsGrid;
     @FXML private GridPane textFieldsGrid;
    
     private int indexPos;
    
-    public GraphicsController() {
+    public AnimationController() {
         initialize();
     }
     
@@ -48,12 +55,12 @@ public class GraphicsController extends AnchorPane implements ISortOperator {
     private void initialize() {
         try {
             final FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(GraphicsController.class.getResource("/fxml/FXMLGraphicsPane.fxml")); //NOI18N
+            loader.setLocation(AnimationController.class.getResource("/fxml/FXMLAnimationPane.fxml")); //NOI18N
             loader.setController(this);
             loader.setRoot(this);
             loader.load();
         } catch (IOException ex) {
-            Logger.getLogger(GraphicsController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AnimationController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         barsGrid.widthProperty().addListener(evt -> addGridBars());
@@ -61,11 +68,11 @@ public class GraphicsController extends AnchorPane implements ISortOperator {
     }
     
     public void setPresetValues(String presetChoice) {
-        RandomBars.setRandomSet(presetChoice, null);
+        RandomValues.setRandomSet(presetChoice, null);
      
         IntStream.range(0, 10).forEachOrdered(index -> {
             TextField tf = (TextField) textFieldsGrid.getChildren().get(index);
-            tf.setText(String.valueOf(RandomBars.getArray()[index].getValue()));
+            tf.setText(String.valueOf(RandomValues.getArray()[index].getValue()));
         });
         
         addGridBars();
@@ -73,25 +80,24 @@ public class GraphicsController extends AnchorPane implements ISortOperator {
 
     public void addGridBars() {
 
-        if (RandomBars.getArray() == null
+        if (RandomValues.getArray() == null
                 || Double.isNaN(barsGrid.getWidth())
                 || Double.isNaN(barsGrid.getHeight())) {
             return;
         }
 
         barsGrid.getChildren().removeAll(barsGrid.getChildren());
-
-        IntStream.range(0, 10).forEachOrdered(index -> {
-            Bar bar = RandomBars.getArray()[index];
-            bar.getStyleClass().add("bar");
-
-            double height = calculateHeight(bar.getValue());
-            bar.setMaxHeight(height);
-            bar.setPrefHeight(height);
-            barsGrid.add(bar, index, 0);
+        final double width = (barsGrid.getWidth()/10d) + -6;
+        IntStream.range(0, 10).forEachOrdered((int index) -> {
+            CompareValue compareValue = RandomValues.getArray()[index];
+            
+            double height = calculateHeight(compareValue.getValue());
+            Rectangle rect = new Rectangle(width, height);
+            rect.setFill(compareValue.getColor());
+            barsGrid.add(rect, index, 0);
         });
     }
-
+    
     /**
      * Use slope and y-intercept formulas to calculate the bars height
      * for resizing.
@@ -100,7 +106,7 @@ public class GraphicsController extends AnchorPane implements ISortOperator {
         double y1 = 0;
         double y2 = barsGrid.getHeight();
 
-        double x1 = RandomBars.getMaxValue();
+        double x1 = RandomValues.getMaxValue();
         double x2 = 0;
 
         // 1st calculate the slope 
@@ -117,26 +123,32 @@ public class GraphicsController extends AnchorPane implements ISortOperator {
 
     @Override
     public Object apply(Object object) {
-        if (indexPos == RandomBars.MAX_SIZE) {
+        if (indexPos == RandomValues.MAX_SIZE) {
             indexPos = 0;
         }
 
-        while (indexPos < RandomBars.MAX_SIZE) {
-            Bar bar = (Bar) object;   
-            String color = Integer.toHexString(bar.getColor().hashCode());
+        while (indexPos < RandomValues.MAX_SIZE) {
+            CompareValue compareValue = (CompareValue) object;   
+            String color = Integer.toHexString(compareValue.getColor().hashCode());
             
-            Bar gridBar = (Bar) barsGrid.getChildren().get(indexPos);   
+            Rectangle rect = (Rectangle) barsGrid.getChildren().get(indexPos);   
             TextField textfield = (TextField) textFieldsGrid.getChildren().get(indexPos);
             
-            gridBar.setStyle("-fx-background-color: #" + color + ";");
+            rect.setFill(Color.web(color));
             
             textfield.setStyle("-fx-border-color: #" + color + ";" 
                              + "-fx-background-color: #" + color.replace("ff", "33") + ";");
           
-            double height = calculateHeight(bar.getValue());
-            gridBar.setMaxHeight(height);
-            gridBar.setPrefHeight(height);
-            textfield.setText(String.valueOf(bar.getValue()));
+            double height = calculateHeight(compareValue.getValue());
+            Timeline tl = new Timeline();
+            tl.setCycleCount(1);
+
+            KeyValue k1 = new KeyValue(rect.heightProperty(), height);
+            KeyFrame kf1 = new KeyFrame(Duration.millis(100), k1);
+            tl.getKeyFrames().add(kf1);
+            tl.play();
+
+            textfield.setText(String.valueOf(compareValue.getValue()));
 
             indexPos++;
             break;

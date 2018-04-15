@@ -35,7 +35,7 @@
       </HBox>
       <SplitPane dividerPositions="0.3" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
          <items>
-            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="375.0" styleClass="controls-anchor-pane">
+            <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="380.0" minWidth="-Infinity" prefWidth="360.0" styleClass="controls-anchor-pane">
                <children>
                   <Label layoutX="14.0" layoutY="15.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" styleClass="sort-label" text="Log" textAlignment="CENTER" wrapText="false">
                      <font>
@@ -45,7 +45,7 @@
                         <Color blue="0.624" green="0.624" red="0.624" />
                      </textFill>
                   </Label>
-                  <TextArea fx:id="logTextArea" editable="false" layoutX="-32.0" layoutY="89.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="400.0" styleClass="log-text-area" wrapText="true" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+                  <TextArea fx:id="logTextArea" editable="false" layoutX="-32.0" layoutY="89.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="360.0" styleClass="log-text-area" wrapText="true" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
                      <font>
                         <Font name="FiraCode-Regular" size="12.0" />
                      </font>

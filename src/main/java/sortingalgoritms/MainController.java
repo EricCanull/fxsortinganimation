@@ -43,10 +43,10 @@ import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import sortingalgoritms.sorts.AbstractSort;
 import sortingalgoritms.sorts.SortOperatorList;
-import sortingalgoritms.ui.GraphicsController;
+import sortingalgoritms.ui.AnimationController;
 import sortingalgoritms.util.Logger;
 import sortingalgoritms.sorts.SortOperator;
-import sortingalgoritms.util.RandomBars;
+import sortingalgoritms.util.RandomValues;
 
 /**
  * FXML Controller class
@@ -61,7 +61,7 @@ public class MainController implements Initializable {
 
     private final SortOperatorList sortOperators = new SortOperatorList();
     
-    private GraphicsController graphicsController;
+    private AnimationController animationController;
 
     private Timeline timeline;
        
@@ -81,12 +81,12 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         // Add the graphics controller pane 
-        graphicsController = new GraphicsController();
-        AnchorPane.setTopAnchor(graphicsController, 50.0);
-        AnchorPane.setBottomAnchor(graphicsController, 0.0);
-        AnchorPane.setLeftAnchor(graphicsController, 0.0);
-        AnchorPane.setRightAnchor(graphicsController, 0.0);
-        anchorPane.getChildren().add(graphicsController);
+        animationController = new AnimationController();
+        AnchorPane.setTopAnchor(animationController, 50.0);
+        AnchorPane.setBottomAnchor(animationController, 0.0);
+        AnchorPane.setLeftAnchor(animationController, 0.0);
+        AnchorPane.setRightAnchor(animationController, 0.0);
+        anchorPane.getChildren().add(animationController);
         
         // Add algoritms list and select the first index in the combobox
         algorithmsComboBox.getItems().setAll(getAlgorithmsList());
@@ -127,7 +127,7 @@ public class MainController implements Initializable {
      * on selection change. 
      */
     private void presetComboBoxAction(Observable observable) {
-        graphicsController.setPresetValues(presetsComboBox.getValue());
+        animationController.setPresetValues(presetsComboBox.getValue());
     }
     
     /**
@@ -165,7 +165,7 @@ public class MainController implements Initializable {
        
         //display the preset values in the text area
         logTextArea.appendText("Preset Values\n");
-        logTextArea.appendText(RandomBars.getString()
+        logTextArea.appendText(RandomValues.getString()
                 .concat("\n\n"));
 
         // Update the algorithm name to the labels and text area
@@ -185,7 +185,7 @@ public class MainController implements Initializable {
 
             // Perform the sort at the position in the list
            AbstractSort sorter = sortOperators.getList().get(sortIndex);
-           sorter.sort(RandomBars.getArray(), 0, RandomBars.MAX_SIZE-1);
+           sorter.sort(RandomValues.getArray(), 0, RandomValues.MAX_SIZE-1);
 
             // Mark end time
             final long endTime = System.nanoTime();
@@ -225,8 +225,7 @@ public class MainController implements Initializable {
      * with progressive sort data until the sorting is complete.
      */
     private void updateViews() {
-        SortOperator.getInstance().apply(
-                RandomBars.getArray(), graphicsController);
+        SortOperator.getInstance().apply(RandomValues.getArray(), animationController);
          Platform.runLater(() -> {
             statusLabel.setText("Status: Sorting");
             countLabel.setText(Long.toString(Logger.getCount()));

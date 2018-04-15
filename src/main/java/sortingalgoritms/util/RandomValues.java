@@ -14,7 +14,7 @@
  */
 package sortingalgoritms.util;
 
-import sortingalgoritms.ui.Bar;
+import sortingalgoritms.ui.CompareValue;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -25,17 +25,17 @@ import java.util.stream.IntStream;
  *
  * @author Eric Canull
  */
-public class RandomBars {
+public class RandomValues {
   
     public static final int MAX_SIZE = 10; // max array indices
     
-    private static Bar[] array = null;
+    private static CompareValue[] array = null;
     
     /**
      * Gets the array.
      * @return an array of values to be sorted
      */
-    public static Bar[] getArray() {
+    public static CompareValue[] getArray() {
         return array;
     }
     
@@ -74,35 +74,35 @@ public class RandomBars {
     
     /** Sets the array with values manually entered by the user. */
     private static void setManualSet(int[] values) {
-        array = new Bar[MAX_SIZE];
+        array = new CompareValue[MAX_SIZE];
         IntStream.range(0, array.length).forEachOrdered(index -> {
-            Bar bar = new Bar(index, values[index]);
+            CompareValue bar = new CompareValue(index, values[index]);
             array[index] = bar;
         });
     }
 
     /** Resets the array. */
     public static void resetArray() {
-        array = new Bar[MAX_SIZE];
+        array = new CompareValue[MAX_SIZE];
         IntStream.range(0, array.length).forEachOrdered(index -> {
-            array[index] = new Bar(index, index + 1);
+            array[index] = new CompareValue(index, index + 1);
         });
     }
 
      /** Determines the highest value in the array. */
     public static void setMaxValue() {
         int max = 0;
-        for (Bar value : array) {
+        for (CompareValue value : array) {
             max = value.getValue() > max ? value.getValue() : max;
         }
-       RandomBars.maxValue = max;
+       RandomValues.maxValue = max;
     }
 
     /**
      * Randomly distributes values 1-10 without duplicates
      * @return an array of random values
      */
-    private static Bar[] randomValues() {
+    private static CompareValue[] randomValues() {
         for (int index = 0; index < array.length - 1; index++) {
             int randomIndex = (int) (Math.random() * (array.length - index)) + index;
             int tempArray = array[index].getValue();
@@ -116,7 +116,7 @@ public class RandomBars {
      * Gets the array with values 1-10 in ascending order without duplicates
      * @return An array of values in-order
      */
-    private static Bar[] inorderValues() {
+    private static CompareValue[] inorderValues() {
         return array;
     }
     
@@ -124,9 +124,9 @@ public class RandomBars {
      * Gets an array with values 1-10 in reverse order without duplicates
      * @return An array of values in reverse order
      */
-    private static Bar[] reverseValues() {
+    private static CompareValue[] reverseValues() {
         int lastIndex = array.length;
-        for (Bar value : array) {
+        for (CompareValue value : array) {
             value.setValue(lastIndex);
             lastIndex--;
         }
@@ -137,8 +137,8 @@ public class RandomBars {
      * Gets an array with random values between 1-10,000.
      * @return an array of random values
      */
-    private static Bar[] randomHundreds() {
-        for (Bar value : array) {
+    private static CompareValue[] randomHundreds() {
+        for (CompareValue value : array) {
             int randomInt = new Random().nextInt(1000) + 100;
             value.setValue(randomInt);
         }
@@ -149,8 +149,8 @@ public class RandomBars {
      * Gets an array with random array between 1-999,000.
      * @return an array of random values
      */
-    private static Bar[] randomThousands() {
-        for (Bar value : array) {
+    private static CompareValue[] randomThousands() {
+        for (CompareValue value : array) {
             int randomInt = new Random().nextInt(999000) + 1;
             value.setValue(randomInt);
         }
