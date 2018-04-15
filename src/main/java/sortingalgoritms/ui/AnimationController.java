@@ -44,6 +44,7 @@ public class AnimationController extends AnchorPane implements ISortOperator {
     @FXML private GridPane textFieldsGrid;
    
     private int indexPos;
+      private Timeline tl;
    
     public AnimationController() {
         initialize();
@@ -85,14 +86,13 @@ public class AnimationController extends AnchorPane implements ISortOperator {
                 || Double.isNaN(barsGrid.getHeight())) {
             return;
         }
-
-        barsGrid.getChildren().removeAll(barsGrid.getChildren());
-        final double width = (barsGrid.getWidth()/10d) + -6;
+         barsGrid.getChildren().removeAll(barsGrid.getChildren());
+        final double width = (barsGrid.getWidth() / 10d) + -6;
         IntStream.range(0, 10).forEachOrdered((int index) -> {
             CompareValue compareValue = RandomValues.getArray()[index];
             
             double height = calculateHeight(compareValue.getValue());
-            Rectangle rect = new Rectangle(width, height);
+            Rectangle rect = new Rectangle(0, 0, width, height);
             rect.setFill(compareValue.getColor());
             barsGrid.add(rect, index, 0);
         });
@@ -118,7 +118,7 @@ public class AnimationController extends AnchorPane implements ISortOperator {
         // 3rd calculate the new height
         double height = y2 - (slope * value + yIntercept);
 
-        return height;
+        return Math.round(height);
     }
 
     @Override
@@ -134,20 +134,20 @@ public class AnimationController extends AnchorPane implements ISortOperator {
             Rectangle rect = (Rectangle) barsGrid.getChildren().get(indexPos);   
             TextField textfield = (TextField) textFieldsGrid.getChildren().get(indexPos);
             
-            rect.setFill(Color.web(color));
-            
             textfield.setStyle("-fx-border-color: #" + color + ";" 
                              + "-fx-background-color: #" + color.replace("ff", "33") + ";");
           
             double height = calculateHeight(compareValue.getValue());
-            Timeline tl = new Timeline();
+            tl = new Timeline();
             tl.setCycleCount(1);
 
-            KeyValue k1 = new KeyValue(rect.heightProperty(), height);
-            KeyFrame kf1 = new KeyFrame(Duration.millis(100), k1);
-            tl.getKeyFrames().add(kf1);
+            tl.getKeyFrames().addAll(
+                    new KeyFrame(Duration.millis(200),
+                    new KeyValue(rect.heightProperty(), height)));
             tl.play();
 
+           
+            rect.setFill(Color.web(color));
             textfield.setText(String.valueOf(compareValue.getValue()));
 
             indexPos++;
