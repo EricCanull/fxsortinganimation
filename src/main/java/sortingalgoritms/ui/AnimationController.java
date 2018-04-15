@@ -23,12 +23,8 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.util.Duration;
@@ -90,18 +86,19 @@ public class AnimationController extends AnchorPane implements ISortOperator {
                 || Double.isNaN(barsGrid.getHeight())) {
             return;
         }
-         barsGrid.getChildren().removeAll(barsGrid.getChildren());
-        final double width = (barsGrid.getWidth() / 10d) + -6;
+       
+        barsGrid.getChildren().removeAll(barsGrid.getChildren());
         IntStream.range(0, 10).forEachOrdered((int index) -> {
             CompareValue compareValue = RandomValues.getArray()[index];
-            
+
             double height = calculateHeight(compareValue.getValue());
+
             Region rect = new Region();
+            rect.getStyleClass().add("rect");
+
             rect.setPrefHeight(height);
             rect.setMaxHeight(height);
-            rect.setBackground(new Background(new BackgroundFill(compareValue.getColor(),
-                        CornerRadii.EMPTY, Insets.EMPTY)));
-         
+
             barsGrid.add(rect, index, 0);
         });
     }
@@ -152,12 +149,11 @@ public class AnimationController extends AnchorPane implements ISortOperator {
 
             tl.getKeyFrames().addAll(
                     new KeyFrame(Duration.millis(delay),
-                    new KeyValue(rect.prefHeightProperty(), height),
-                    new KeyValue(rect.maxHeightProperty(), height)));
+                            new KeyValue(rect.prefHeightProperty(), height),
+                            new KeyValue(rect.maxHeightProperty(), height)));
             tl.play();
 
-           rect.setStyle("-fx-background-color: #" + color + ";");
-          //  rect.setFill(Color.web(color));
+            rect.setStyle("-fx-background-color: #" + color + ";");
             textfield.setText(String.valueOf(compareValue.getValue()));
 
             indexPos++;
