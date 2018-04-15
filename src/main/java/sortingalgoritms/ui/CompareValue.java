@@ -19,7 +19,7 @@ import sortingalgoritms.MainController;
 import sortingalgoritms.util.IComparable;
 
 /**
- *  A rectangular bar with an index and given value.
+ * Creates comparable value with changing colors.
  *
  * @author Eric Canull
  */
@@ -28,19 +28,17 @@ public final class CompareValue implements IComparable {
     private final Color NORMAL_COLOR = Color.web("#3073b4");
     private final Color SELECTED_COLOR = Color.web("#a07617");
     
-    private int index;
     private int value;
     
     private Color color;
    
     /**
-     * Creates a rectangular bar with a index and value.
+     * Creates comparable value with changing colors.
      *
      * @param index
      * @param value an integer reference to a number
      */
-    public CompareValue(int index, int value) {
-        this.index = index;
+    public CompareValue(int value) {
         this.value = value;
         this.color = NORMAL_COLOR;
     }
@@ -75,23 +73,7 @@ public final class CompareValue implements IComparable {
     }
 
     /**
-     * Gets the index of the bar
-     * @return 
-     */
-    public int getIndex() {
-        return this.index;
-    }
-    
-    /**
-     * Sets the index of the bar
-     * @param index 
-     */
-    public void setIndex(int index) {
-        this.index = index;
-    }
-
-    /**
-     * Gets the value of the bar.
+     * Gets the value.
      *
      * @return An integer value specifying the current number stored
      */
@@ -100,7 +82,7 @@ public final class CompareValue implements IComparable {
     }
 
     /**
-     * Sets the value of the bar.
+     * Sets the value.
      *
      * @param number a reference to the new integer value to be set
      */
@@ -109,7 +91,7 @@ public final class CompareValue implements IComparable {
     }
 
     /**
-     * Sets the color of the bar
+     * Sets the color
      * @param color 
      */
     @Override
@@ -118,7 +100,7 @@ public final class CompareValue implements IComparable {
     }
 
     /**
-     * Gets the color of the bar
+     * Gets the color
      * @return 
      */
     @Override
@@ -127,7 +109,7 @@ public final class CompareValue implements IComparable {
     }
     
     /**
-     * Gets the value of the bar as a string
+     * Gets the value as a string
      * @return 
      */
     @Override

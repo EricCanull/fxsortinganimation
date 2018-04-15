@@ -76,7 +76,7 @@ public class RandomValues {
     private static void setManualSet(int[] values) {
         array = new CompareValue[MAX_SIZE];
         IntStream.range(0, array.length).forEachOrdered(index -> {
-            CompareValue bar = new CompareValue(index, values[index]);
+            CompareValue bar = new CompareValue(values[index]);
             array[index] = bar;
         });
     }
@@ -85,7 +85,7 @@ public class RandomValues {
     public static void resetArray() {
         array = new CompareValue[MAX_SIZE];
         IntStream.range(0, array.length).forEachOrdered(index -> {
-            array[index] = new CompareValue(index, index + 1);
+            array[index] = new CompareValue(index + 1);
         });
     }
 
