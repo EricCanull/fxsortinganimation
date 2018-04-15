@@ -99,7 +99,7 @@ public class MainController implements Initializable {
 
         // Create spinner factory with default min, max, current, step
         SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory
-                .IntegerSpinnerValueFactory(0, 2000, 100, 10);
+                .IntegerSpinnerValueFactory(0, 2000, 250, 10);
 
         // Set the spinner value factory
         delaySpinner.setValueFactory(valueFactory);

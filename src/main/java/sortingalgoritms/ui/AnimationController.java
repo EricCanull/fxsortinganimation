@@ -23,12 +23,16 @@ import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.layout.Region;
 import javafx.util.Duration;
+import sortingalgoritms.MainController;
 
 import sortingalgoritms.util.RandomValues;
 import sortingalgoritms.util.ISortOperator;
@@ -42,7 +46,7 @@ public class AnimationController extends AnchorPane implements ISortOperator {
     
     @FXML private GridPane barsGrid;
     @FXML private GridPane textFieldsGrid;
-   
+    
     private int indexPos;
       private Timeline tl;
    
@@ -67,7 +71,7 @@ public class AnimationController extends AnchorPane implements ISortOperator {
         barsGrid.widthProperty().addListener(evt -> addGridBars());
         barsGrid.heightProperty().addListener(evt -> addGridBars());
     }
-    
+
     public void setPresetValues(String presetChoice) {
         RandomValues.setRandomSet(presetChoice, null);
      
@@ -92,8 +96,12 @@ public class AnimationController extends AnchorPane implements ISortOperator {
             CompareValue compareValue = RandomValues.getArray()[index];
             
             double height = calculateHeight(compareValue.getValue());
-            Rectangle rect = new Rectangle(0, 0, width, height);
-            rect.setFill(compareValue.getColor());
+            Region rect = new Region();
+            rect.setPrefHeight(height);
+            rect.setMaxHeight(height);
+            rect.setBackground(new Background(new BackgroundFill(compareValue.getColor(),
+                        CornerRadii.EMPTY, Insets.EMPTY)));
+         
             barsGrid.add(rect, index, 0);
         });
     }
@@ -131,23 +139,25 @@ public class AnimationController extends AnchorPane implements ISortOperator {
             CompareValue compareValue = (CompareValue) object;   
             String color = Integer.toHexString(compareValue.getColor().hashCode());
             
-            Rectangle rect = (Rectangle) barsGrid.getChildren().get(indexPos);   
+            Region rect = (Region) barsGrid.getChildren().get(indexPos);   
             TextField textfield = (TextField) textFieldsGrid.getChildren().get(indexPos);
             
             textfield.setStyle("-fx-border-color: #" + color + ";" 
                              + "-fx-background-color: #" + color.replace("ff", "33") + ";");
           
             double height = calculateHeight(compareValue.getValue());
+            int delay = MainController.DELAY_PROPERTY.get();
             tl = new Timeline();
             tl.setCycleCount(1);
 
             tl.getKeyFrames().addAll(
-                    new KeyFrame(Duration.millis(200),
-                    new KeyValue(rect.heightProperty(), height)));
+                    new KeyFrame(Duration.millis(delay),
+                    new KeyValue(rect.prefHeightProperty(), height),
+                    new KeyValue(rect.maxHeightProperty(), height)));
             tl.play();
 
-           
-            rect.setFill(Color.web(color));
+           rect.setStyle("-fx-background-color: #" + color + ";");
+          //  rect.setFill(Color.web(color));
             textfield.setText(String.valueOf(compareValue.getValue()));
 
             indexPos++;
