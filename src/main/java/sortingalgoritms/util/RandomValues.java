@@ -14,7 +14,6 @@
  */
 package sortingalgoritms.util;
 
-import sortingalgoritms.ui.CompareValue;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.stream.IntStream;

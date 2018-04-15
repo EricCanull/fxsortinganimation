@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package sortingalgoritms.ui;
+package sortingalgoritms.util;
 
 import javafx.scene.paint.Color;
 import sortingalgoritms.MainController;
