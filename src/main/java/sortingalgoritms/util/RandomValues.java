@@ -19,14 +19,15 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 /**
- * Creates an array of ten bars with values in random, reversed or ascending
+ * Creates an array of ten values in random, reversed or ascending
  * order based on the selected number set.
  *
  * @author Eric Canull
  */
 public class RandomValues {
-  
-    public static final int MAX_SIZE = 10; // max array indices
+    
+    /** max array size */
+    public static final int MAX_SIZE = 10; 
     
     private static CompareValue[] array = null;
     

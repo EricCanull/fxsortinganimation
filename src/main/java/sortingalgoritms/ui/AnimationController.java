@@ -45,8 +45,7 @@ public class AnimationController extends AnchorPane implements ISortOperator {
     @FXML private GridPane textFieldsGrid;
     
     private int indexPos;
-      private Timeline tl;
-   
+      
     public AnimationController() {
         initialize();
     }
@@ -144,8 +143,10 @@ public class AnimationController extends AnchorPane implements ISortOperator {
                              + "-fx-background-color: #" + color.replace("ff", "33") + ";");
           
             double height = calculateHeight(compareValue.getValue());
+            
             int delay = MainController.DELAY_PROPERTY.get();
-            tl = new Timeline();
+            
+            final Timeline tl = new Timeline();
             tl.setCycleCount(1);
 
             tl.getKeyFrames().addAll(
