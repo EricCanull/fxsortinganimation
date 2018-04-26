@@ -54,7 +54,7 @@ public final class CompareValue implements IComparable {
         compareValue.color = SELECTED_COLOR;
         color = SELECTED_COLOR;
          try {
-            Thread.sleep(MainController.DELAY_PROPERTY.get()/2);
+            Thread.sleep(MainController.DELAY_PROPERTY.get()/3);
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
@@ -71,7 +71,7 @@ public final class CompareValue implements IComparable {
             i = IComparable.EQUAL;
         }
           try {
-            Thread.sleep(MainController.DELAY_PROPERTY.get()/2);
+            Thread.sleep(MainController.DELAY_PROPERTY.get()/3);
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }

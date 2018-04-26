@@ -28,6 +28,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import sortingalgoritms.MainController;
 
 import sortingalgoritms.util.CompareValue;
 import sortingalgoritms.util.RandomValues;
@@ -101,7 +102,7 @@ public class AnimationController extends AnchorPane implements ISortOperator {
                 double height = calculateHeight(compareValue.getValue());
 
                 Bar bar = (Bar) barsGrid.getChildren().get(index);
-                animate(bar, height);
+                animate(bar, height, CompareValue.NORMAL_COLOR);
             });
         }
     }
@@ -120,10 +121,11 @@ public class AnimationController extends AnchorPane implements ISortOperator {
         return Math.round(height);
     }
     
-    public void animate(Bar rect, double height) {
+    public void animate(Bar rect, double height, Color color) {
         final Timeline tl = new Timeline();
         tl.getKeyFrames().addAll(
-                new KeyFrame(Duration.millis(200),
+                new KeyFrame(Duration.millis(Math.max(MainController.DELAY_PROPERTY.get()/3, 20)),
+                        new KeyValue(rect.colorProperty, color),
                         new KeyValue(rect.prefHeightProperty(), height),
                         new KeyValue(rect.maxHeightProperty(), height)));
         tl.play();
@@ -144,7 +146,7 @@ public class AnimationController extends AnchorPane implements ISortOperator {
 
             Bar rect = (Bar) barsGrid.getChildren().get(indexPos);
             TextField textfield = (TextField) textFieldsGrid.getChildren().get(indexPos);
-
+//            rect.setStyle("-fx-background-color: " + webColor + ";");
             textfield.setStyle("-fx-border-color: " + webColor + ";"
                     + "-fx-background-color: " + webColor.replace("ff", "33") + ";");
 
@@ -152,16 +154,9 @@ public class AnimationController extends AnchorPane implements ISortOperator {
 
             final double height = calculateHeight(value);
 
-            final Timeline tl = new Timeline();
-            tl.getKeyFrames().addAll(
-                    new KeyFrame(Duration.millis(150),
-                            new KeyValue(rect.colorProperty, color),
-                            new KeyValue(rect.prefHeightProperty(), height),
-                            new KeyValue(rect.maxHeightProperty(), height)));
-            tl.play();
-
+            animate(rect, height, color);
         }
-        
+
         return null;
     }
 }
