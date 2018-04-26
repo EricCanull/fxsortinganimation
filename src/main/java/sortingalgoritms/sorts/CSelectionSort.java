@@ -37,7 +37,6 @@ public final class CSelectionSort extends AbstractSort {
      */
     @Override
     public void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
-        resetCount();
         IComparable minValue;
 
         int index, minIndex;

@@ -14,7 +14,6 @@
  */
 package sortingalgoritms.ui;
 
-import sortingalgoritms.util.CompareValue;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,10 +26,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
-import sortingalgoritms.MainController;
 
+import sortingalgoritms.util.CompareValue;
 import sortingalgoritms.util.RandomValues;
 import sortingalgoritms.util.ISortOperator;
 
@@ -43,8 +42,6 @@ public class AnimationController extends AnchorPane implements ISortOperator {
     
     @FXML private GridPane barsGrid;
     @FXML private GridPane textFieldsGrid;
-    
-    private int indexPos;
       
     public AnimationController() {
         initialize();
@@ -86,80 +83,83 @@ public class AnimationController extends AnchorPane implements ISortOperator {
                 || Double.isNaN(barsGrid.getHeight())) {
             return;
         }
-       
-        barsGrid.getChildren().removeAll(barsGrid.getChildren());
-        IntStream.range(0, 10).forEachOrdered((int index) -> {
-            CompareValue compareValue = RandomValues.getArray()[index];
+        if (barsGrid.getChildren().isEmpty()) {
+            IntStream.range(0, 10).forEachOrdered((int index) -> {
+                CompareValue compareValue = RandomValues.getArray()[index];
 
-            double height = calculateHeight(compareValue.getValue());
+                double height = calculateHeight(compareValue.getValue());
 
-            Region rect = new Region();
-            rect.getStyleClass().add("rect");
+                Bar rect = new Bar();
+                rect.getStyleClass().add("rect");
+                rect.setPrefHeight(height);
+                rect.setMaxHeight(height);
+                barsGrid.add(rect, index, 0);
+            });
+        } else {
+            IntStream.range(0, 10).forEachOrdered((int index) -> {
+                CompareValue compareValue = RandomValues.getArray()[index];
+                double height = calculateHeight(compareValue.getValue());
 
-            rect.setPrefHeight(height);
-            rect.setMaxHeight(height);
-
-            barsGrid.add(rect, index, 0);
-        });
+                Bar bar = (Bar) barsGrid.getChildren().get(index);
+                animate(bar, height);
+            });
+        }
     }
-    
+
     /**
      * Use slope and y-intercept formulas to calculate the bars height
      * for resizing.
      */
     private double calculateHeight(double value) {
-        double y1 = 0;
-        double y2 = barsGrid.getHeight();
+        double x1 = RandomValues.getMaxValue(), 
+               y2 = barsGrid.getHeight();
 
-        double x1 = RandomValues.getMaxValue();
-        double x2 = 0;
-
-        // 1st calculate the slope 
-        double slope = (y1 - y2) / (x1 - x2);
-
-        // 2nd calculate the y-Intercept
-        double yIntercept = (y2 * x1 - y1 * x2) / (x1 - x2);
-
-        // 3rd calculate the new height
-        double height = y2 - (slope * value + yIntercept);
+        // calculate the new height
+        double height = y2 - ((-y2 / x1) * value + ((y2 * x1) / (x1)));
 
         return Math.round(height);
     }
+    
+    public void animate(Bar rect, double height) {
+        final Timeline tl = new Timeline();
+        tl.getKeyFrames().addAll(
+                new KeyFrame(Duration.millis(200),
+                        new KeyValue(rect.prefHeightProperty(), height),
+                        new KeyValue(rect.maxHeightProperty(), height)));
+        tl.play();
+    }
+
 
     @Override
     public Object apply(Object object) {
-        if (indexPos == RandomValues.MAX_SIZE) {
-            indexPos = 0;
-        }
+        CompareValue[] objectArray = (CompareValue[]) object;
 
-        while (indexPos < RandomValues.MAX_SIZE) {
-            CompareValue compareValue = (CompareValue) object;   
-            String color = Integer.toHexString(compareValue.getColor().hashCode());
-            
-            Region rect = (Region) barsGrid.getChildren().get(indexPos);   
+        for (int indexPos = 0; indexPos < objectArray.length; indexPos++) {
+
+            CompareValue compareValue = objectArray[indexPos];
+
+            String webColor = "#".concat(Integer.toHexString(compareValue.getColor().hashCode()));
+            Color color = compareValue.getColor();
+            int value = compareValue.getValue();
+
+            Bar rect = (Bar) barsGrid.getChildren().get(indexPos);
             TextField textfield = (TextField) textFieldsGrid.getChildren().get(indexPos);
-            
-            textfield.setStyle("-fx-border-color: #" + color + ";" 
-                             + "-fx-background-color: #" + color.replace("ff", "33") + ";");
-          
-            double height = calculateHeight(compareValue.getValue());
-            
-            int delay = MainController.DELAY_PROPERTY.get();
-            
-            final Timeline tl = new Timeline();
-            tl.setCycleCount(1);
 
+            textfield.setStyle("-fx-border-color: " + webColor + ";"
+                    + "-fx-background-color: " + webColor.replace("ff", "33") + ";");
+
+            textfield.setText(String.valueOf(value));
+
+            final double height = calculateHeight(value);
+
+            final Timeline tl = new Timeline();
             tl.getKeyFrames().addAll(
-                    new KeyFrame(Duration.millis(delay),
+                    new KeyFrame(Duration.millis(150),
+                            new KeyValue(rect.colorProperty, color),
                             new KeyValue(rect.prefHeightProperty(), height),
                             new KeyValue(rect.maxHeightProperty(), height)));
             tl.play();
 
-            rect.setStyle("-fx-background-color: #" + color + ";");
-            textfield.setText(String.valueOf(compareValue.getValue()));
-
-            indexPos++;
-            break;
         }
         
         return null;

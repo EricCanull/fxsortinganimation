@@ -39,7 +39,6 @@ public final class CQuickSort extends AbstractSort {
      */
     @Override
     protected void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
-        resetCount();
         qsort(numbers, 0, numbers.length - 1);
     }
 

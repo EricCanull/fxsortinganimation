@@ -90,7 +90,7 @@
                            </GridPane.margin>
                         </Label>
                         <Spinner fx:id="delaySpinner" onScroll="#spinnerScrollAction" prefHeight="32.0" prefWidth="90.0" GridPane.columnIndex="1" />
-                        <Button fx:id="startButton" alignment="CENTER" mnemonicParsing="false" onAction="#startAction" prefHeight="32.0" prefWidth="82.0" text="Start" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <Button fx:id="sortButton" alignment="CENTER" mnemonicParsing="false" onAction="#sortAction" prefHeight="32.0" prefWidth="82.0" text="Start" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
                   <Button fx:id="clearButton" layoutX="250.0" layoutY="10.0" mnemonicParsing="false" onAction="#clearTextArea" prefHeight="32.0" prefWidth="82.0" text="Clear" AnchorPane.rightAnchor="15.0" />

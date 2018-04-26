@@ -39,7 +39,6 @@ public final class CExchangeSort extends AbstractSort {
      */
     @Override
     protected void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
-        resetCount();
         IComparable temp;
         for (int i = 0; i < numbers.length - 1; i++) {
             count();

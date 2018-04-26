@@ -37,7 +37,6 @@ public final class CMergeSort extends AbstractSort {
      */
     @Override
     protected void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
-        resetCount();
         mergeSort(numbers);
     }
 

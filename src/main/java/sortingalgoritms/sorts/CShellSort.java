@@ -37,7 +37,6 @@ public final class CShellSort extends AbstractSort {
      */
     @Override
     protected void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
-        resetCount();
         int inner, outer;
         IComparable temp;
 

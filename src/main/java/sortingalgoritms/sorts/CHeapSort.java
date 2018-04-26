@@ -43,7 +43,6 @@ public final class CHeapSort extends AbstractSort {
      */
     @Override
     protected void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
-        resetCount();
         temp = numbers;
         buildheap(temp);
         for (int i = number; i > 0; i--) {

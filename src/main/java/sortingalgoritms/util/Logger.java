@@ -24,19 +24,18 @@ public final class Logger {
 
     private static String infoText = "";
     private static long count;
-
-    /**
-     * Creates an empty UtilLogger
-     */
-    public Logger() {
-        count = 0;
-    }
+    public static long startTime, endTime;
 
     /**
      * Resets the iteration count.
      */
-    public static void resetCount() {
+    public static void initiateLog() {
         count = 0;
+        startTime = System.nanoTime();
+    }
+
+    public static void terminateLog() {
+        endTime = System.nanoTime();
     }
 
     /**

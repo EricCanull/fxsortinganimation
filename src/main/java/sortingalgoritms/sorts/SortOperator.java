@@ -14,6 +14,7 @@
  */
 package sortingalgoritms.sorts;
 
+import java.util.Arrays;
 import sortingalgoritms.util.ISortOperator;
 
 /**
@@ -42,10 +43,8 @@ public class SortOperator implements ISortOperator {
      * @return an output sorted object or null
      */
     public Object[] apply(Object objects[], ISortOperator sortOperator) {
-        Object[] result = new Object[objects.length];
-        for(int i = 0; i < objects.length; i++) {
-            result[i] = sortOperator.apply(objects[i]);
-        }
+        Object[] result = Arrays.copyOf(objects, objects.length);
+        sortOperator.apply(objects);
         return result;
     }
     

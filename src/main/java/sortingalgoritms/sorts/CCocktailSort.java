@@ -38,7 +38,6 @@ public final class CCocktailSort extends AbstractSort {
      */
     @Override
     protected void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
-        resetCount();
         boolean swapped;
         do {
             swapped = false;

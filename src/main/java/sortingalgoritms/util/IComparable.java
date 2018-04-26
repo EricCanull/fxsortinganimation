@@ -21,19 +21,24 @@ import javafx.scene.paint.Color;
  */
 public interface IComparable {
 
-    final int LESS = -1;
-    final int EQUAL = 0;
-    final int GREATER = 1;
+    int LESS = -1;
+    int EQUAL = 0;
+    int GREATER = 1;
 
+    Color NORMAL_COLOR = Color.web("#3073b4");
+    Color SELECTED_COLOR = Color.web("#a07617");
+    Color GREATER_COLOR = Color.web("#2da762");
+    Color LESS_COLOR = Color.web("#7F5096");
+    
     /**
      * Similar to Comparable.compareTo
      *
      * @param number a value to compare
      * @return the result of the comparison
      */
-    int compare(IComparable number);
+    int compare(IComparable number);   
     
     void setColor(Color color);
 
-   Color getColor();
+    Color getColor();
 }

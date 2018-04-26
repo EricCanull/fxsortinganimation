@@ -39,7 +39,6 @@ public final class CInsertionSort extends AbstractSort {
     protected void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
         // Sub-array used to hold the sorted numbers
         IComparable temp;
-        resetCount();
 
         // Iterates through numbers array one time, swapping any numbers it finds less than 
         // it's next index until reaching the last and the array is sorted

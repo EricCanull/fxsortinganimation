@@ -32,8 +32,10 @@ public abstract class AbstractSort {
      * @param lowIndex the low index of the array.
      * @param highIndex the high index of array.
      */
-    public final void sort(IComparable[] numbers, int lowIndex, int highIndex) {
+    public void sort(IComparable[] numbers, int lowIndex, int highIndex) {
+        Logger.initiateLog();
         startSort(numbers, lowIndex, highIndex);
+        Logger.terminateLog();
     }
 
     /**
@@ -44,15 +46,8 @@ public abstract class AbstractSort {
      * @param highIndex the high index of array.
      */
     protected abstract void startSort(IComparable[] numbers, int lowIndex, int highIndex);
-
-    /**
-     * Resets the sort count.
-     */
-    protected void resetCount() {
-        Logger.resetCount();
-    }
-
-    /**
+    
+     /**
      * Increments iteration count.
      */
     protected void count() {

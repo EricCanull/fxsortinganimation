@@ -22,12 +22,10 @@ import sortingalgoritms.util.IComparable;
  * @version 1.0
  */
 public final class CBubbleSort extends AbstractSort {
+    private CBubbleSort() { } /* non-use private constructor */
    
     public static final CBubbleSort SINGLETON = new CBubbleSort();
-    
-    /** Implementation of the bubble sort algorithm. */
-    private CBubbleSort() { }
-    
+       
     /**
      * Starts the Bubble Sort algorithm.
      * @param numbers an array of numbers used for the sorting
@@ -36,7 +34,6 @@ public final class CBubbleSort extends AbstractSort {
      */
     @Override
     protected void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
-        resetCount();
         
         // Marker for the final swap's position
         int lastSwap = numbers.length - 1;

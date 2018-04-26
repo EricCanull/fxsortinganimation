@@ -39,7 +39,6 @@ public final class CPancakeSort extends AbstractSort {
      */
     @Override
     protected void startSort(IComparable[] numbers, int lowIndex, int highIndex) {
-        resetCount();
         IComparable max;
 
         for (int index = 0; index < numbers.length; index++) {

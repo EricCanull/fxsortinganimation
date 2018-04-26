@@ -62,12 +62,14 @@ public class MainController implements Initializable {
     private final SortOperatorList sortOperators = new SortOperatorList();
     
     private AnimationController animationController;
+    
+    private ExecutorService executor;
 
     private Timeline timeline;
        
     @FXML private AnchorPane anchorPane;
     @FXML private TextArea logTextArea;
-    @FXML private Button startButton, clearButton;
+    @FXML private Button sortButton, clearButton;
     @FXML private ComboBox<String> algorithmsComboBox, presetsComboBox;
     @FXML private Spinner<Integer> delaySpinner;
     @FXML private Label algorithmLabel, countLabel, statusLabel;
@@ -115,7 +117,7 @@ public class MainController implements Initializable {
 
         // Bind the UI controls to the disableUI boolean property 
         statusLabel.getGraphic().visibleProperty().bind(disableUI);
-        startButton.disableProperty().bind(disableUI);
+        sortButton.disableProperty().bind(disableUI);
         clearButton.disableProperty().bind(disableUI);
         delaySpinner.disableProperty().bind(disableUI);
         algorithmsComboBox.disableProperty().bind(disableUI);
@@ -148,14 +150,14 @@ public class MainController implements Initializable {
      * Start button method to startSort the sorting operation
      */
     @FXML
-    private void startAction(ActionEvent event) {
-        startSort();
+    private void sortAction(ActionEvent event) {
+         start();
     }
     
     /**
      * Starts the sorting operation
      */
-    public void startSort() {
+    public void start() {
         
         disableUI.set(true);     // Disable UI
         countLabel.setText("0"); // Reset count label
@@ -165,46 +167,39 @@ public class MainController implements Initializable {
        
         //display the preset values in the text area
         logTextArea.appendText("Preset Values\n");
-        logTextArea.appendText(RandomValues.getString()
-                .concat("\n\n"));
+        logTextArea.appendText(RandomValues.getString().concat("\n\n"));
 
         // Update the algorithm name to the labels and text area
         String sortName = algorithmsComboBox.getValue().concat(" Sort\n");
         algorithmLabel.setText(sortName);
         logTextArea.appendText(sortName);
-       
+        
         // Start the timeline
         timeline.play();
 
         // Create a new thread to startSort the sorting algorithm
-        final ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor = Executors.newSingleThreadExecutor();
         executor.submit(() -> {
-
-            // Mark start time
-            final long startTime = System.nanoTime();
-
-            // Perform the sort at the position in the list
-           AbstractSort sorter = sortOperators.getList().get(sortIndex);
-           sorter.sort(RandomValues.getArray(), 0, RandomValues.MAX_SIZE-1);
-
-            // Mark end time
-            final long endTime = System.nanoTime();
-
+            
+             // Perform the sort at the position in the list
+        AbstractSort sorter = sortOperators.getList().get(sortIndex);
+        sorter.sort(RandomValues.getArray(), 0, RandomValues.MAX_SIZE - 1);
+         
             // Append text area with metric data
             Platform.runLater(() -> {
                 updateViews();
-                appendMetricText(startTime, endTime);
+                appendMetricText();
             });
 
-            // Sort completed 
-            stop(executor);
+           //  Sort completed 
+            stop();
         });
     }
     
     /**
      * Shutdown running tasks and update the status label
      */
-    private void stop(ExecutorService executor) {
+    private void stop() {
         try {
             executor.shutdown();
             executor.awaitTermination(100, TimeUnit.MILLISECONDS);
@@ -251,15 +246,15 @@ public class MainController implements Initializable {
     /**
      * Appends the info text area with the metric data for the sorting routine.
      */
-    private void appendMetricText(long startTime, long endTime) {
+    private void appendMetricText() {
 
         // Calculates the difference between start and end time
-        long delta = endTime - startTime;
+        long delta = Logger.endTime - Logger.startTime;
         
         // Create a new string builder with metric data
         final StringBuilder sb = new StringBuilder();
-        sb.append("Start: ").append(startTime).append(" ns \n");
-        sb.append("Ended: ").append(endTime).append(" ns \n");
+        sb.append("Start: ").append(Logger.startTime).append(" ns \n");
+        sb.append("Ended: ").append(Logger.endTime).append(" ns \n");
         sb.append("Delay: ").append(delaySpinner.getValue()).append(" ms\n");
         sb.append("Speed: ").append(delta).append(" ns").append("\n");
         sb.append("Steps: ").append(Logger.getCount()).append("\n\n");

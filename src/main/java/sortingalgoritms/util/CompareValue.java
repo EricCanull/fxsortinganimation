@@ -14,9 +14,10 @@
  */
 package sortingalgoritms.util;
 
+import java.util.HashMap;
+import java.util.Map;
 import javafx.scene.paint.Color;
 import sortingalgoritms.MainController;
-import sortingalgoritms.util.IComparable;
 
 /**
  * Creates comparable value with changing colors.
@@ -25,17 +26,14 @@ import sortingalgoritms.util.IComparable;
  */
 public final class CompareValue implements IComparable {
     
-    private final Color NORMAL_COLOR = Color.web("#3073b4");
-    private final Color SELECTED_COLOR = Color.web("#a07617");
-    
     private int value;
-    
     private Color color;
-   
+  
+    int i;
+    
     /**
      * Creates comparable value with changing colors.
      *
-     * @param index
      * @param value an integer reference to a number
      */
     public CompareValue(int value) {
@@ -43,7 +41,7 @@ public final class CompareValue implements IComparable {
         this.color = NORMAL_COLOR;
     }
     
-    /**
+      /**
      * Compares two values, changes their colors and returns -1, 0, or 1.
      *
      * @param comparable
@@ -52,26 +50,36 @@ public final class CompareValue implements IComparable {
     @Override
     public int compare(IComparable comparable) {
         CompareValue compareValue = (CompareValue) comparable;
-        
-        color = SELECTED_COLOR;
 
         compareValue.color = SELECTED_COLOR;
-
-        try {
-            Thread.sleep(MainController.DELAY_PROPERTY.get());
+        color = SELECTED_COLOR;
+         try {
+            Thread.sleep(MainController.DELAY_PROPERTY.get()/2);
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
-        
+
+        if (value < compareValue.value) {
+            compareValue.color = GREATER_COLOR;
+            color = LESS_COLOR;
+            i = IComparable.LESS;
+        } else if (value > compareValue.value) {
+            compareValue.color = LESS_COLOR;
+            color = GREATER_COLOR;
+            i = IComparable.GREATER;
+        } else {
+            i = IComparable.EQUAL;
+        }
+          try {
+            Thread.sleep(MainController.DELAY_PROPERTY.get()/2);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+         compareValue.color = NORMAL_COLOR;
         color = NORMAL_COLOR;
-        
-        compareValue.color = NORMAL_COLOR;
-
-        return value < compareValue.value ? IComparable.LESS // -1 
-                : value > compareValue.value ? IComparable.GREATER //  1
-                        : IComparable.EQUAL;  //  0                              
+        return i;
     }
-
+    
     /**
      * Gets the value.
      *
@@ -84,10 +92,10 @@ public final class CompareValue implements IComparable {
     /**
      * Sets the value.
      *
-     * @param number a reference to the new integer value to be set
+     * @param value a reference to the new integer value to be set
      */
-    public void setValue(int number) {
-        this.value = number;
+    public void setValue(int value) {
+        this.value = value;
     }
 
     /**
