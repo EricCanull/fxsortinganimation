@@ -130,6 +130,7 @@ public class MainController implements Initializable {
      */
     private void presetComboBoxAction(Observable observable) {
         animationController.setPresetValues(presetsComboBox.getValue());
+        animationController.onResizeAnimated();
     }
     
     /**

@@ -54,24 +54,23 @@ public final class CompareValue implements IComparable {
         compareValue.color = SELECTED_COLOR;
         color = SELECTED_COLOR;
          try {
-            Thread.sleep(MainController.DELAY_PROPERTY.get()/3);
+            Thread.sleep(MainController.DELAY_PROPERTY.get()/2);
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
-
-        if (value < compareValue.value) {
-            compareValue.color = GREATER_COLOR;
-            color = LESS_COLOR;
+         if (value < compareValue.value) {
+//            compareValue.color = SELECTED_COLOR;
+//            color = SELECTED_COLOR;
             i = IComparable.LESS;
         } else if (value > compareValue.value) {
-            compareValue.color = LESS_COLOR;
-            color = GREATER_COLOR;
+//            compareValue.color = SELECTED_COLOR;
+//            color = SELECTED_COLOR;
             i = IComparable.GREATER;
         } else {
             i = IComparable.EQUAL;
         }
-          try {
-            Thread.sleep(MainController.DELAY_PROPERTY.get()/3);
+           try {
+            Thread.sleep(MainController.DELAY_PROPERTY.get()/2);
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
