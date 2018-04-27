@@ -114,7 +114,7 @@ public class AnimationController extends AnchorPane implements ISortOperator {
                 barsGrid.add(rect, index, 0);
             });
         } else {
-            // Just resize the height of the bars
+            // Just resize the height of the existing bars
             IntStream.range(0, RandomValues.MAX_SIZE).forEachOrdered((int index) -> {
                 CompareValue compareValue = RandomValues.getArray()[index];
                 double height = calculateHeight(compareValue.getValue());
